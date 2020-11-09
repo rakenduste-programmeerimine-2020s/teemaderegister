@@ -1,0 +1,15 @@
+html
+  head
+    meta(name='viewport', content='width=device-width')
+    meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
+    style
+      include styles.css
+  body
+    header
+      h1 Teemaderegister account temporary locked
+    container
+      p Hello #{user},
+      p We have detected that your account has had 5 failed log in attempts to your account.
+      p Therefore, to insure maximum security, we have temporary disabled your account for #{blockDurationInMinutes} minutes in order to prevent an attack.
+      p With your current password you have another chance to access your account after #{newAttemptTime}
+      p In order to access your account earlier you can use forgot password option on our login page.

@@ -1,0 +1,16 @@
+.curriculumMeta {
+  background-position: center center;
+  background-size: cover;
+  padding: 15px;
+
+  &__avatar {
+    background-color: rgba(0, 0, 0, 0.7);
+    display: inline-table;
+    margin-right: 5px;
+  }
+
+  h3, 
+  h4 {
+    margin-bottom: 15px
+  }
+}

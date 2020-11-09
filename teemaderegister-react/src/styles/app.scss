@@ -1,0 +1,13 @@
+.layout {
+  background-color: #fff;
+
+  &__content {
+    background: #fff;
+    min-height: 280px;
+  }
+
+  &__footer {
+    background-color: #fff;
+    text-align: center;
+  }
+}

@@ -1,0 +1,31 @@
+.text-align {
+
+  &--center {
+    text-align: center;
+  }
+
+  &--left {
+    text-align: left;
+  }
+
+  &--right {
+    text-align: right;
+  }
+}
+
+.icon {
+  &--15 {
+    font-size: 15px;
+  }
+}
+
+.width {
+  &--public-page {
+    margin: 0 auto;
+    max-width: 980px;
+    padding: 0 16px;
+  }
+  &--admin-page {
+    width: 100%;
+  }
+}

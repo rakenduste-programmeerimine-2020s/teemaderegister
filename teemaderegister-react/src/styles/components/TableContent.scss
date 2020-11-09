@@ -1,0 +1,75 @@
+.tableContent {
+  margin-top: 15px;
+
+  .link {
+    &--curriculum {
+      width: auto;
+      padding-right: 3px;
+    }
+    &--pdf {
+      display: inline;
+    }
+  }
+
+  .icon {
+    &--download {
+      font-size: 16px
+    }
+    &--copy {
+      padding-left: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      color: #3c7269;
+    }
+  }
+
+  .highlight {
+    background-color: rgb(245, 245, 196);
+  }
+  
+  /* antd overwrites */
+  .ant-table-body {
+    overflow-x: scroll; 
+  }
+ 
+  .no-desc {
+    .ant-table-row-expand-icon {
+      display: none;
+    }
+  }
+  
+  .no-status-margin {
+    .ant-badge-status-text {
+      margin: 0;
+    }
+  }
+
+  .ant-table-thead {
+    tr {
+      th {
+        background: #f7f7f7;
+
+        .ant-table-column-sort {
+          background: #eee;
+        }
+      }
+    }
+  }
+
+  .ant-table-thead,
+  .ant-table-tbody {
+    tr {
+      th,
+      td {
+        word-break: normal;
+      }
+    }
+  }
+  
+  /* hack for hiding inactive tab panes pagination */
+  .ant-tabs-tabpane-inactive {
+    .ant-pagination {
+      display: none;
+    }
+  }
+}

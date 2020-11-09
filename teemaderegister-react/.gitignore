@@ -1,0 +1,14 @@
+# dependencies
+/node_modules
+
+# testing
+/tests
+
+# production
+/dist
+
+# misc
+.DS_Store
+
+npm-debug.log*
+.idea

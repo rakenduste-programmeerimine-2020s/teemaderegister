@@ -1,0 +1,27 @@
+[
+  {
+    "_id":"597852cf1ddcdc4eb983ed0e",
+    "updatedAt":"2017-08-08T10:10:19.898Z",
+    "createdAt":"2017-07-26T08:29:04.033Z",
+    "title":"SPSS statistikatarkvara puudutavad teemad",
+    "titleEng":"SPSS statistikatarkvara puudutavad teemad",
+    "description":"Töö eesmärgiks on koostada õppematerjal seni eesti keeles mitte käsitletud statistikatarkvara SPSS võimaluste kohta (teemade osas on erinevaid võimalusi, mis tuleb juhendajaga läbi arutada ja kokku leppida).",
+    "accepted":"2017-07-26T08:29:03.954Z",
+    "attachments":[],
+    "types":[
+      "BA",
+      "MA"
+    ],
+    "curriculums":[
+      "597849cd0d77d8435fdf65d1"
+    ],
+    "supervisors":[
+      {
+          "type":"Main",
+          "supervisor":"597848d0fce7214223c5608a",
+          "_id":"597852cf1ddcdc4eb983ed0f"
+      }
+    ],
+    "slug":"SPSS-statistikatarkvara-puudutavad-teemad"
+  }
+]

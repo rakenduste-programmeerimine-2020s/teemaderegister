@@ -1,0 +1,33 @@
+.homeCards {
+  a {
+    color: rgba(0, 0, 0, 0.65);
+    font-size: 12px;
+  }
+  
+  &__card {
+    cursor: pointer;
+    min-height: 90px;
+    margin-bottom: 20px;
+    background-size: cover;
+    background-position: center center;
+
+    h2 {
+      line-height: 1;
+      margin-bottom: 5px;
+    }
+
+    .ant-card-body {
+      padding: 14px;
+    }
+  }
+
+  &__closed {
+    & div:nth-child(2){
+      padding: 0;
+    }
+  }
+
+  &__dropdown {
+    margin-bottom: 2.5em
+  }
+}

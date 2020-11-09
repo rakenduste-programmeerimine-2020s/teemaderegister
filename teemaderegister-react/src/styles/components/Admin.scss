@@ -1,0 +1,26 @@
+.Admin {
+
+  &__layout{
+    min-height: 280px;
+    padding: 0 24px 24px;
+    
+    &__content {
+      margin: 0;
+      padding: 24px;
+      background: #fff;
+    }
+  }
+
+  &__sidebar {
+    background: #fff;
+
+    &__menu {
+      height: 100%;
+      border-right: 0;
+    }
+
+    .ant-layout-sider-zero-width-trigger {
+      top: 17px;
+    }
+  }
+}

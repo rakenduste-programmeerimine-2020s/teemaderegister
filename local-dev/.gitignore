@@ -1,0 +1,13 @@
+# mongo db
+data/mongo/*
+!data/mongo/.gitkeep
+
+# profile pictures 
+data/uploads/misc/*
+data/uploads/profile/original/*
+data/uploads/profile/full/*
+data/uploads/profile/thumbnail/*
+!data/uploads/misc/.gitkeep
+!data/uploads/profile/original/.gitkeep
+!data/uploads/profile/full/default.jpg
+!data/uploads/profile/thumbnail/thumb-default.jpg

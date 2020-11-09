@@ -1,0 +1,103 @@
+.supervisorMeta {
+
+  &__row {
+    margin-bottom: 10px;
+
+    .profile {
+      display: flex;
+      margin-bottom: 15px;
+
+      &__image {
+        width: 150px;
+        height: 150px;
+      }
+
+      &__details {
+        display: inline-block;
+        padding-left: 18px;
+        max-height: 105px;
+
+        h1 {
+          line-height: 1;
+          margin-bottom: 10px;
+        }
+
+        h3 {
+          line-height: 1;
+          margin-bottom: 5px;
+        }
+        &__contact {
+          margin-top: 10px;
+        }
+      }
+    }
+
+    .topics-description {
+      margin-bottom: 15px;
+      min-height: 50px;
+      min-width: 200px;
+    }
+  }
+  
+  &__chart {
+
+    .card {
+      height: 120px;
+
+      &--curriculums {
+
+        .ant-card-body{
+          padding: 0;
+        }
+        .pie-chart {
+          margin: 0 auto;
+        }
+      }
+
+      &--supervised {
+        color: #6bcaba;
+      }
+
+      &--chart {
+
+        .ant-card-body {
+          padding-bottom: 0;
+        }
+
+        .recharts-tooltip-wrapper {
+          padding: 10px;
+          background-color: rgb(255, 255, 255);
+          border: 1px solid rgb(204, 204, 204);
+          white-space: nowrap;
+        }
+      }
+
+      &__title {
+        text-align: center;
+        display: block;
+        line-height: 1;
+        margin-top: 5px;
+      }
+
+      &__count {
+        line-height: 1;
+        font-size: 40px;
+        text-align: center;
+        margin-top: 10px;
+        margin-left: 8px;
+        display: block;
+
+        &__icon {
+          font-size: 15px;
+          margin-left: 3px;
+        }
+      }
+    }
+
+    .ant-card-body {
+      padding: 15px;
+    }
+  }
+
+}
+

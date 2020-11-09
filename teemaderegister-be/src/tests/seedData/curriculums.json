@@ -1,0 +1,22 @@
+[
+  {  
+    "_id":"597849cd0d77d8435fdf65d1",
+    "updatedAt":"2017-08-08T10:25:17.665Z",
+    "createdAt":"2017-07-26T07:50:37.500Z",
+    "abbreviation":"IFIFB",
+    "type":"BA",
+    "representative":"597848d0fce7214223c5608a",
+    "faculty":"DTI",
+    "languages":[
+      "ET"
+    ],
+    "names":{
+      "et":"Informaatika",
+      "en":"Computer Science"
+    },
+    "slugs":{
+      "et":"Informaatika",
+      "en":"Computer-Science"
+    }
+  }
+]

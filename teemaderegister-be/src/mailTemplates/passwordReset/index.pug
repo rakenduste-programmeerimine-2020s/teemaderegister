@@ -1,0 +1,17 @@
+mixin button(buttonLink, buttonText)
+    a(class='reset-btn' href=buttonLink)= buttonText
+
+html
+  head
+    meta(name='viewport', content='width=device-width')
+    meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
+    style
+      include styles.css
+  body
+    header
+      h1 Password reset for Teemaderegister
+    container
+      p Press button below to reset your password:
+      +button(passwordResetURL, 'Reset password')
+      p If the button is not working please copy the password reset URL below and paste into your browser
+      p #{passwordResetURL}

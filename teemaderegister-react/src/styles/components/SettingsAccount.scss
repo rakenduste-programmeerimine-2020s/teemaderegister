@@ -1,0 +1,76 @@
+.settingsAccount {
+
+  h2 {
+    margin-bottom: 20px;
+  }
+
+  .ant-form-item-label {
+    margin-top: -10px;
+  }
+
+  .profilePicture {
+    position: relative;
+    height: 200px;
+    width: 200px;
+    margin: 0 auto 30px;
+    cursor: pointer;
+
+    &__loading {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(255,255,255,0.7);
+
+      .ant-spin {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-top: -16px;
+        margin-left: -16px;
+      }
+    }
+    
+    &__avatar {
+      position: absolute;
+      height: 200px;
+      width: 200px;
+      background-color: lightgrey;
+    }
+    
+    &__edit-icon {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      width: 27px;
+      border-radius: 50%;
+      background-color: rgba(255,255,255, 0.8);
+      font-size: 1.5em;
+      text-align: center;
+    }
+
+    // fix for dropdown start position
+    .ant-dropdown-trigger {
+      height: 100%;
+    }
+  }
+}
+
+.profileResetDropdownMenu {
+  text-align: center;
+
+  
+  &__link {
+    display: block;
+    margin: 0;
+    padding: 10px 20px;
+  }
+
+  .ant-dropdown-menu-item {
+    padding: 0;
+
+    .ant-upload.ant-upload-select { 
+      display: block;
+    }
+  }
+}

@@ -1,0 +1,111 @@
+$menu-link: rgb(255, 255, 255);
+$menu-link-hover: rgb(138, 131, 131);
+
+.headerWrap {
+  padding: 0;
+
+  &__wrapper {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 16px;
+
+    .logo {
+      color: #fff;
+      float: left;
+      font-size: 2em;
+      margin: 0 10px 0 0;
+      padding: 0 10px 0 0;
+    }
+
+    .content {
+      .search {
+        float: left;
+        width: 60%;
+        
+        &__input {
+          .ant-input-search-icon {
+              color: lightgray;
+            }
+          
+          input {
+            background-color: transparent;
+            border-color: transparent;
+            background-color: #5f5f5f;
+            color: white;
+
+            &::placeholder {
+              color: lightgray;
+            }
+          }
+        }
+      }
+
+      .login {
+        float: right;
+
+        a,
+        a:hover {
+          color: #fff;
+          font-size: 1.2em;
+        }
+      }
+
+      .navigationWrap{
+        & .userDropdown{
+          &--icon {
+            float:right;
+            margin-top: 1.3em;
+            width: 32px;
+            height: 32px;
+            border-radius: 20px;
+            background-color: #fff;
+            background-size: cover;
+            cursor: pointer;
+            
+            &:hover {
+              opacity: 0.8;
+            }
+          }
+        }
+      }
+    }
+  } 
+}
+
+// open
+.headerWrapDropdownMenu {
+  background-color: #5f5f5f;
+
+  .ant-dropdown-menu-item {
+    padding: 0;
+
+    a,
+    .link,
+    &.user-info {
+      display: block;
+      color: $menu-link;
+      padding: 10px 20px;
+      margin: 0;
+    }
+    
+    .user-name{
+      font-size: 1.5em;
+    }
+    
+    &:hover, 
+    &:focus {
+      a,
+      .link {
+        color: $menu-link-hover;
+      }
+      
+      button {
+        border-color: $menu-link-hover;
+      }
+    }
+  }
+  .ant-dropdown-menu-item.noHover {
+    background-color: #5f5f5f;
+    cursor: initial;
+  }
+}

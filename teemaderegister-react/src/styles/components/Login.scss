@@ -1,0 +1,18 @@
+.login {
+  h2 {
+    margin-bottom: 20px;      
+
+    .emphisize {
+      font-size: 2em;
+      font-weight: 600;
+    }
+  }
+  
+  &__password {
+    margin-bottom: 5px;
+  }
+
+  &__forgot {
+    float: right;
+  }
+}

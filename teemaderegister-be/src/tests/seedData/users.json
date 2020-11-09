@@ -1,0 +1,15 @@
+[
+  {
+    "_id":"597848d0fce7214223c5608a",
+    "updatedAt":"2017-08-08T09:59:16.633Z",
+    "createdAt":"2017-07-26T07:46:24.397Z",
+    "profile": {
+      "firstName":"Andrus",
+      "lastName":"Tamm",
+      "slug":"Andrus-Tamm"
+    },
+    "login": {
+      "roles": ["supervisor"]
+    }
+  }
+]
