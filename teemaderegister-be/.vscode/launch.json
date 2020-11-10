@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug docker node",
+      "type": "node",
+      "request": "attach",
+      "port": 9000,
+      "address": "localhost",
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": "/home/node/app",
+      "protocol": "inspector"
+    }
+  ]
+}

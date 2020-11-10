@@ -19,7 +19,7 @@ const propTypes = {
 }
 
 class SupervisorMeta extends PureComponent {
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     this.curriculumsChartColors = []
     const abbreviations = Object.keys(this.props.count.abbreviations.chartData)
     const mainRGB = '107,202,186'

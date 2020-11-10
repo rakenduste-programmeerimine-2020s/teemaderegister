@@ -127,22 +127,24 @@ class AddCurriculum extends React.Component {
                   })}
                 </Select>
               </FormItem>
-              <FormItem label='Representative' name='representative' rules={[{ required: true, message: 'Please select represantive!' }]}>
+              <FormItem label='Representative'>
                 <Tooltip
                   placement='topLeft'
                   title='Start typing name'
                   trigger='focus'
                 >
-                  <Select
-                    showSearch
-                    labelInValue
-                    notFoundContent={fetching ? <Spin size='small' /> : null}
-                    filterOption={false}
-                    onSearch={this.fetchUsers}
-                    style={{ width: '100%' }}
-                  >
-                    {representatives.map(d => <Option key={d.value}>{d.text}</Option>)}
-                  </Select>
+                  <FormItem noStyle name='representative' rules={[{ required: true, message: 'Please select represantive!' }]}>
+                    <Select
+                      showSearch
+                      labelInValue
+                      notFoundContent={fetching ? <Spin size='small' /> : null}
+                      filterOption={false}
+                      onSearch={this.fetchUsers}
+                      style={{ width: '100%' }}
+                    >
+                      {representatives.map(d => <Option key={d.value}>{d.text}</Option>)}
+                    </Select>
+                  </FormItem>
                 </Tooltip>
               </FormItem>
               <FormItem label='Faculty' name='faculty' initialValue={process.env.FACULTY} rules={[{ required: true, message: 'Please input faculty!' }]}>

@@ -10,11 +10,6 @@ const { func, object, shape, bool, string } = PropTypes
 
 const propTypes = {
   changePassword: func.isRequired,
-  form: shape({
-    getFieldValue: func.isRequired,
-    resetFields: func.isRequired,
-    validateFields: func.isRequired
-  }).isRequired,
   initSettings: func.isRequired,
   location: object.isRequired,
   settings: shape({

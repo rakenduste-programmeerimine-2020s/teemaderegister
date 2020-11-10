@@ -5,6 +5,7 @@ import { setDocTitle } from '../utils/Helpers'
 import HomeCollection from './HomeCollection'
 
 import { Button } from 'antd'
+import { PlusOutlined } from '@ant-design/icons'
 
 const { array, bool, func, shape } = PropTypes
 
@@ -42,7 +43,7 @@ class Home extends React.Component {
         </div>
         {showAddCurriculumLink &&
           <Link to='/curriculum/add'>
-            <Button icon='plus'>Lisa õppekava</Button>
+            <Button icon={<PlusOutlined/>}>Lisa õppekava</Button>
           </Link>}
         {!loading && <HomeCollection curriculums={curriculums} />}
       </div>

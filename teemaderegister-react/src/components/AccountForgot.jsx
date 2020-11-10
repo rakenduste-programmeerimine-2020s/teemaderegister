@@ -47,7 +47,7 @@ class AccountForgot extends React.Component {
     }
   }
 
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     this.props.initPasswordReset()
 
     setDocTitle('Request password reset')

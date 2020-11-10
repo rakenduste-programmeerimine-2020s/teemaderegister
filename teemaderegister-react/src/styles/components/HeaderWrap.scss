@@ -3,6 +3,7 @@ $menu-link-hover: rgb(138, 131, 131);
 
 .headerWrap {
   padding: 0;
+  background-color: #404040;
 
   &__wrapper {
     max-width: 980px;
@@ -21,6 +22,7 @@ $menu-link-hover: rgb(138, 131, 131);
       .search {
         float: left;
         width: 60%;
+        margin-top: 10px;
         
         &__input {
           .ant-input-search-icon {

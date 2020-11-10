@@ -54,7 +54,7 @@ class AccountPassword extends React.Component {
     }
   }
 
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     setDocTitle('Reset password')
   }
 
@@ -64,7 +64,7 @@ class AccountPassword extends React.Component {
 
   handleInactiveInput (e) {
     const { value } = e.target
-    const form = this.form
+    const form = this.formRef.current
     this.setState({ confirmDirty: this.state.confirmDirty || !!value })
 
     if (form.getFieldValue('password-confirm') &&
@@ -74,7 +74,7 @@ class AccountPassword extends React.Component {
   }
 
   checkPassword (rule, value, callback) {
-    const form = this.formRef
+    const form = this.formRef.current
     const formInputValue = form.getFieldValue('password')
 
     if (value && value !== formInputValue) {
@@ -84,7 +84,7 @@ class AccountPassword extends React.Component {
   }
 
   checkPasswordConfirm (rule, value, callback) {
-    const form = this.formRef
+    const form = this.formRef.current
     if (value && this.state.confirmDirty) {
       form.validateFields(['password-confirm'], { force: true })
     }

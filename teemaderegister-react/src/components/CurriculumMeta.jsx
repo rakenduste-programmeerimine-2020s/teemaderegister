@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import { PropTypes } from 'prop-types'
 
 import { Avatar, Tooltip } from 'antd'
+import { UserOutlined } from '@ant-design/icons'
 
 import noneBack from '../media/background/none-cur-back.svg'
 import halfBack from '../media/background/half-cur-back.svg'
@@ -67,7 +68,7 @@ class CurriculumMeta extends PureComponent {
               className='curriculumMeta__avatar'
               shape='square'
               size='small'
-              icon='user'
+              icon={<UserOutlined/>}
             />
             <span>{profile.firstName + ' ' + profile.lastName}</span>
           </Tooltip>

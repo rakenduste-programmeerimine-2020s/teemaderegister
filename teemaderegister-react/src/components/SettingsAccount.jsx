@@ -15,9 +15,6 @@ const { Option } = Select
 const { func, shape, bool, string, array } = PropTypes
 
 const propTypes = {
-  form: shape({
-    validateFields: func.isRequired
-  }).isRequired,
   getProfile: func.isRequired,
   initSettings: func.isRequired,
   resetPicture: func.isRequired,

@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"teemaderegister.users"},{"v":{"$numberInt":"2"},"unique":true,"key":{"profile.slug":{"$numberInt":"1"}},"name":"profile.slug_1","ns":"teemaderegister.users","background":true}],"uuid":"53e40f115cd3407080d18f22b77ceee5"}
