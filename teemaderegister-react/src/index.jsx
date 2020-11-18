@@ -46,10 +46,9 @@ import etEE from 'antd/lib/locale-provider/et_EE'
 const { Content, Footer } = Layout
 
 const links = {
-  project: 'https://github.com/romilrobtsenkov/teemaderegister-react',
-  creator: 'https://github.com/romilrobtsenkov',
+  project: 'https://github.com/rakenduste-programmeerimine-2020s/teemaderegister',
   license: 'https://opensource.org/licenses/mit-license.html',
-  contet: 'https://www.tlu.ee'
+  content: 'https://www.tlu.ee'
 }
 
 initAnalytics()
@@ -103,10 +102,9 @@ render(
             </div>
           </Content>
           <Footer className='layout__footer'>
-            <a href={links.project}><GithubOutlined /> Teemaderegister</a>{' · '}
-            Created by <a href={links.creator}>Romil Rõbtšenkov</a><br/>
+            <a href={links.project}><GithubOutlined /> Teemaderegister</a><br/>
             Code licensed under <a href={links.license}>MIT License</a><br/>
-            Content © 2010-{new Date().getFullYear()} <a href={links.contet}>Tallinn University</a>
+            Content © 2010-{new Date().getFullYear()} <a href={links.content}>Tallinn University</a>
           </Footer>
         </Layout>
       </ConfigProvider>
