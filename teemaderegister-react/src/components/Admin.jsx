@@ -38,7 +38,8 @@ class Admin extends React.Component {
       defended: <AdminTopics type='defended' />,
       confs: <AdminConfirmations />,
       supervisors: <AdminUsers type='supervisor' />,
-      students: <AdminUsers type='students' />
+      students: <AdminUsers type='students' />,
+      addNewUser: <AdminUsers type='addNewUser' />
     }
 
     this.defaultPage = 'registered'
@@ -103,6 +104,7 @@ class Admin extends React.Component {
                   <SubMenu key='users' title={<span><UserOutlined />Users</span>}>
                     <Menu.Item key='supervisors'>Supervisors</Menu.Item>
                     <Menu.Item key='students'>Students</Menu.Item>
+                    <Menu.Item key='addNewUser'>Add new user</Menu.Item>
                   </SubMenu>
                 }
               </Menu>
