@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 
 import TableContent from '../components/TableContent'
-import { Tabs, Radio } from 'antd'
+import { Tabs, Radio, Button } from 'antd'
 
 const { func, object, string } = PropTypes
 
@@ -31,6 +31,7 @@ class TabsWrap extends Component {
       return (
         <Tabs.TabPane tab={this.createTabTitle(icon, title, count)} key={key}>
           {this.createSubTabs(subs)}
+          <Button className='tab-load-css'> Lae CSV </Button>
           <TableContent
             curriculum={curriculum}
             handleTableChange={handleTableChange}
@@ -70,27 +71,27 @@ class TabsWrap extends Component {
   createTabTitle (Icon, title, count) {
     return (
       <span>
-        <Icon/>
+        <Icon />
         {title} {count > 0 && '| ' + count}
       </span>
     )
   }
 
   createSubTitle (title, count) {
-    return (
+    return ( 
       <span>
         {title} {count > 0 && '| ' + count}
       </span>
     )
   }
-  tabClicked (e) {
+  tabClicked(e) { 
     // clear filters
     // tab - e
     const { activeTab, tabs, tabUpdated } = this.props
     // tab updated
     if (activeTab === e) { return tabUpdated([activeTab, tabs[activeTab].defaultSub]) }
   }
-  updateTabs (e) {
+  updateTabs(e) {
     // tab - e
     // sub - e.target.value
     const { tabs, activeTab, tabUpdated } = this.props
@@ -126,6 +127,7 @@ class TabsWrap extends Component {
           tableContent,
           tabs
         )}
+
       </Tabs>
     )
   }

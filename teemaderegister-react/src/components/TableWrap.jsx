@@ -141,6 +141,7 @@ class TableWrap extends React.Component {
     }
 
     this.props.getTableContent(query, showLoading || false)
+    console.log(query)
   }
 
   setPageTitle () {

@@ -64,7 +64,7 @@ module.exports.getCurriculumBySlug = async (req, res) => {
       .then(users => countUsers(users)),
     Topic.distinct('supervisors.supervisor', TopicsQuery('defended', extend))
       .then(users => countUsers(users))
-  ]);s
+  ]);
 
   const data = {
     meta: curriculumMeta,
