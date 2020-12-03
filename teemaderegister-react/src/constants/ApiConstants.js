@@ -18,3 +18,5 @@ export const USER_UPDATE_PASSWORD_URL = `${API}/users/password`
 export const USER_PICTURE_UPLOAD_URL = `${API}/users/upload-picture`
 export const USER_PICTURE_RESET_URL = `${API}/users/reset-picture`
 export const ADMIN_ADD_NEW_USER = `${API}/admin/createUser`
+export const TOS_LOAD = `${API}/tos`
+export const TOS_SAVE = `${API}/admin/tos/save`

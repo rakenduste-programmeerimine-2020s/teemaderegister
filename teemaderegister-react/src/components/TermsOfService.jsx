@@ -1,12 +1,17 @@
 import React from 'react'
 import { setDocTitle } from '../utils/Helpers'
+import PropTypes from 'prop-types'
 
-const TermsOfService = () => {
+const TermsOfService = ({ content }) => {
   setDocTitle('Terms of Service')
 
   return (
-    <h2>TBD</h2>
+    <p>{content || 'Sisu puudub'}</p>
   )
+}
+
+TermsOfService.propTypes = {
+  content: PropTypes.string
 }
 
 export default TermsOfService

@@ -107,7 +107,7 @@ render(
             </div>
           </Content>
           <Footer className='layout__footer'>
-            <a href={links.project}><GithubOutlined /> Teemaderegister</a><br/>
+            <a href={links.project}> Teemaderegister</a><br/>
             Code licensed under <a href={links.license}>MIT License</a><br/>
             Content © 2010-{new Date().getFullYear()} <a href={links.content}>Tallinn University</a><br/>
             <Link to={TOS_PATH}>Terms of Service</Link>
