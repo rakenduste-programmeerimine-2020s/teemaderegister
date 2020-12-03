@@ -1,6 +1,7 @@
 import React from 'react'
-import { PropTypes } from 'prop-types'
-import AddNewUserForm from "./addNewUserForm"
+import {PropTypes} from 'prop-types'
+import AddNewUserForm from './addNewUserForm'
+import {Card} from 'antd'
 
 const propTypes = {
   type: PropTypes.string
@@ -18,8 +19,10 @@ const AdminUsers = props => {
       )
     case 'addNewUser':
       return (
-        <AddNewUserForm />
-      )  
+        <Card>
+          <AddNewUserForm/>
+        </Card>
+      )
     default:
       return (<h2>Choose something.</h2>
       )
