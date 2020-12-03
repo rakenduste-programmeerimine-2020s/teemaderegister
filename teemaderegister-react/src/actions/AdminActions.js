@@ -8,7 +8,7 @@ export const initAddNewUser = () => dispatch => dispatch({ type: types.ADMIN_INI
 
 export const adminAddNewUser = creds => dispatch => {
   dispatch({ type: types.LOGIN_START })
-    console.log("Siin")
+  console.log('siin')
   return Api('POST', ADMIN_ADD_NEW_USER, { data: creds })
     .then(data => {
       setToken(data.token)

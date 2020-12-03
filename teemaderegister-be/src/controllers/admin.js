@@ -1,6 +1,7 @@
 const User = require('../models/user')
 const slug = require('slug')
 const crypto = require('crypto')
+const mail = require('./../utils/mail')
 
 module.exports.createUser = async (req, res) => {
   const {firstName, lastName, email, role} = req.body
@@ -9,7 +10,7 @@ module.exports.createUser = async (req, res) => {
   const alreadyUser = await User
     .findOne({'login.email': email})
   if (alreadyUser) throw new Error(`Email ${email} already in use`)
-
+  const passwordResetURL = crypto.randomBytes(20).toString('hex')
   const user = {
     profile: {
       firstName: firstName,
@@ -19,14 +20,28 @@ module.exports.createUser = async (req, res) => {
 
     login: {
       email: email,
-      passwordResetToken: crypto.randomBytes(20).toString('hex'),
+      passwordResetToken: passwordResetURL,
       passwordResetExpires: Date.now() + parseInt(process.env.PASSWORD_RESET_TOKEN_EXPIRES),
       roles: role
     }
   }
 
   const newUser = await new User(user).save()
-  return res.status(201).send({ newUser })
+
+  await mail.sendMail({
+    to: email,
+    subject: `Password create`,
+    template: {
+      name: 'passwordReset',
+      data: { passwordResetURL }
+    }
+  })
+
+  if (newUser) {
+    console.log('Success')
+    return res.status(201).send({newUser})
+  }
+  return res.status(400).send({success: 0})
 }
 module.exports.getSecret = async (req, res) => {
   const {user: {_id}} = req

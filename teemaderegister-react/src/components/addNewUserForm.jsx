@@ -2,10 +2,11 @@ import React from 'react'
 // eslint-disable-next-line standard/object-curly-even-spacing
 import { Button, Form, Input, notification, Select } from 'antd'
 import { adminAddNewUser } from '../actions/AdminActions'
+import { connect } from 'react-redux'
 
 const { Option } = Select
 
-const AddNewUserForm = () => {
+const AddNewUserForm = (props) => {
   const roles = [
     'admin',
     'curriculum-manager',
@@ -15,11 +16,13 @@ const AddNewUserForm = () => {
     'supervisor'
   ]
 
-  function onFinish (values) {
+  async function onFinish (values) {
     // show user loading
-    window.setTimeout(() => {
-      adminAddNewUser(values)
-    }, 1500)
+    window.setTimeout(async () => {
+      const response = await props.adminAddNewUser(values)
+      console.log(response)
+      console.log('done')
+    }, 10)
     notification.success({
       message: 'Creating user was successful!'
     })
@@ -100,4 +103,4 @@ const AddNewUserForm = () => {
   )
 }
 
-export default AddNewUserForm
+export default connect(() => {}, { adminAddNewUser })(AddNewUserForm)
