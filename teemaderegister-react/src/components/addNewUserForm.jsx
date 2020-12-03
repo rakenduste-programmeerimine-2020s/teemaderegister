@@ -1,6 +1,7 @@
 import React from 'react'
 // eslint-disable-next-line standard/object-curly-even-spacing
 import { Button, Form, Input, notification, Select } from 'antd'
+import { adminAddNewUser } from '../actions/AdminActions'
 
 const { Option } = Select
 
@@ -15,7 +16,10 @@ const AddNewUserForm = () => {
   ]
 
   function onFinish (values) {
-    console.log(JSON.stringify(values))
+    // show user loading
+    window.setTimeout(() => {
+      adminAddNewUser(values)
+    }, 1500)
     notification.success({
       message: 'Creating user was successful!'
     })
