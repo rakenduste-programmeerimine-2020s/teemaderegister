@@ -53,7 +53,7 @@ services:
       MAILSERVICE_PASSWORD: c63d598dcf032c9f4f251fae99281c89
       EMAIL_SENDER: teemaderegister@tlu.ee
       EMAIL_SENDER_NAME: Teemaderegister
-      TOPICS_EXPIRE_IN_MONTHS: 12
+      TOPICS_EXPIRE_IN_MONTHS: 72
     command: 'run start-dev'
 
   tr-react:
