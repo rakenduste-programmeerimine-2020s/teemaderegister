@@ -20,7 +20,7 @@ const propTypes = {
 }
 
 class TableContent extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.columnsMap = {
@@ -29,7 +29,9 @@ class TableContent extends React.Component {
     }
   }
 
-  render () {
+
+
+  render() {
     const {
       curriculum,
       handleTableChange,
@@ -94,8 +96,8 @@ class TableContent extends React.Component {
       />
     )
   }
-}
 
+}
 const renderExpandedRow = record => {
   return (
     <span>

@@ -15,8 +15,17 @@ const supervisors = require('./controllers/supervisors')
 const topics = require('./controllers/topics')
 const users = require('./controllers/users')
 const admin = require('./controllers/admin')
+const csv = require('./controllers/generateCSV')
+const bodyParser = require('body-parser')
 
-router.post('/auth/local/login', validate.localLogin, asyncMiddleware(auth.localLogin))
+
+router.post('/csv/', (ctx) => {
+    //console.log('node:  ' , ctx.body)
+    const {status, course, level} = ctx.body
+   csv.getTopicData(status, course, level)
+})
+
+router.post('/auth/local/login', validate.localLogin, asyncMiddleware(auth.localLogin)) 
 router.post('/auth/local/signup', validate.localSignup, asyncMiddleware(auth.localSignup))
 router.post('/auth/logout', jwtEnsure, asyncMiddleware(auth.logout))
 router.post('/auth/forgot', validate.passwordResetEmail, asyncMiddleware(auth.forgotPassword))

@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
-
+import Api from '../utils/Api'
 import TableContent from '../components/TableContent'
 import { Tabs, Radio, Button } from 'antd'
+//import { getData } from '../actions/CsvActions'
+import DownloadCSV from './DownloadCSV'
+
 
 const { func, object, string } = PropTypes
 
@@ -18,20 +21,20 @@ const propTypes = {
 }
 
 class TabsWrap extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.updateTabs = this.updateTabs.bind(this)
     this.tabClicked = this.tabClicked.bind(this)
   }
 
-  createTabPanes (curriculum, handleTableChange, supervisor, tableContent, tabs) {
+  createTabPanes(curriculum, handleTableChange, supervisor, tableContent, tabs) {
     return Object.keys(tabs).map(key => {
       const { title, icon, count, subs } = tabs[key]
       return (
         <Tabs.TabPane tab={this.createTabTitle(icon, title, count)} key={key}>
           {this.createSubTabs(subs)}
-          <Button className='tab-load-css'> Lae CSV </Button>
+          <DownloadCSV {...this.props} />
           <TableContent
             curriculum={curriculum}
             handleTableChange={handleTableChange}
@@ -44,7 +47,8 @@ class TabsWrap extends Component {
     })
   }
 
-  createSubTabs (subs) {
+
+  createSubTabs(subs) {
     const { activeSub, curriculum } = this.props
 
     subs = Object.keys(subs).map(key => {
@@ -68,7 +72,7 @@ class TabsWrap extends Component {
     )
   }
 
-  createTabTitle (Icon, title, count) {
+  createTabTitle(Icon, title, count) {
     return (
       <span>
         <Icon />
@@ -77,14 +81,14 @@ class TabsWrap extends Component {
     )
   }
 
-  createSubTitle (title, count) {
-    return ( 
+  createSubTitle(title, count) {
+    return (
       <span>
         {title} {count > 0 && '| ' + count}
       </span>
     )
   }
-  tabClicked(e) { 
+  tabClicked(e) {
     // clear filters
     // tab - e
     const { activeTab, tabs, tabUpdated } = this.props
@@ -103,7 +107,22 @@ class TabsWrap extends Component {
     return tabUpdated([newTab, newSub])
   }
 
-  render () {
+  downloadCSV() {
+    console.log('clicked')
+    /*     return Api('GET', TOPICS_URL)
+          .then(console.log(data))
+          .then(data => dispatch({
+            type: types.CURRICULUMS_LOADED,
+            curriculums: data.curriculums
+          }))
+          .catch(err => {
+            console.log(err)
+          }) */
+  }
+
+
+
+  render() {
     const {
       curriculum,
       handleTableChange,
@@ -120,6 +139,7 @@ class TabsWrap extends Component {
         defaultActiveKey={activeTab}
         onTabClick={this.tabClicked}
       >
+
         {this.createTabPanes(
           curriculum,
           handleTableChange,
