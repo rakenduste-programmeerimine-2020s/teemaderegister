@@ -17,12 +17,37 @@ const users = require('./controllers/users')
 const admin = require('./controllers/admin')
 const csv = require('./controllers/generateCSV')
 const bodyParser = require('body-parser')
+const Topic = require('./models/topic')
 
-
-router.post('/csv/', (ctx) => {
+/* router.post('/csv/', (ctx) => {
     //console.log('node:  ' , ctx.body)
     const {status, course, level} = ctx.body
    csv.getTopicData(status, course, level)
+}) */
+
+router.get('/csv/', (req, res) => {
+    console.log('NODE:  ',req.query)
+    const { status, course, level } = req.query
+    if(status == 'registered'){
+        Topic.find({
+            'curriculums': [course], 
+            'defended': {$exists: false}},
+            (err, docs) => {
+            if (!err) { 
+                //console.log(docs);
+                return docs
+            } else {
+                throw err;  
+            }
+        }).exec((err, data) => {
+            res.send(data)
+            console.log('DATA: ',data)
+        })
+        //const jsonData = csv.getTopicData(req.query)
+        //console.log('KONSOOOL123:  ' ,(jsonData))
+        //res.send(jsonData)
+        
+    }
 })
 
 router.post('/auth/local/login', validate.localLogin, asyncMiddleware(auth.localLogin)) 
