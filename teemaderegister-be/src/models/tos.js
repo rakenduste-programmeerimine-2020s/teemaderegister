@@ -7,6 +7,6 @@ const termsOfServiceSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
-const termsOfService = mongoose.model('TermsOfService', termsOfServiceSchema)
+const TermsOfService = mongoose.model('TermsOfService', termsOfServiceSchema)
 
-module.exports = termsOfService
+module.exports = TermsOfService
