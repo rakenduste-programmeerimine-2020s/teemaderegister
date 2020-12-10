@@ -11,6 +11,7 @@ module.exports.createUser = async (req, res) => {
     .findOne({'login.email': email})
   if (alreadyUser) throw new Error(`Email ${email} already in use`)
   const passwordResetURL = crypto.randomBytes(20).toString('hex')
+  console.log(`[+] Create new password URL: http://localhost:8080/account/password/${passwordResetURL}`)
   const user = {
     profile: {
       firstName: firstName,
@@ -32,7 +33,7 @@ module.exports.createUser = async (req, res) => {
     to: email,
     subject: `Password create`,
     template: {
-      name: 'passwordReset',
+      name: 'createPassword',
       data: { passwordResetURL }
     }
   })

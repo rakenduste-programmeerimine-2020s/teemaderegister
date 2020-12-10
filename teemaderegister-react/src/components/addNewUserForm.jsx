@@ -21,7 +21,6 @@ const AddNewUserForm = (props) => {
     window.setTimeout(async () => {
       const response = await props.adminAddNewUser(values)
       console.log(response)
-      console.log('done')
     }, 10)
     notification.success({
       message: 'Creating user was successful!'
