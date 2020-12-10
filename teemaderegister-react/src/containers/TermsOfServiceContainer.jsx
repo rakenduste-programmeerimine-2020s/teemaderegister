@@ -1,13 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getTos, saveTos } from '../actions/TermsOfServiceActions'
+import { getTos } from '../actions/TermsOfServiceActions'
 
 import TermsOfService from '../components/TermsOfService'
 
 const TermsOfServiceContainer = props => <TermsOfService {...props} />
 
 const mapStateToProps = state => ({
-  content: state.content
+  content: state.tos.content
 })
 
-export default connect(mapStateToProps, { getTos, saveTos })(TermsOfServiceContainer)
+export default connect(mapStateToProps, { getTos })(TermsOfServiceContainer)

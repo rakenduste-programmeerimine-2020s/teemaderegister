@@ -7,7 +7,7 @@ import AdminTos from '../components/AdminTos'
 const AdminTosContainer = props => <AdminTos {...props} />
 
 const mapStateToProps = state => ({
-  content: state.content
+  content: state.tos.content
 })
 
 export default connect(mapStateToProps, { getTos, saveTos })(AdminTosContainer)

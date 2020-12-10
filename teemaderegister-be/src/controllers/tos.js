@@ -1,16 +1,24 @@
 const TermsOfService = require('../models/tos')
 
 module.exports.getTos = async (req, res) => {
-  const tos = await TermsOfService.findById('1')
+  const tos = await TermsOfService.find({})
 
-  return res.json({ tos })
+  const doc = tos[0]
+
+  return res.json({ doc })
 }
 
 module.exports.saveTos = async (req, res) => {
-  const { data } = req.body
-  // Miks see errorit ei viska? Kas seda koodi ei jooksutata?
-  console.log(req.body.test.w.deaw)
-  await new TermsOfService({ _id: '1', content: data }).save()
+  const { content } = req.body
+
+  const tos = await TermsOfService.find({})
+
+  if (tos.length === 0) {
+    await new TermsOfService({ content }).save()
+  } else {
+    tos[0].content = content
+    await tos[0].save()
+  }
 
   return res.json({ message: 'Terms of Service were successfully changed' })
 }

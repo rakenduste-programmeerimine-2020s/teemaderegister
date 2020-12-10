@@ -1,17 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { setDocTitle } from '../utils/Helpers'
 import PropTypes from 'prop-types'
 
-const TermsOfService = ({ content }) => {
+const TermsOfService = props => {
   setDocTitle('Terms of Service')
 
+  useEffect(() => {
+    props.getTos()
+  }, [])
+
   return (
-    <p>{content || 'Sisu puudub'}</p>
+    <p>{props.content || 'Sisu puudub'}</p>
   )
 }
 
 TermsOfService.propTypes = {
-  content: PropTypes.string
+  content: PropTypes.string,
+  getTos: PropTypes.func.isRequired
 }
 
 export default TermsOfService

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { Input, Button, Typography } from 'antd'
+import { Input, Button, Typography, Form } from 'antd'
 
 const { TextArea } = Input
 const { Text } = Typography
@@ -14,8 +14,8 @@ const AdminTos = props => {
   })
 
   const flipEditable = () => setEditable(!editable)
-  const save = text => {
-    props.saveTos({ content: 'blabla' })
+  const onFinish = values => {
+    props.saveTos({ content: values.textInput })
     flipEditable()
   }
 
@@ -33,11 +33,16 @@ const AdminTos = props => {
         </React.Fragment>
       }
       {editable &&
-        <React.Fragment>
-          <TextArea size={'large'} defaultValue={content} />
-          <Button type='primary' onClick={save}>{'Save'}</Button>
-          <Button type='danger' onClick={flipEditable}></Button>
-        </React.Fragment>
+        <Form onFinish={onFinish}>
+          <Form.Item name={'textInput'} label={'Terms of Service'}>
+            <TextArea size={'large'} defaultValue={content} />
+          </Form.Item>
+          <Form.Item>
+            <Button type='primary' htmlType='submit'>{'Save'}</Button>
+          </Form.Item>
+
+          <Button type='danger' onClick={flipEditable}>Cancel</Button>
+        </Form>
       }
     </React.Fragment>
   )

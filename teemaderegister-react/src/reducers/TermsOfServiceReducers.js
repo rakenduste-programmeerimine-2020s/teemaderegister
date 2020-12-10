@@ -12,11 +12,9 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         content
       }
-
-    case types.TOS_SAVED: {
+    default:
       return {
         ...state
       }
-    }
   }
 }
