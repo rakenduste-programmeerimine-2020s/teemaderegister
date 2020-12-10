@@ -6,8 +6,8 @@ import { TOS_LOAD, TOS_SAVE } from '../constants/ApiConstants'
 export const getTos = () => dispatch => {
   return Api('GET', TOS_LOAD)
     .then(response => {
-      const { content } = response.doc
-      dispatch({ type: types.TOS_LOADED, content })
+      const { content, updatedAt } = response.doc
+      dispatch({ type: types.TOS_LOADED, content, updatedAt })
     })
     .catch(err => {
       console.log(err)

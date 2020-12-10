@@ -7,7 +7,8 @@ import TermsOfService from '../components/TermsOfService'
 const TermsOfServiceContainer = props => <TermsOfService {...props} />
 
 const mapStateToProps = state => ({
-  content: state.tos.content
+  content: state.tos.content,
+  contentLastUpdated: state.tos.contentLastUpdated
 })
 
 export default connect(mapStateToProps, { getTos })(TermsOfServiceContainer)
