@@ -44,7 +44,7 @@ router.put('/users/reset-picture', jwtEnsure, asyncMiddleware(users.resetPicture
 
 // SAMPLE
 router.get('/admin/', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(admin.getSecret))
-router.put('/admin/createUser', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(admin.createUser))
+router.post('/admin/createUser', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(admin.createUser))
 router.post('/test', asyncMiddleware(admin.createUser))
 
 module.exports = router

@@ -27,22 +27,25 @@ module.exports.createUser = async (req, res) => {
   const passwordCreateURL =
     `${process.env.SITE_URL}/account/password/${user.login.passwordResetToken}?is-new=1`
   console.log(passwordCreateURL)
-  const newUser = await new User(user).save()
 
-  await mail.sendMail({
-    to: email,
-    subject: `Password create`,
-    template: {
-      name: 'createPassword',
-      data: { passwordCreateURL }
-    }
-  })
-
-  if (newUser) {
-    console.log('Success')
-    return res.status(201).send({newUser})
+  try {
+    await mail.sendMail({
+      to: email,
+      subject: `Password create`,
+      template: {
+        name: 'createPassword',
+        data: { passwordCreateURL }
+      }
+    })
+  } catch (e) {
+    throw new Error(e)
   }
-  return res.status(400).send({success: 0})
+
+  const newUser = await new User(user).save()
+  if (newUser) {
+    return res.status(201).json({ message: 'Created successfully', success: 1 })
+  }
+  return res.status(400).json({ message: 'Created unsuccessfully', success: 0 })
 }
 module.exports.getSecret = async (req, res) => {
   const {user: {_id}} = req

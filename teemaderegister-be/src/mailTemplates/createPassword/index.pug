@@ -1,5 +1,5 @@
 mixin button(buttonLink, buttonText)
-    a(class='reset-btn' href=buttonLink)= buttonText
+  a(class='reset-btn' href=buttonLink)= buttonText
 
 html
   head
@@ -12,6 +12,6 @@ html
       h1 Create password for Teemaderegister
     container
       p Press button below to create your password:
-      +button(passwordResetURL, 'Create password')
+      +button(passwordCreateURL, 'Create password')
       p If the button is not working please copy the create password URL below and paste into your browser
-      p #{passwordResetURL}
+      p #{passwordCreateURL}
