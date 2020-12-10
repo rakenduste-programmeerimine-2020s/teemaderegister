@@ -25,7 +25,7 @@ module.exports.createUser = async (req, res) => {
     }
   }
   const passwordCreateURL =
-    `${process.env.SITE_URL}/account/password/${user.login.passwordResetToken}?is_new=1`
+    `${process.env.SITE_URL}/account/password/${user.login.passwordResetToken}?is-new=1`
   console.log(passwordCreateURL)
   const newUser = await new User(user).save()
 
