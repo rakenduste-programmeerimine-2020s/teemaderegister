@@ -1,7 +1,7 @@
 import React from 'react'
 // eslint-disable-next-line standard/object-curly-even-spacing
 import {Button, Form, Input, notification, Select} from 'antd'
-import {adminAddNewUser} from '../actions/AdminActions'
+import {adminAddNewUser, initAddNewUser} from '../actions/AdminActions'
 import {connect} from 'react-redux'
 
 const {Option} = Select
@@ -18,6 +18,7 @@ const AddNewUserForm = (props) => {
 
   const onFinish = async (values) => {
     // show user loading
+    await props.initAddNewUser()
     const response = await props.adminAddNewUser(values)
     console.log(response)
     const {message, success} = response
@@ -104,4 +105,4 @@ const AddNewUserForm = (props) => {
 }
 
 export default connect(() => {
-}, {adminAddNewUser})(AddNewUserForm)
+}, {initAddNewUser, adminAddNewUser})(AddNewUserForm)

@@ -27,6 +27,7 @@ module.exports.createUser = async (req, res) => {
   const passwordCreateURL =
     `${process.env.SITE_URL}/account/password/${user.login.passwordResetToken}?is-new=1`
   console.log(passwordCreateURL)
+  const newUser = await new User(user).save()
 
   try {
     await mail.sendMail({
@@ -41,9 +42,9 @@ module.exports.createUser = async (req, res) => {
     throw new Error(e)
   }
 
-  const newUser = await new User(user).save()
   if (newUser) {
-    return res.status(201).json({ message: 'Created successfully', success: 1 })
+    console.log('Success')
+    return res.status(201).send({newUser})
   }
   return res.status(400).json({ message: 'Created unsuccessfully', success: 0 })
 }
