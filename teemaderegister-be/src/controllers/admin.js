@@ -44,7 +44,7 @@ module.exports.createUser = async (req, res) => {
 
   if (newUser) {
     console.log('Success')
-    return res.status(201).send({newUser})
+    return res.status(201).json({ message: 'Created successfully', success: 1 })
   }
   return res.status(400).json({ message: 'Created unsuccessfully', success: 0 })
 }

@@ -17,7 +17,7 @@ const AdminUsers = props => {
       return (
         <h2>Registered students</h2>
       )
-    case 'addNewUser':
+    case 'add-new-user':
       return (
         <Card>
           <AddNewUserForm/>
