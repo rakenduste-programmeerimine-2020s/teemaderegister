@@ -39,7 +39,7 @@ class Admin extends React.Component {
       confs: <AdminConfirmations/>,
       supervisors: <AdminUsers type='supervisor'/>,
       students: <AdminUsers type='students'/>,
-      addNewUser: <AdminUsers type='addNewUser'/>
+      addNewUser: <AdminUsers type='add-new-user'/>
     }
 
     this.defaultPage = 'registered'

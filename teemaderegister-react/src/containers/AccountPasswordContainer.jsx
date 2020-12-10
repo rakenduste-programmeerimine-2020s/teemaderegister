@@ -12,6 +12,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch, props) => {
   const { token } = props.match.params
+  console.log(token)
   return bindActionCreators(
     {
       resetPasswordToken: () => resetPasswordToken(token),

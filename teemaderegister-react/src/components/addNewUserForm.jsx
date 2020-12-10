@@ -1,12 +1,14 @@
-import React from 'react'
+import React, {useState} from 'react'
 // eslint-disable-next-line standard/object-curly-even-spacing
-import { Button, Form, Input, notification, Select } from 'antd'
-import { adminAddNewUser } from '../actions/AdminActions'
-import { connect } from 'react-redux'
+import {Button, Form, Input, notification, Select} from 'antd'
+import {adminAddNewUser, initAddNewUser} from '../actions/AdminActions'
+import {connect} from 'react-redux'
 
-const { Option } = Select
+const {Option} = Select
 
 const AddNewUserForm = (props) => {
+  const [form] = Form.useForm()
+  const [isLoading, setIsLoading] = useState(false)
   const roles = [
     'admin',
     'curriculum-manager',
@@ -16,52 +18,52 @@ const AddNewUserForm = (props) => {
     'supervisor'
   ]
 
-  async function onFinish (values) {
-    // show user loading
-    window.setTimeout(async () => {
-      const response = await props.adminAddNewUser(values)
-      console.log(response)
-      console.log('done')
-    }, 10)
-    notification.success({
-      message: 'Creating user was successful!'
-    })
+  const onFinish = async (values) => {
+    setIsLoading(true)
+    // eslint-disable-next-line react/prop-types
+    await props.initAddNewUser()
+    // eslint-disable-next-line react/prop-types
+    const response = await props.adminAddNewUser(values)
+    const {message, success} = response
+
+    if (success === 1) {
+      notification.success({message: message})
+      form.resetFields()
+    } else {
+      notification.error({message: message})
+    }
+    setIsLoading(false)
   }
 
-  // eslint-disable-next-line handle-callback-err
-  function onFinishFailed (error) {
-    console.log(error)
+  function onFinishFailed () {
     notification.error({
       message: 'Please input values!'
     })
   }
 
-  function handleChange (values) {
-    console.log(`selected roles: ${values}`)
-  }
-
   return (
     <Form
+      form={form}
       name={'addNewUserForm'}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
-      labelCol={{ span: 3 }}
-      wrapperCol={{ span: 14 }}
+      labelCol={{span: 3}}
+      wrapperCol={{span: 14}}
     >
-      <Form.Item label='Name' style={{ marginBottom: 0 }}>
+      <Form.Item label='Name' style={{marginBottom: 0}}>
         <Input.Group compact>
           <Form.Item
             name={'firstName'}
-            rules={[{ required: true, message: 'Please input first name!' }]}
+            rules={[{required: true, message: 'Please input first name!'}]}
           >
-            <Input placeholder={'First Name'} />
+            <Input placeholder={'First Name'}/>
           </Form.Item>
 
           <Form.Item
             name={'lastName'}
-            rules={[{ required: true, message: 'Please input last name!' }]}
+            rules={[{required: true, message: 'Please input last name!'}]}
           >
-            <Input placeholder={'Last Name'} />
+            <Input placeholder={'Last Name'}/>
           </Form.Item>
         </Input.Group>
       </Form.Item>
@@ -70,23 +72,22 @@ const AddNewUserForm = (props) => {
         label={'Email'}
         name={'email'}
         rules={[
-          { required: true, message: 'Please input email!', type: 'email' }
+          {required: true, message: 'Please input email!', type: 'email'}
         ]}
       >
-        <Input />
+        <Input/>
       </Form.Item>
 
       <Form.Item
         label={'Role'}
         name={'role'}
-        rules={[{ required: true, message: 'Please input role!' }]}
+        rules={[{required: true, message: 'Please input role!'}]}
       >
         <Select
           mode='multiple'
           allowClear
-          style={{ width: '100%' }}
+          style={{width: '100%'}}
           placeholder='Please select new user roles'
-          onChange={handleChange}
         >
           {roles.map((value) => {
             return <Option key={value}>{value}</Option>
@@ -95,12 +96,13 @@ const AddNewUserForm = (props) => {
       </Form.Item>
 
       <Form.Item name={'submit'}>
-        <Button type='primary' htmlType='submit'>
-          Submit
+        <Button type='primary' htmlType='submit' loading={isLoading}>
+            Submit
         </Button>
       </Form.Item>
     </Form>
   )
 }
 
-export default connect(() => {}, { adminAddNewUser })(AddNewUserForm)
+export default connect(() => {
+}, {initAddNewUser, adminAddNewUser})(AddNewUserForm)

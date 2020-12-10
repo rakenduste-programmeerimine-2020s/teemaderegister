@@ -4,17 +4,20 @@ import { setToken } from '../utils/jwt'
 
 import { ADMIN_ADD_NEW_USER } from '../constants/ApiConstants'
 
-export const initAddNewUser = () => dispatch => dispatch({ type: types.ADMIN_INIT_ADD_NEW_USER })
+export const initAddNewUser = () => dispatch => dispatch({ type: types.CREATE_USER_INIT })
 
-export const adminAddNewUser = creds => dispatch => {
-  dispatch({ type: types.LOGIN_START })
-  console.log('siin')
-  return Api('POST', ADMIN_ADD_NEW_USER, { data: creds })
-    .then(data => {
-      setToken(data.token)
-      dispatch({ type: types.LOGIN_LOADED })
-    }).catch(err => {
-      const error = err.data
-      dispatch({ type: types.LOGIN_LOADED, error })
-    })
+export const adminAddNewUser = userData => {
+  return dispatch => {
+    dispatch({type: types.CREATE_USER_START})
+    return Api('POST', ADMIN_ADD_NEW_USER, {data: userData})
+      .then(data => {
+        setToken(data.token)
+        dispatch({type: types.CREATE_USER_LOADED})
+        return data
+      }).catch(err => {
+        const error = err.data
+        dispatch({type: types.CREATE_USER_LOADED, error})
+        return error
+      })
+  }
 }
