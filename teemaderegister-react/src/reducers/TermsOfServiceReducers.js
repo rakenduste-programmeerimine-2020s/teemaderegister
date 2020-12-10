@@ -8,7 +8,6 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case types.TOS_LOADED:
-      console.log({ c: action.content, u: action.updatedAt })
       const { content, updatedAt } = action
       return {
         ...state,

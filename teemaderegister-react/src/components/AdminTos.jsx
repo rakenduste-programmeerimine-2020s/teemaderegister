@@ -1,50 +1,59 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { Input, Button, Typography, Form } from 'antd'
+import { Input, Button, Typography, Form, Layout, Space } from 'antd'
 
 const { TextArea } = Input
-const { Text } = Typography
+const { Title, Paragraph } = Typography
+
+const { Content } = Layout
 
 const AdminTos = props => {
-  const content = props.content
   const [editable, setEditable] = useState(false)
+  const [content, setContent] = useState(props.content)
 
   useEffect(() => {
     props.getTos()
-  })
+  }, [])
 
   const flipEditable = () => setEditable(!editable)
   const onFinish = values => {
+    setContent(values.textInput)
     props.saveTos({ content: values.textInput })
     flipEditable()
   }
 
   return (
-    <React.Fragment>
+    <Layout className='layout termsOfService width--public-page'>
+      <Space direction='vertical' align='center'>
+        <Title>{'Teemaderegister Terms of Service'}</Title>
+      </Space>
       {!editable &&
-        <React.Fragment>
-          <Text>{content}</Text>
+        <Content>
+          <Paragraph>{content}</Paragraph>
           <Button
             type='primary'
             onClick={flipEditable}
           >
             {'Edit'}
           </Button>
-        </React.Fragment>
+        </Content>
       }
       {editable &&
         <Form onFinish={onFinish}>
-          <Form.Item name={'textInput'} label={'Terms of Service'}>
-            <TextArea size={'large'} defaultValue={content} />
+          <Form.Item name={'textInput'}>
+            <TextArea size={'large'} defaultValue={content} autoSize={true} />
           </Form.Item>
-          <Form.Item>
-            <Button type='primary' htmlType='submit'>{'Save'}</Button>
-          </Form.Item>
-
-          <Button type='danger' onClick={flipEditable}>Cancel</Button>
+          <Space>
+            <Form.Item>
+              <Button type='primary' htmlType='submit'>{'Save'}</Button>
+            </Form.Item>
+            <Form.Item>
+              <Button type='danger' htmlType='reset' onClick={flipEditable}>Cancel</Button>
+            </Form.Item>
+          </Space>
         </Form>
       }
-    </React.Fragment>
+    </Layout>
   )
 }
 

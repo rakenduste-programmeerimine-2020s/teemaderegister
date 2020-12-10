@@ -1,6 +1,11 @@
 import React, { useEffect } from 'react'
 import { setDocTitle } from '../utils/Helpers'
 import PropTypes from 'prop-types'
+import { Layout, Typography, Space } from 'antd'
+
+const { Title, Paragraph } = Typography
+
+const { Content } = Layout
 
 const formatter = new Intl.DateTimeFormat('et-EE', {
   year: 'numeric',
@@ -17,11 +22,18 @@ const TermsOfService = props => {
   }, [])
 
   return (
-    <React.Fragment>
-      <h3>{formattedTime}</h3>
-      <p>{props.content || 'Sisu puudub'}</p>
-    </React.Fragment>
+    <Layout className='layout termsOfService width--public-page'>
+      <Space direction='vertical' align='center'>
+        <Title>{'Teemaderegister Terms of Service'}</Title>
+      </Space>
+      <Content>
+        <Space direction='vertical' align='start'>
+          <Title level={5}>{'Last updated at ' + formattedTime}</Title>
+          <Paragraph>{props.content || 'Sisu puudub'}</Paragraph>
+        </Space>
+      </Content>
 
+    </Layout>
   )
 }
 
