@@ -39,7 +39,6 @@ class AccountPassword extends React.Component {
     this.formRef = React.createRef()
     let uri = window.location.search.substring(1)
     let params = new URLSearchParams(uri)
-    console.log(params.get('is-new'))
     this.is_new = !!params.get('is-new')
   }
 

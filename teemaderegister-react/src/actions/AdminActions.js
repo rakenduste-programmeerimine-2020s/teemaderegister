@@ -16,7 +16,7 @@ export const adminAddNewUser = userData => {
         return data
       }).catch(err => {
         const error = err.data
-        dispatch({type: types.LOGIN_LOADED, error})
+        dispatch({type: types.CREATE_USER_LOADED, error})
         return error
       })
   }

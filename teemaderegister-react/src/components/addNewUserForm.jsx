@@ -8,7 +8,7 @@ const {Option} = Select
 
 const AddNewUserForm = (props) => {
   const [form] = Form.useForm()
-  const [isLoading, setisLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const roles = [
     'admin',
     'curriculum-manager',
@@ -19,33 +19,26 @@ const AddNewUserForm = (props) => {
   ]
 
   const onFinish = async (values) => {
-    // show user loading
-    setisLoading(true)
+    setIsLoading(true)
     // eslint-disable-next-line react/prop-types
     await props.initAddNewUser()
     // eslint-disable-next-line react/prop-types
     const response = await props.adminAddNewUser(values)
-    console.log(response)
     const {message, success} = response
+
     if (success === 1) {
       notification.success({message: message})
       form.resetFields()
     } else {
       notification.error({message: message})
     }
-    setisLoading(false)
+    setIsLoading(false)
   }
 
-  // eslint-disable-next-line handle-callback-err
-  function onFinishFailed (error) {
-    console.log(error)
+  function onFinishFailed () {
     notification.error({
       message: 'Please input values!'
     })
-  }
-
-  function handleChange (values) {
-    console.log(`selected roles: ${values}`)
   }
 
   return (
@@ -95,7 +88,6 @@ const AddNewUserForm = (props) => {
           allowClear
           style={{width: '100%'}}
           placeholder='Please select new user roles'
-          onChange={handleChange}
         >
           {roles.map((value) => {
             return <Option key={value}>{value}</Option>

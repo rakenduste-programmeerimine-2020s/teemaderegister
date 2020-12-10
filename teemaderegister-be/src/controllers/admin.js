@@ -7,9 +7,11 @@ module.exports.createUser = async (req, res) => {
   const {firstName, lastName, email, role} = req.body
   const slugs = `${slug(firstName)}-${slug(lastName)}`
 
-  const alreadyUser = await User
-    .findOne({'login.email': email})
-  if (alreadyUser) throw new Error(`Email ${email} already in use`)
+  const alreadyUser = await User.findOne({'login.email': email})
+  if (alreadyUser) {
+    return res.status(406).json({message: 'Email already in use!', success: 0})
+  }
+
   const user = {
     profile: {
       firstName: firstName,
@@ -24,9 +26,7 @@ module.exports.createUser = async (req, res) => {
       roles: role
     }
   }
-  const passwordCreateURL =
-    `${process.env.SITE_URL}/account/password/${user.login.passwordResetToken}?is-new=1`
-  console.log(passwordCreateURL)
+  const passwordCreateURL = `${process.env.SITE_URL}/account/password/${user.login.passwordResetToken}?is-new=1`
   const newUser = await new User(user).save()
 
   try {
@@ -35,18 +35,18 @@ module.exports.createUser = async (req, res) => {
       subject: `Password create`,
       template: {
         name: 'createPassword',
-        data: { passwordCreateURL }
+        data: {passwordCreateURL}
       }
     })
   } catch (e) {
-    throw new Error(e)
+    console.log(e)
+    return res.status(503).json({message: 'Email sent error!', success: 0})
   }
 
-  if (newUser) {
-    console.log('Success')
-    return res.status(201).json({ message: 'Created successfully', success: 1 })
+  if (!newUser) {
+    return res.status(400).json({message: 'Created unsuccessfully!', success: 0})
   }
-  return res.status(400).json({ message: 'Created unsuccessfully', success: 0 })
+  return res.status(201).json({message: 'Created successfully!', success: 1})
 }
 module.exports.getSecret = async (req, res) => {
   const {user: {_id}} = req
