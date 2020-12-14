@@ -1,26 +1,20 @@
-import React from 'react'
-import { PropTypes } from 'prop-types'
+import React from "react";
+import { PropTypes } from "prop-types";
+import ViewAllUsers from "./ViewAllUsers";
 
 const propTypes = {
-  type: PropTypes.string
-}
+  type: PropTypes.string,
+};
 
-const AdminUsers = props => {
+const AdminUsers = (props) => {
   switch (props.type) {
-    case 'supervisor':
-      return (
-        <h2>Registered supervisors</h2>
-      )
-    case 'students':
-      return (
-        <h2>Registered students</h2>
-      )
+    case "supervisor":
+      return <ViewAllUsers />;
     default:
-      return (<h2>Choose something.</h2>
-      )
+      return <h2>Choose something.</h2>;
   }
-}
+};
 
-AdminUsers.propTypes = propTypes
+AdminUsers.propTypes = propTypes;
 
-export default AdminUsers
+export default AdminUsers;
