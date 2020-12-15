@@ -1,8 +1,9 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 // eslint-disable-next-line standard/object-curly-even-spacing
 import {Button, Form, Input, notification, Select} from 'antd'
-import {adminAddNewUser, initAddNewUser} from '../actions/AdminActions'
+import {adminAddNewUser} from '../actions/AdminActions'
 import {connect} from 'react-redux'
+import { setDocTitle } from '../utils/Helpers'
 
 const {Option} = Select
 
@@ -17,11 +18,10 @@ const AddNewUserForm = (props) => {
     'study-assistant',
     'supervisor'
   ]
+  setDocTitle('Add new user')
 
   const onFinish = async (values) => {
     setIsLoading(true)
-    // eslint-disable-next-line react/prop-types
-    await props.initAddNewUser()
     // eslint-disable-next-line react/prop-types
     const response = await props.adminAddNewUser(values)
     const {message, success} = response
@@ -44,7 +44,7 @@ const AddNewUserForm = (props) => {
   return (
     <Form
       form={form}
-      name={'addNewUserForm'}
+      name={'AddNewUserForm'}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       labelCol={{span: 3}}
@@ -72,7 +72,7 @@ const AddNewUserForm = (props) => {
         label={'Email'}
         name={'email'}
         rules={[
-          {required: true, message: 'Please input email!', type: 'email'}
+          {required: true, message: 'Please enter correct email!', type: 'email'}
         ]}
       >
         <Input/>
@@ -105,4 +105,4 @@ const AddNewUserForm = (props) => {
 }
 
 export default connect(() => {
-}, {initAddNewUser, adminAddNewUser})(AddNewUserForm)
+}, {adminAddNewUser})(AddNewUserForm)

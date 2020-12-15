@@ -58,8 +58,8 @@ class AccountPassword extends React.Component {
   }
 
   UNSAFE_componentWillMount () {
+    if (this.is_new) return setDocTitle('Create password')
     setDocTitle('Reset password')
-    if (this.is_new) setDocTitle('Create password')
   }
 
   componentDidMount () {

@@ -1,6 +1,6 @@
 import React from 'react'
 import {PropTypes} from 'prop-types'
-import AddNewUserForm from './addNewUserForm'
+import AddNewUserForm from './AddNewUserForm'
 import {Card} from 'antd'
 
 const propTypes = {
