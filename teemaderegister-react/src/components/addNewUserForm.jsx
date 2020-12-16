@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react'
 import {Button, Form, Input, notification, Select} from 'antd'
 import {adminAddNewUser} from '../actions/AdminActions'
 import {connect} from 'react-redux'
-import { setDocTitle } from '../utils/Helpers'
+import {setDocTitle} from '../utils/Helpers'
 
 const {Option} = Select
 
@@ -18,7 +18,10 @@ const AddNewUserForm = (props) => {
     'study-assistant',
     'supervisor'
   ]
-  setDocTitle('Add new user')
+
+  useEffect(() => {
+    setDocTitle('Add new user')
+  }, [])
 
   const onFinish = async (values) => {
     setIsLoading(true)
