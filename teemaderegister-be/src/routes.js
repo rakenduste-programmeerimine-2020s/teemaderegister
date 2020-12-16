@@ -45,7 +45,8 @@ router.get('/csv/', (req, res) => {
                 throw err;  
             }
         }).sort({registered: 'desc'})
-          .populate('supervisors.supervisor', '_id profile')
+          .populate('supervisors.supervisor',  '_id profile.firstName profile.lastName')
+          .select('title author registered ')
           .exec((err, data) => {
             res.send(JSON.stringify(data))
             //console.log('DATA: ',data)        
@@ -66,6 +67,7 @@ router.get('/csv/', (req, res) => {
                 throw err;  
             }
         }).sort({defended: 'desc'})
+          .populate('supervisors.supervisor', '_id profile')
           .exec((err, data) => {
             res.send(JSON.stringify(data))
             console.log('DATA: ',data)        
