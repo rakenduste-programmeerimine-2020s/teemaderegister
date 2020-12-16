@@ -1,19 +1,19 @@
-const Promise = require("bluebird");
-const Jimp = require("jimp");
-const slug = require("slug");
-const fs = require("fs");
-const { matchedData } = require("express-validator/filter");
+const Promise = require('bluebird')
+const Jimp = require('jimp')
+const slug = require('slug')
+const fs = require('fs')
+const { matchedData } = require('express-validator/filter')
 
-const User = require("../models/user");
-const log = require("../utils/logger");
-const { signToken, blacklistToken } = require("../utils/jwt");
-const { Error, NotAuthorizedError } = require("../utils/errors");
+const User = require('../models/user')
+const log = require('../utils/logger')
+const { signToken, blacklistToken } = require('../utils/jwt')
+const { Error, NotAuthorizedError } = require('../utils/errors')
 
 module.exports.getUser = async (req, res) => {
   // Check if user from token exists
-  const user = await User.findById(req.user._id);
+  const user = await User.findById(req.user._id)
 
-  if (!user) throw new NotAuthorizedError();
+  if (!user) throw new NotAuthorizedError()
 
   let data = {
     user: {
@@ -33,27 +33,27 @@ module.exports.getUser = async (req, res) => {
       },
       updatedAt: user.updatedAt,
     },
-  };
+  }
 
   // update token if more than X seconds from last token update
   // time to send update token (1h)
   const secondsFromtoUpdate =
-    req.user.iat + parseInt(process.env.TOKEN_UPDATE_IN_SECONDS);
-  const currentTimestampInSeconds = parseInt(Date.now() / 1000);
-  const updateToken = secondsFromtoUpdate <= currentTimestampInSeconds;
+    req.user.iat + parseInt(process.env.TOKEN_UPDATE_IN_SECONDS)
+  const currentTimestampInSeconds = parseInt(Date.now() / 1000)
+  const updateToken = secondsFromtoUpdate <= currentTimestampInSeconds
 
   if (updateToken) {
     // save prev revoked token
-    const blacklisted = await blacklistToken(req.user);
-    if (!blacklisted) throw new Error("Unable to blacklist active token");
+    const blacklisted = await blacklistToken(req.user)
+    if (!blacklisted) throw new Error('Unable to blacklist active token')
 
-    log.debug(`${req.user._id} token blacklisted`);
-    log.debug(`sending updated token to ${req.user._id}`);
-    data.token = signToken(user);
+    log.debug(`${req.user._id} token blacklisted`)
+    log.debug(`sending updated token to ${req.user._id}`)
+    data.token = signToken(user)
   }
 
-  return res.json(data);
-};
+  return res.json(data)
+}
 
 module.exports.getProfile = async (req, res) => {
   const user = await User.findById(req.user._id).select(`
@@ -62,61 +62,61 @@ module.exports.getProfile = async (req, res) => {
       -login.passwordResetExpires 
       -login.passwordUpdatedAt 
       -profile.image.original
-    `);
+    `)
 
-  return res.json({ user });
-};
+  return res.json({ user })
+}
 
 module.exports.updateUser = async (req, res) => {
-  const { firstName, lastName, email } = matchedData(req); // validated data
+  const { firstName, lastName, email } = matchedData(req) // validated data
 
   const userWithSameEmail = await User.findOne({
-    $and: [{ _id: { $ne: req.user._id } }, { "login.email": email }],
-  });
-  if (userWithSameEmail) throw new Error(`Email ${email} already in use`);
+    $and: [{ _id: { $ne: req.user._id } }, { 'login.email': email }],
+  })
+  if (userWithSameEmail) throw new Error(`Email ${email} already in use`)
 
   await User.findByIdAndUpdate(req.user._id, {
     $set: {
-      "profile.firstName": firstName,
-      "profile.lastName": lastName,
+      'profile.firstName': firstName,
+      'profile.lastName': lastName,
       // TODO Fix for unique slug, waiting(teemaderegister-be/pull/18)
-      "profile.slug": slug(firstName + " " + lastName),
-      "login.email": email,
+      'profile.slug': slug(firstName + ' ' + lastName),
+      'login.email': email,
     },
-  });
+  })
 
-  return res.json({ message: "Changes saved" });
-};
+  return res.json({ message: 'Changes saved' })
+}
 
 module.exports.updatePassword = async (req, res) => {
-  const { currentPassword, newPassword } = req.body;
+  const { currentPassword, newPassword } = req.body
 
-  const user = await User.findById(req.user._id);
-  const isMatch = await user.comparePassword(currentPassword);
-  if (!isMatch) throw new Error("Wrong password");
+  const user = await User.findById(req.user._id)
+  const isMatch = await user.comparePassword(currentPassword)
+  if (!isMatch) throw new Error('Wrong password')
 
   user.login = {
     ...user.login,
     password: newPassword,
     passwordUpdatedAt: Date.now(),
-  };
-  await user.save();
+  }
+  await user.save()
 
-  return res.json({ message: "Password was successfully changed" });
-};
+  return res.json({ message: 'Password was successfully changed' })
+}
 
 module.exports.uploadPicture = async (req, res) => {
-  if (!req.file) throw new Error("No file uploaded");
-  const { file, user } = req;
+  if (!req.file) throw new Error('No file uploaded')
+  const { file, user } = req
 
-  const image = await Jimp.read(file.path);
-  const { width, height } = image.bitmap;
+  const image = await Jimp.read(file.path)
+  const { width, height } = image.bitmap
 
-  const fullSideLength = parseInt(process.env.PROFILE_PIC_FULL_SIDE_PX);
-  const thumbSideLength = parseInt(process.env.PROFILE_PIC_THUMB_SIDE_PX);
+  const fullSideLength = parseInt(process.env.PROFILE_PIC_FULL_SIDE_PX)
+  const thumbSideLength = parseInt(process.env.PROFILE_PIC_THUMB_SIDE_PX)
 
   if (width < fullSideLength || height < fullSideLength) {
-    throw new Error(`Upload image larger than ${fullSideLength}px`);
+    throw new Error(`Upload image larger than ${fullSideLength}px`)
   }
 
   const sizes = {
@@ -128,12 +128,12 @@ module.exports.uploadPicture = async (req, res) => {
       w: thumbSideLength,
       h: thumbSideLength,
     },
-  };
+  }
 
-  const original = `profile/original/${user._id}.jpg`;
-  const full = `profile/full/${user._id}.jpg`;
-  const thumb = `profile/thumbnail/thumb-${user._id}.jpg`;
-  const imgQuality = 70;
+  const original = `profile/original/${user._id}.jpg`
+  const full = `profile/full/${user._id}.jpg`
+  const thumb = `profile/thumbnail/thumb-${user._id}.jpg`
+  const imgQuality = 70
 
   await Promise.all([
     image
@@ -146,44 +146,44 @@ module.exports.uploadPicture = async (req, res) => {
       .quality(imgQuality)
       .background(0xffffffff)
       .write(process.env.UPLOAD_DIR + thumb),
-  ]);
+  ])
 
   const updatedUser = await User.findByIdAndUpdate(
     req.user._id,
-    { $set: { "profile.image": { original, full, thumb } } },
+    { $set: { 'profile.image': { original, full, thumb } } },
     { new: true }
-  ).select("profile.image.full updatedAt");
+  ).select('profile.image.full updatedAt')
 
   return res.json({
     user: updatedUser,
-    message: "Picture updated successfully",
-  });
-};
+    message: 'Picture updated successfully',
+  })
+}
 
 module.exports.resetPicture = async (req, res) => {
-  const full = "profile/full/default.jpg";
-  const thumb = "profile/thumbnail/thumb-default.jpg";
-  const original = `profile/original/${req.user._id}.jpg`;
+  const full = 'profile/full/default.jpg'
+  const thumb = 'profile/thumbnail/thumb-default.jpg'
+  const original = `profile/original/${req.user._id}.jpg`
 
   const user = await User.findByIdAndUpdate(
     req.user._id,
-    { $set: { "profile.image": { orignal: null, full, thumb } } },
+    { $set: { 'profile.image': { orignal: null, full, thumb } } },
     { new: true }
-  ).select("profile.image.full updatedAt");
+  ).select('profile.image.full updatedAt')
 
   await fs.unlink(`${process.env.UPLOAD_DIR + original}`, (err) =>
     log.debug(`${err && err.code} - Probably ${original} already deleted`)
-  );
+  )
 
-  return res.json({ user, message: "Picture updated successfully" });
-};
+  return res.json({ user, message: 'Picture updated successfully' })
+}
 
 module.exports.getAllUsers = async (req, res) => {
-  const users = await User.find({});
+  const users = await User.find({})
 
-  let data = [];
+  let data = []
   for (const number in users) {
-    data.push(users[number]["profile"]);
+    data.push(users[number]['profile'])
   }
-  return res.json(data);
-};
+  return res.json(data)
+}
