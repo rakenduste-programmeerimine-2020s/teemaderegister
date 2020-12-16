@@ -1,8 +1,7 @@
 const User = require('../models/user')
 const slug = require('slug')
-const crypto = require('crypto')
 const mail = require('./../utils/mail')
-const {getPasswordResetTokenValues} = require('./auth') 
+const {getPasswordResetTokenValues} = require('./auth')
 
 module.exports.createUser = async (req, res) => {
   const {firstName, lastName, email, role} = req.body
@@ -26,11 +25,8 @@ module.exports.createUser = async (req, res) => {
     }
   }
   const passwordCreateURL = `${process.env.SITE_URL}/account/password/${user.login.passwordResetToken}?is-new=1`
-  const newUser = await new User(user).save()
 
-  if (!newUser) {
-    return res.status(400).json({message: 'Created unsuccessfully!', success: 0})
-  }
+  await new User(user).save()
 
   await mail.sendMail({
     to: email,
