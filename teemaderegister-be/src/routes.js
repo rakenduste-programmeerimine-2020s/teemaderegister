@@ -25,13 +25,18 @@ const Topic = require('./models/topic')
    csv.getTopicData(status, course, level)
 }) */
 
+router.post('/csv/supervisors', (req, res) => {
+    console.log('Konsool1:  ',req.body.supervisorId[2])
+})
+
 router.get('/csv/', (req, res) => {
-    console.log('NODE:  ',req.query)
+    //console.log('NODE:  ',req.query)
     const { status, course, level } = req.query
     if(status == 'registered'){
         Topic.find({
-            'curriculums': [course], 
-            'defended': {$exists: false}},
+            'curriculums':  course , 
+            'defended': { $exists: false }
+            /* 'types':  [level] */ },
             (err, docs) => {
             if (!err) { 
                 //console.log(docs);
@@ -39,14 +44,32 @@ router.get('/csv/', (req, res) => {
             } else {
                 throw err;  
             }
-        }).exec((err, data) => {
-            res.send(data)
-            console.log('DATA: ',data)
+        }).sort({registered: 'desc'})
+          .populate('supervisors.supervisor', '_id profile')
+          .exec((err, data) => {
+            res.send(JSON.stringify(data))
+            //console.log('DATA: ',data)        
         })
         //const jsonData = csv.getTopicData(req.query)
         //console.log('KONSOOOL123:  ' ,(jsonData))
         //res.send(jsonData)
-        
+    } else {
+        Topic.find({
+            'curriculums':  [course], 
+            'defended': {$exists: true}
+           /*  'types':  [level] */ },
+            (err, docs) => {
+            if (!err) { 
+                //console.log(docs);
+                return docs
+            } else {
+                throw err;  
+            }
+        }).sort({defended: 'desc'})
+          .exec((err, data) => {
+            res.send(JSON.stringify(data))
+            console.log('DATA: ',data)        
+        })
     }
 })
 
