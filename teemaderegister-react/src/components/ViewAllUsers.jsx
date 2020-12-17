@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Component } from 'react'
+import React, {useEffect, useState} from 'react'
 import { Layout, Table } from 'antd'
 
 const columns = [
@@ -29,10 +29,12 @@ function ViewAllUsers() {
       const jsonData = await response.json()
       const userInfo = jsonData.map((userData, i) => ({
         key: i,
-        firstName: userData.firstName,
-        lastName: userData.lastName,
+        firstName: userData.profile.firstName,
+        lastName: userData.profile.lastName,
       }))
+      console.log(userInfo)
       return userInfo
+    
     }
     getUserData().then(setUsers)
   }, [])
