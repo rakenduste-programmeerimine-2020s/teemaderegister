@@ -24,15 +24,15 @@ module.exports.getUser = async (req, res) => {
         slug: user.profile.slug,
         image: {
           full: user.profile.image.full,
-          thumb: user.profile.image.thumb,
-        },
+          thumb: user.profile.image.thumb
+        }
       },
       login: {
         email: user.login.email,
-        roles: user.login.roles,
+        roles: user.login.roles
       },
-      updatedAt: user.updatedAt,
-    },
+      updatedAt: user.updatedAt
+    }
   }
 
   // update token if more than X seconds from last token update
@@ -56,7 +56,9 @@ module.exports.getUser = async (req, res) => {
 }
 
 module.exports.getProfile = async (req, res) => {
-  const user = await User.findById(req.user._id).select(`
+  const user = await User
+    .findById(req.user._id)
+    .select(`
       -login.password 
       -login.passwordResetToken 
       -login.passwordResetExpires 
@@ -70,9 +72,13 @@ module.exports.getProfile = async (req, res) => {
 module.exports.updateUser = async (req, res) => {
   const { firstName, lastName, email } = matchedData(req) // validated data
 
-  const userWithSameEmail = await User.findOne({
-    $and: [{ _id: { $ne: req.user._id } }, { 'login.email': email }],
-  })
+  const userWithSameEmail = await User
+    .findOne({
+      $and: [
+        { _id: { $ne: req.user._id } },
+        { 'login.email': email }
+      ]
+    })
   if (userWithSameEmail) throw new Error(`Email ${email} already in use`)
 
   await User.findByIdAndUpdate(req.user._id, {
@@ -81,8 +87,8 @@ module.exports.updateUser = async (req, res) => {
       'profile.lastName': lastName,
       // TODO Fix for unique slug, waiting(teemaderegister-be/pull/18)
       'profile.slug': slug(firstName + ' ' + lastName),
-      'login.email': email,
-    },
+      'login.email': email
+    }
   })
 
   return res.json({ message: 'Changes saved' })
@@ -98,7 +104,7 @@ module.exports.updatePassword = async (req, res) => {
   user.login = {
     ...user.login,
     password: newPassword,
-    passwordUpdatedAt: Date.now(),
+    passwordUpdatedAt: Date.now()
   }
   await user.save()
 
@@ -122,12 +128,12 @@ module.exports.uploadPicture = async (req, res) => {
   const sizes = {
     full: {
       w: fullSideLength,
-      h: fullSideLength,
+      h: fullSideLength
     },
     thumb: {
       w: thumbSideLength,
-      h: thumbSideLength,
-    },
+      h: thumbSideLength
+    }
   }
 
   const original = `profile/original/${user._id}.jpg`
@@ -139,13 +145,13 @@ module.exports.uploadPicture = async (req, res) => {
     image
       .cover(sizes.full.w, sizes.full.w)
       .quality(imgQuality)
-      .background(0xffffffff) // PNG background-color
+      .background(0xFFFFFFFF) // PNG background-color
       .write(process.env.UPLOAD_DIR + full),
     image
       .cover(sizes.thumb.w, sizes.thumb.w)
       .quality(imgQuality)
-      .background(0xffffffff)
-      .write(process.env.UPLOAD_DIR + thumb),
+      .background(0xFFFFFFFF)
+      .write(process.env.UPLOAD_DIR + thumb)
   ])
 
   const updatedUser = await User.findByIdAndUpdate(
@@ -154,10 +160,7 @@ module.exports.uploadPicture = async (req, res) => {
     { new: true }
   ).select('profile.image.full updatedAt')
 
-  return res.json({
-    user: updatedUser,
-    message: 'Picture updated successfully',
-  })
+  return res.json({ user: updatedUser, message: 'Picture updated successfully' })
 }
 
 module.exports.resetPicture = async (req, res) => {
@@ -171,9 +174,8 @@ module.exports.resetPicture = async (req, res) => {
     { new: true }
   ).select('profile.image.full updatedAt')
 
-  await fs.unlink(`${process.env.UPLOAD_DIR + original}`, (err) =>
-    log.debug(`${err && err.code} - Probably ${original} already deleted`)
-  )
+  await fs.unlink(`${process.env.UPLOAD_DIR + original}`, err =>
+    log.debug(`${err && err.code} - Probably ${original} already deleted`))
 
   return res.json({ user, message: 'Picture updated successfully' })
 }
