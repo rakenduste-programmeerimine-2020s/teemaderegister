@@ -107,21 +107,6 @@ class TabsWrap extends Component {
     return tabUpdated([newTab, newSub])
   }
 
-  downloadCSV() {
-    console.log('clicked')
-    /*     return Api('GET', TOPICS_URL)
-          .then(console.log(data))
-          .then(data => dispatch({
-            type: types.CURRICULUMS_LOADED,
-            curriculums: data.curriculums
-          }))
-          .catch(err => {
-            console.log(err)
-          }) */
-  }
-
-
-
   render() {
     const {
       curriculum,

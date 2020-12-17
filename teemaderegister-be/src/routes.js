@@ -15,19 +15,7 @@ const supervisors = require('./controllers/supervisors')
 const topics = require('./controllers/topics')
 const users = require('./controllers/users')
 const admin = require('./controllers/admin')
-const csv = require('./controllers/generateCSV')
-const bodyParser = require('body-parser')
 const Topic = require('./models/topic')
-
-/* router.post('/csv/', (ctx) => {
-    //console.log('node:  ' , ctx.body)
-    const {status, course, level} = ctx.body
-   csv.getTopicData(status, course, level)
-}) */
-
-router.post('/csv/supervisors', (req, res) => {
-    console.log('Konsool1:  ',req.body.supervisorId[2])
-})
 
 router.get('/csv/', (req, res) => {
     //console.log('NODE:  ',req.query)
@@ -39,21 +27,18 @@ router.get('/csv/', (req, res) => {
             /* 'types':  [level] */ },
             (err, docs) => {
             if (!err) { 
-                //console.log(docs);
                 return docs
             } else {
                 throw err;  
             }
-        }).sort({registered: 'desc'})
-          .populate('supervisors.supervisor',  '_id profile.firstName profile.lastName')
-          .select('title author registered ')
-          .exec((err, data) => {
-            res.send(JSON.stringify(data))
-            //console.log('DATA: ',data)        
         })
-        //const jsonData = csv.getTopicData(req.query)
-        //console.log('KONSOOOL123:  ' ,(jsonData))
-        //res.send(jsonData)
+        .sort({registered: 'desc'})
+        .populate('supervisors.supervisor',  '_id profile.firstName profile.lastName')
+        .populate('curriculums')
+        .select('title author registered curriculums')
+        .exec((err, data) => {
+            res.send(JSON.stringify(data))
+        })
     } else {
         Topic.find({
             'curriculums':  [course], 
@@ -61,14 +46,17 @@ router.get('/csv/', (req, res) => {
            /*  'types':  [level] */ },
             (err, docs) => {
             if (!err) { 
-                //console.log(docs);
+
                 return docs
             } else {
                 throw err;  
             }
-        }).sort({defended: 'desc'})
-          .populate('supervisors.supervisor', '_id profile')
-          .exec((err, data) => {
+        })
+        .sort({defended: 'desc'})
+        .populate('supervisors.supervisor',  '_id profile.firstName profile.lastName')
+        .populate('curriculums')
+        .select('title author defended curriculums')
+        .exec((err, data) => {
             res.send(JSON.stringify(data))
             console.log('DATA: ',data)        
         })

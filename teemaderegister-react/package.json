@@ -20,6 +20,7 @@
     "@ant-design/icons": "^4.2.2",
     "antd": "^4.8.0",
     "axios": "^0.21.0",
+    "file-saver": "^2.0.5",
     "lodash": "^4.17.20",
     "nprogress": "^0.2.0",
     "query-string": "^5.0.1",
@@ -33,7 +34,8 @@
     "react-string-replace": "^0.4.1",
     "recharts": "^1.0.0-beta.0",
     "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "xlsx": "^0.16.9"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
