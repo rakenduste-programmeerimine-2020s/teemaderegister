@@ -183,9 +183,5 @@ module.exports.resetPicture = async (req, res) => {
 module.exports.getAllUsers = async (req, res) => {
   const users = await User.find({})
 
-  let data = []
-  for (const number in users) {
-    data.push(users[number]['profile'])
-  }
-  return res.json(data)
+  return res.json(users)
 }
