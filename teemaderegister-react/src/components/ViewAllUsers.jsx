@@ -20,7 +20,7 @@ function ViewAllUsers() {
   useEffect(() => {
     const getUserData = async () => {
       var jwt = localStorage.getItem('jwtToken')
-      const response = await fetch('http://localhost:8080/api/getAllUsers', {
+      const response = await fetch('http://localhost:8080/api/admin/users', {
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + jwt,
