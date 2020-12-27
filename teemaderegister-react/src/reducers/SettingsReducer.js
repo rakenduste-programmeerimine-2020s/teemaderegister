@@ -2,6 +2,7 @@ import * as types from '../constants/ActionTypes'
 
 const INITIAL_STATE = {
   loading: true,
+  twofa: false,
   user: {
     login: {},
     profile: {},

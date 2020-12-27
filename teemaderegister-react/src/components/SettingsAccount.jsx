@@ -2,18 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Breadcrumbs from './Breadcrumbs'
 import { Link } from 'react-router-dom'
-
+​
 import { USER_PICTURE_UPLOAD_URL } from '../constants/ApiConstants'
 import { getToken } from '../utils/jwt'
-
-import { Row, Col, Form, Input, Button, Upload, message, Avatar, Spin, Modal, Dropdown, Menu, Select } from 'antd'
+​
+import { Row, Col, Checkbox, Form, Input, Button, Upload, message, Avatar, Spin, Modal, Dropdown, Menu, Select } from 'antd'
 import { UploadOutlined, CloseCircleOutlined, EditOutlined } from '@ant-design/icons'
 const FormItem = Form.Item
 const { confirm } = Modal
 const { Option } = Select
-
+​
 const { func, shape, bool, string, array } = PropTypes
-
+​
 const propTypes = {
   getProfile: func.isRequired,
   initSettings: func.isRequired,
@@ -49,19 +49,22 @@ const propTypes = {
   uploadPictureError: func.isRequired,
   uploadPictureStart: func.isRequired
 }
-
+​
 class SettingsAccount extends React.Component {
   constructor (props) {
     super(props)
-
+​
     this.defaultAvatarSrc = 'profile/full/default.jpg'
-
+​
     this.submitUpdateProfile = this.submitUpdateProfile.bind(this)
     this.resetPictureConfirm = this.resetPictureConfirm.bind(this)
     this.onUploadPictureChange = this.onUploadPictureChange.bind(this)
+    this.updateTwoFA = this.updateTwoFA.bind(this)
     this.formRef = React.createRef()
+​
+    this.state = {}
   }
-
+​
   UNSAFE_componentWillReceiveProps (nextProps) {
     const { settings: { formLoading } } = this.props
     const {
@@ -71,7 +74,7 @@ class SettingsAccount extends React.Component {
         hasError
       }
     } = nextProps
-
+​
     if ((!newFormLoading.picture && newFormLoading.picture !== formLoading.picture) ||
     (!newFormLoading.account && newFormLoading.account !== formLoading.account)) {
       if (hasError) {
@@ -81,32 +84,32 @@ class SettingsAccount extends React.Component {
       }
     }
   }
-
+​
   componentDidMount () {
     this.props.getProfile()
   }
-
+​
   componentWillUnmount () {
     this.props.initSettings()
   }
-
+​
   submitUpdateProfile (values) {
     this.props.updateProfile(values)
   }
-
+​
   beforeUpload (file) {
     const fileTypes = new RegExp('jpeg|jpg|png')
     const allowedType = fileTypes.test(file.type.toLowerCase())
     if (!allowedType) message.error('You can only upload image files - jpg, jpeg, png!')
-
+​
     const allowedSize = file.size / 1024 / 1024 < process.env.PROFILE_PIC_MAX_SIZE_IN_MB
     if (!allowedSize) {
       message.error(`Image must smaller than ${process.env.PROFILE_PIC_MAX_SIZE_IN_MB}MB!`)
     }
-
+​
     return allowedType && allowedSize
   }
-
+​
   onUploadPictureChange ({ file: { status, response } }) {
     if (status === 'uploading' && !this.props.settings.formLoading.picture) {
       return this.props.uploadPictureStart()
@@ -114,14 +117,27 @@ class SettingsAccount extends React.Component {
     if (status === 'done') return this.props.uploadPictureEnd(response)
     if (status === 'error') return this.props.uploadPictureError(response)
   }
-
+​
   resetPictureConfirm () {
     confirm({
       title: 'Do you want to reset to default picture?',
       onOk: () => this.props.resetPicture()
     })
   }
-
+​
+  updateTwoFA (e) {
+    const { checked } = e.target
+​
+    if (checked !== this.props.settings.twofa) {
+      this.setState({ showPasswordConfirm: true })
+      console.log('different')
+​
+      return
+    }
+​
+    this.setState({ showPasswordConfirm: false })
+  }
+​
   render () {
     const crumbs = [{ url: null, name: 'Settings' }]
     const {
@@ -132,14 +148,15 @@ class SettingsAccount extends React.Component {
           profile: { firstName, lastName, image },
           login: { email, roles },
           updatedAt
-        }
+        },
+        twofa
       }
     } = this.props
-
+​
     const avatarSrc = image
       ? `${process.env.UPLOAD_PATH + image.full}?updatedAt=${updatedAt}`
       : null
-
+​
     return (
       <div className='settingsAccount width--public-page'>
         {!loading &&
@@ -225,6 +242,20 @@ class SettingsAccount extends React.Component {
                     )}
                   </Select>
                 </FormItem>
+                <FormItem label='2FA' name='2fa' initialValue={twofa} rules={[ { required: true } ]}>
+                  <Checkbox defaultChecked={twofa} onChange={this.updateTwoFA}>2FA enabled</Checkbox>
+                </FormItem>
+                {this.state.showPasswordConfirm &&
+                  <div>
+                    QR code
+                    <FormItem label='Password' name='password'>
+                      <Input type='password'/>
+                    </FormItem>
+                    <FormItem label='one time password' name='onetimepass'>
+                      <Input type='number'/>
+                    </FormItem>
+                  </div>
+                }
                 <FormItem>
                   <Button
                     type='primary'
@@ -250,7 +281,7 @@ class SettingsAccount extends React.Component {
     )
   }
 }
-
+​
 SettingsAccount.propTypes = propTypes
-
+​
 export default SettingsAccount
