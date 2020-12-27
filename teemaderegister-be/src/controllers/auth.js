@@ -9,7 +9,6 @@ const { signToken, blacklistToken } = require('../utils/jwt')
 const { Error } = require('../utils/errors')
 
 module.exports.localLogin = async (req, res) => {
-  
   const { email, password } = req.body
 
   const user = await User.findOne({ 'login.email': email })

@@ -1,13 +1,11 @@
 const express = require('express')
 const router = express.Router()
-
 const { jwtEnsure, allowRoles } = require('./utils/jwt')
 const validate = require('./utils/validate')
 const asyncMiddleware = require('./utils/asyncMiddleware')
 const multerMiddleware = require('./utils/multerMiddleware')
-
 const { ADMIN } = require('./constants/roles')
-
+const csv = require('./controllers/csv')
 const auth = require('./controllers/auth')
 const curriculums = require('./controllers/curriculums')
 const search = require('./controllers/search')
@@ -15,55 +13,8 @@ const supervisors = require('./controllers/supervisors')
 const topics = require('./controllers/topics')
 const users = require('./controllers/users')
 const admin = require('./controllers/admin')
-const Topic = require('./models/topic')
 
-router.get('/csv/', (req, res) => {
-    //console.log('NODE:  ',req.query)
-    const { status, course, level } = req.query
-    if(status == 'registered'){
-        Topic.find({
-            'curriculums':  course , 
-            'defended': { $exists: false },
-            'registered': {$exists: true}
-            /* 'types':  [level] */ },
-            (err, docs) => {
-            if (!err) { 
-                return docs
-            } else {
-                throw err;  
-            }
-        })
-        .sort({registered: 'desc'})
-        .populate('supervisors.supervisor',  '_id profile.firstName profile.lastName')
-        .populate('curriculums')
-        .select('title author registered curriculums')
-        .exec((err, data) => {
-            res.send(JSON.stringify(data))
-        })
-    } else {
-        Topic.find({
-            'curriculums':  [course], 
-            'defended': {$exists: true}
-           /*  'types':  [level] */ },
-            (err, docs) => {
-            if (!err) { 
-
-                return docs
-            } else {
-                throw err;  
-            }
-        })
-        .sort({defended: 'desc'})
-        .populate('supervisors.supervisor',  '_id profile.firstName profile.lastName')
-        .populate('curriculums')
-        .select('title author defended curriculums')
-        .exec((err, data) => {
-            res.send(JSON.stringify(data))
-            console.log('DATA: ',data)        
-        })
-    }
-})
-
+router.get('/csv', asyncMiddleware(csv.findCsvData))
 router.post('/auth/local/login', validate.localLogin, asyncMiddleware(auth.localLogin)) 
 router.post('/auth/local/signup', validate.localSignup, asyncMiddleware(auth.localSignup))
 router.post('/auth/logout', jwtEnsure, asyncMiddleware(auth.logout))

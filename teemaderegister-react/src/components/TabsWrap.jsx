@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
-import Api from '../utils/Api'
 import TableContent from '../components/TableContent'
 import { Tabs, Radio, Button } from 'antd'
-//import { getData } from '../actions/CsvActions'
 import DownloadCSV from './DownloadCSV'
 
 
