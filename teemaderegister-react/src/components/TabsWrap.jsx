@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import TableContent from '../components/TableContent'
-import { Tabs, Radio, Button } from 'antd'
+import { Tabs, Radio } from 'antd'
 import DownloadCSV from './DownloadCSV'
-
-
 const { func, object, string } = PropTypes
 
 const propTypes = {
@@ -19,14 +17,14 @@ const propTypes = {
 }
 
 class TabsWrap extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.updateTabs = this.updateTabs.bind(this)
     this.tabClicked = this.tabClicked.bind(this)
   }
 
-  createTabPanes(curriculum, handleTableChange, supervisor, tableContent, tabs) {
+  createTabPanes (curriculum, handleTableChange, supervisor, tableContent, tabs) {
     return Object.keys(tabs).map(key => {
       const { title, icon, count, subs } = tabs[key]
       return (
@@ -45,21 +43,19 @@ class TabsWrap extends Component {
     })
   }
 
-
-  createSubTabs(subs) {
+  createSubTabs (subs) {
     const { activeSub, curriculum } = this.props
 
     subs = Object.keys(subs).map(key => {
       const { title, count } = subs[key]
       return (
-        
-          <Radio.Button
-            disabled={curriculum && curriculum.meta.closed && title !== 'Defended'}
-            value={key}
-            key={key}
-          >
-            {this.createSubTitle(title, count)}
-          </Radio.Button>
+        <Radio.Button
+          disabled={curriculum && curriculum.meta.closed && title !== 'Defended'}
+          value={key}
+          key={key}
+        >
+          {this.createSubTitle(title, count)}
+        </Radio.Button>
       )
     })
 
@@ -70,7 +66,7 @@ class TabsWrap extends Component {
     )
   }
 
-  createTabTitle(Icon, title, count) {
+  createTabTitle (Icon, title, count) {
     return (
       <span>
         <Icon />
@@ -79,21 +75,21 @@ class TabsWrap extends Component {
     )
   }
 
-  createSubTitle(title, count) {
+  createSubTitle (title, count) {
     return (
       <span>
         {title} {count > 0 && '| ' + count}
       </span>
     )
   }
-  tabClicked(e) {
+  tabClicked (e) {
     // clear filters
     // tab - e
     const { activeTab, tabs, tabUpdated } = this.props
     // tab updated
     if (activeTab === e) { return tabUpdated([activeTab, tabs[activeTab].defaultSub]) }
   }
-  updateTabs(e) {
+  updateTabs (e) {
     // tab - e
     // sub - e.target.value
     const { tabs, activeTab, tabUpdated } = this.props
@@ -105,7 +101,7 @@ class TabsWrap extends Component {
     return tabUpdated([newTab, newSub])
   }
 
-  render() {
+  render () {
     const {
       curriculum,
       handleTableChange,

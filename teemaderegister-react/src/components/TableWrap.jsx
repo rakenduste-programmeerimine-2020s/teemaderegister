@@ -28,7 +28,7 @@ const propTypes = {
 }
 
 class TableWrap extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.tabs = props.tabs
@@ -96,12 +96,12 @@ class TableWrap extends React.Component {
     this.handleTableChange = this.handleTableChange.bind(this)
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.makeQuery()
     this.setPageTitle()
   }
 
-  UNSAFE_componentWillUpdate(nextProps) {
+  UNSAFE_componentWillUpdate (nextProps) {
     // trigger content load on new searchword
     // make search query and override state q
     if (nextProps.search && nextProps.search.q !== this.props.search.q) {
@@ -113,7 +113,7 @@ class TableWrap extends React.Component {
     }
   }
 
-  getDefaults({ tab, sub }) {
+  getDefaults ({ tab, sub }) {
     const tabObj = this.tabs[tab]
     sub = sub || tabObj.sub
     const { columnKey, order } = tabObj.subs[sub]
@@ -128,7 +128,7 @@ class TableWrap extends React.Component {
     }
   }
 
-  makeQuery(showLoading, q) {
+  makeQuery (showLoading, q) {
     // dont do query if no count
     const { tab, sub } = this.state
     const query = Object.assign(this.queryExtend, this.state, q)
@@ -143,7 +143,7 @@ class TableWrap extends React.Component {
     this.props.getTableContent(query, showLoading || false)
   }
 
-  setPageTitle() {
+  setPageTitle () {
     const searchTitle = this.props.search && (
       this.state.q
         ? `${this.state.q} - Search`
@@ -154,7 +154,7 @@ class TableWrap extends React.Component {
     setDocTitle(pageTitle)
   }
 
-  tabUpdated([tab, sub]) {
+  tabUpdated ([tab, sub]) {
     const newState = Object.assign({ tab }, this.getDefaults({ tab, sub }))
     const showLoading = true
 
@@ -165,7 +165,7 @@ class TableWrap extends React.Component {
     })
   }
 
-  writeURL() {
+  writeURL () {
     const { history: { replace, location: { pathname } } } = this.props
     const { tab, sub, columnKey } = this.state
 
@@ -182,7 +182,7 @@ class TableWrap extends React.Component {
     setUrl(replace, pathname, this.state, defaults)
   }
 
-  handleTableChange(pagination, filters, sorter) {
+  handleTableChange (pagination, filters, sorter) {
     const { columnKey, order } = sorter
     const page = pagination.current
     const { types, curriculums } = removeEmpty(filters)
@@ -194,7 +194,7 @@ class TableWrap extends React.Component {
     })
   }
 
-  render() {
+  render () {
     const { sub, tab } = this.state
     const {
       curriculum,

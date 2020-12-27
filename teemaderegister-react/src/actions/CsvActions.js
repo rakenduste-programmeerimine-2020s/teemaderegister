@@ -7,7 +7,7 @@ const EXCEL_TYPE = 'application/csv'
 //  const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8'
 
 export const getCsvData = (status, course, level) => {
-  return axios.get(CSV_REQUEST, { params: {status: status, course: course, level: level }})
+  return axios.get(CSV_REQUEST, {params: {status: status, course: course, level: level}})
     .then((res) => {
       createCsv(res.data)
     })
@@ -20,7 +20,7 @@ const createCsv = data => {
   let fileName = data[0].curriculums[0].abbreviation
   let mappedData
 
-  if (data[0].defended == undefined) {
+  if (data[0].defended === undefined) {
     mappedData = data.map(row => ({
       Title: row.title,
       Name: row.author.firstName + ' ' + row.author.lastName,

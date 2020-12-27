@@ -15,7 +15,7 @@ const users = require('./controllers/users')
 const admin = require('./controllers/admin')
 
 router.get('/csv', asyncMiddleware(csv.findCsvData))
-router.post('/auth/local/login', validate.localLogin, asyncMiddleware(auth.localLogin)) 
+router.post('/auth/local/login', validate.localLogin, asyncMiddleware(auth.localLogin))
 router.post('/auth/local/signup', validate.localSignup, asyncMiddleware(auth.localSignup))
 router.post('/auth/logout', jwtEnsure, asyncMiddleware(auth.logout))
 router.post('/auth/forgot', validate.passwordResetEmail, asyncMiddleware(auth.forgotPassword))
