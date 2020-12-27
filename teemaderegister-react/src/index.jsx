@@ -15,7 +15,8 @@ import {
   ACCOUNT_FORGOT,
   ACCOUNT_PASSWORD,
   SETTINGS_ACCOUNT_PATH,
-  SETTINGS_PASSWORD_PATH
+  SETTINGS_PASSWORD_PATH,
+  SETTINGS_2fa_PATH
 } from './constants/RouterConstants'
 
 import CurriculumContainer from './containers/CurriculumContainer'
@@ -32,6 +33,7 @@ import AccountPasswordContainer from './containers/AccountPasswordContainer'
 import SettingsAccountContainer from './containers/SettingsAccountContainer'
 import SettingsPasswordContainer from './containers/SettingsPasswordContainer'
 import CurriculumAddContainer from './containers/CurriculumAddContainer'
+import Settings2faContainer from './containers/Settings2faContainer'
 
 import store from './store/configureStore'
 import { initAnalytics } from './utils/Analytics'
@@ -94,6 +96,9 @@ render(
                 } />
                 <Route path={ACCOUNT_PASSWORD} component={
                   RouteWrapContainer(props => <AccountPasswordContainer {...props} />)
+                } />
+                <Route path={SETTINGS_2fa_PATH} component={
+                  RouteWrapContainer(props => <Settings2faContainer {...props} />, {restrict: true})
                 } />
                 <Route component={
                   RouteWrapContainer(props => <NotFound {...props} />)

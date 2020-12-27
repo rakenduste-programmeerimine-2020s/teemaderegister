@@ -270,6 +270,12 @@ class SettingsAccount extends React.Component {
                       <Link to='/settings/password'>Change Password</Link>
                     </Button>
                   </FormItem>
+                  <h2 className='text-align--center'>2FA</h2>
+                  <FormItem>
+                    <Button type='primary' className='button--fullWidth'>
+                      <Link to='/settings/2fa'>Enable 2FA</Link>
+                    </Button>
+                  </FormItem>
                 </Form>
               </Col>
               <Col span={8} />
