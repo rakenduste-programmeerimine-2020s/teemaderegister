@@ -1,5 +1,6 @@
 import React from 'react'
 import { getData } from '../actions/CsvActions'
+import { Button } from 'antd';
 const getCSV = (props) => {
 
   const sendCurriculumInfo = () => {
@@ -8,8 +9,8 @@ const getCSV = (props) => {
   }
 
   return (
-    <div>
-      <button onClick={sendCurriculumInfo}>Download CSV</button>
+    <div style={{float: 'right'}}>
+      <Button onClick={sendCurriculumInfo}>Export CSV</Button>
     </div>
   )
 }

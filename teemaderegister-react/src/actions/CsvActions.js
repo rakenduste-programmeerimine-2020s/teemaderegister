@@ -15,6 +15,8 @@ export const getData = (status, course, level) => {
     })
 }
 
+// Informaatika registered ei tööta miskipärast
+
 const createCsv = data => {
     let fileName = data[0].curriculums[0].abbreviation
     console.log('defended:   ', data[0])
@@ -43,9 +45,7 @@ const createCsv = data => {
     xlsx.utils.book_append_sheet(workBook, workSheet)
 
     const csvBuffer = xlsx.write(workBook, {bookType: 'xlsx', type: 'array'})
-
     const blob = new Blob([csvBuffer], {type: EXCEL_TYPE})
-    
     saveAs(blob, fileName + '.xlsx')
   }
 

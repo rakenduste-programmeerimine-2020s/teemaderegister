@@ -23,7 +23,8 @@ router.get('/csv/', (req, res) => {
     if(status == 'registered'){
         Topic.find({
             'curriculums':  course , 
-            'defended': { $exists: false }
+            'defended': { $exists: false },
+            'registered': {$exists: true}
             /* 'types':  [level] */ },
             (err, docs) => {
             if (!err) { 

@@ -53,15 +53,15 @@ class TabsWrap extends Component {
 
     subs = Object.keys(subs).map(key => {
       const { title, count } = subs[key]
-
       return (
-        <Radio.Button
-          disabled={curriculum && curriculum.meta.closed && title !== 'Defended'}
-          value={key}
-          key={key}
-        >
-          {this.createSubTitle(title, count)}
-        </Radio.Button>
+        
+          <Radio.Button
+            disabled={curriculum && curriculum.meta.closed && title !== 'Defended'}
+            value={key}
+            key={key}
+          >
+            {this.createSubTitle(title, count)}
+          </Radio.Button>
       )
     })
 
@@ -124,7 +124,6 @@ class TabsWrap extends Component {
         defaultActiveKey={activeTab}
         onTabClick={this.tabClicked}
       >
-
         {this.createTabPanes(
           curriculum,
           handleTableChange,
@@ -132,7 +131,6 @@ class TabsWrap extends Component {
           tableContent,
           tabs
         )}
-
       </Tabs>
     )
   }
