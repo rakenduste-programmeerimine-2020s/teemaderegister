@@ -1,5 +1,6 @@
 version: '3.4'
 
+
 services:
   tr-mongo:
     image: mongo:latest
