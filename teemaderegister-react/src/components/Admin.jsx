@@ -1,16 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Layout, Menu } from 'antd'
-import { BookOutlined, LaptopOutlined, UserOutlined } from '@ant-design/icons'
+import {Layout, Menu} from 'antd'
+import {BookOutlined, LaptopOutlined, UserOutlined, UserAddOutlined} from '@ant-design/icons'
 import AdminConfirmations from './AdminConfirmations'
 import AdminTopics from './AdminTopics'
 import AdminUsers from './AdminUsers'
 import setUrl from '../utils/setUrl'
 
-const { SubMenu } = Menu
-const { Content, Sider } = Layout
+const {SubMenu} = Menu
+const {Content, Sider} = Layout
 
-const { object, func, shape, arr } = PropTypes
+const {object, func, shape, arr} = PropTypes
 
 const propTypes = {
   auth: shape({
@@ -33,17 +33,18 @@ class Admin extends React.Component {
     super(props)
 
     this.Views = {
-      registered: <AdminTopics type='registered' />,
-      available: <AdminTopics type='available' />,
-      defended: <AdminTopics type='defended' />,
-      confs: <AdminConfirmations />,
-      supervisors: <AdminUsers type='supervisor' />,
-      students: <AdminUsers type='students' />
+      registered: <AdminTopics type='registered'/>,
+      available: <AdminTopics type='available'/>,
+      defended: <AdminTopics type='defended'/>,
+      confs: <AdminConfirmations/>,
+      supervisors: <AdminUsers type='supervisor'/>,
+      students: <AdminUsers type='students'/>,
+      addNewUser: <AdminUsers type='add-new-user'/>
     }
 
     this.defaultPage = 'registered'
     const page = Object.keys(this.Views)[props.match.params.page] || this.defaultPage
-    this.state = { page, collapsed: false }
+    this.state = {page, collapsed: false}
 
     this.updateUrl = this.updateUrl.bind(this)
     this.onCollapse = this.onCollapse.bind(this)
@@ -56,20 +57,20 @@ class Admin extends React.Component {
   }
 
   onCollapse (collapsed) {
-    this.setState({ collapsed })
+    this.setState({collapsed})
   }
 
   onSelect (info) {
     const page = info.selectedKeys[0]
-    this.setState({ page }, () => {
+    this.setState({page}, () => {
       this.updateUrl(page)
     })
   }
 
   render () {
-    const { page } = this.state
+    const {page} = this.state
     const Page = this.Views[page] || this.Views[this.defaultPage]
-    const { auth: { user: { login: { roles } } } } = this.props
+    const {auth: {user: {login: {roles}}}} = this.props
 
     const isAdmin = roles && roles.includes('admin')
     const isStudyAssistant = roles && roles.includes('study-assistant')
@@ -90,20 +91,23 @@ class Admin extends React.Component {
                 defaultSelectedKeys={[page]}
                 defaultOpenKeys={['topics', 'users']}
                 onSelect={this.onSelect}>
-                <SubMenu key='topics' title={<span><BookOutlined />Topics</span>}>
+                <SubMenu key='topics' title={<span><BookOutlined/>Topics</span>}>
                   <Menu.Item key='registered'>Registered</Menu.Item>
                   <Menu.Item key='available'>Available</Menu.Item>
                   <Menu.Item key='defended'>Defended</Menu.Item>
                 </SubMenu>
                 <Menu.Item key='confs'>
-                  <LaptopOutlined />
+                  <LaptopOutlined/>
                   <span>Confirmation</span>
                 </Menu.Item>
                 {(isAdmin || isStudyAssistant) &&
-                  <SubMenu key='users' title={<span><UserOutlined />Users</span>}>
-                    <Menu.Item key='supervisors'>Supervisors</Menu.Item>
-                    <Menu.Item key='students'>Students</Menu.Item>
-                  </SubMenu>
+                <SubMenu key='users' title={<span><UserOutlined/>Users</span>}>
+                  <Menu.Item
+                    key='addNewUser'
+                    icon={<UserAddOutlined/>}>Add new user</Menu.Item>
+                  <Menu.Item key='supervisors'>Supervisors</Menu.Item>
+                  <Menu.Item key='students'>Students</Menu.Item>
+                </SubMenu>
                 }
               </Menu>
             </Sider>
