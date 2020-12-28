@@ -6,8 +6,8 @@ import { saveAs } from 'file-saver'
 const EXCEL_TYPE = 'application/csv'
 //  const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8'
 
-export const getCsvData = (status, course, level) => {
-  return axios.get(CSV_REQUEST, {params: {status: status, course: course, level: level}})
+export const getCsvData = (status, course) => {
+  return axios.get(CSV_REQUEST, {params: {status: status, course: course}})
     .then((res) => {
       createCsv(res.data)
     })
