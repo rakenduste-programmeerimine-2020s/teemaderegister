@@ -2,10 +2,9 @@ import React from 'react'
 import { getCsvData } from '../actions/CsvActions'
 import { Button } from 'antd'
 
-
 const getCSV = (props) => {
   const sendCurriculumInfo = () => {
-    getCsvData(props.activeSub, props.curriculum.meta._id, props.curriculum.meta.type)
+    getCsvData(props.activeSub, props.curriculum.meta._id)
   }
 
   return (
