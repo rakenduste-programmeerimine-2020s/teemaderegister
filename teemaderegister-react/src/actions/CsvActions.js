@@ -17,10 +17,11 @@ export const getCsvData = (status, course, level) => {
 }
 
 const createCsv = data => {
+  console.log(data[0].title)
   let fileName = data[0].curriculums[0].abbreviation
   let mappedData
 
-  if (data[0].defended === undefined) {
+  if (typeof data[0].defended === 'undefined' && typeof data[0].registered !== 'undefined') {
     mappedData = data.map(row => ({
       Title: row.title,
       Name: row.author.firstName + ' ' + row.author.lastName,
@@ -28,7 +29,7 @@ const createCsv = data => {
       Registered: moment(row.registered).format('DD.MM.YY')
     }))
     fileName += '-registered'
-  } else {
+  } else if (typeof data[0].defended !== 'undefined') {
     mappedData = data.map(row => ({
       Title: row.title,
       Name: row.author.firstName + ' ' + row.author.lastName,
@@ -36,13 +37,24 @@ const createCsv = data => {
       Defended: moment(row.defended).format('DD.MM.YY')
     }))
     fileName += '-defended'
+  } else {
+    mappedData = data.map(row => ({
+      Title: row.title,
+      /*       ÕK: (() => {
+        return row.curriculums.length() > 1 ? '+' : '-'
+      })(), */
+      ÕK: row.curriculums.length,
+      Supervisor: row.supervisors[0].supervisor.profile.firstName + ' ' + row.supervisors[0].supervisor.profile.lastName,
+      Added: moment(row.added).format('DD.MM.YY')
+    }))
   }
-  const workSheet = xlsx.utils.json_to_sheet(mappedData)
+  console.log(mappedData)
+/*   const workSheet = xlsx.utils.json_to_sheet(mappedData)
   const workBook = xlsx.utils.book_new()
   xlsx.utils.book_append_sheet(workBook, workSheet)
 
   const csvBuffer = xlsx.write(workBook, {bookType: 'csv', type: 'array'})
   const blob = new Blob([csvBuffer], {type: EXCEL_TYPE})
 
-  saveAs(blob, fileName + '.csv')
+  saveAs(blob, fileName + '.csv') */
 }
