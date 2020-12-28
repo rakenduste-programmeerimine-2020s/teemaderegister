@@ -39,7 +39,7 @@ const AdminTos = props => {
         </Content>
       }
       {editable &&
-        <Form onFinish={onFinish} initialValues={{ 'innerTextInput': content }}>
+        <Form onFinish={onFinish} initialValues={{ 'textInput': content, 'innerTextInput': content }}>
           <Form.Item name={'textInput'}>
             <TextArea name={'innerTextInput'} size={'large'} autoSize={true} />
           </Form.Item>
