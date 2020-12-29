@@ -6,13 +6,13 @@ const log = require('../utils/logger')
 const mail = require('./../utils/mail')
 const { signToken, blacklistToken } = require('../utils/jwt')
 
-const { Error } = require('../utils/errors')
+const { Error, InsertToken } = require('../utils/errors')
 
 module.exports.localLogin = async (req, res) => {
-  const { email, password } = req.body
+  const { email, password, token } = req.body
 
   const user = await User.findOne({ 'login.email': email })
-  if (!user) throw new Error('Email or password incorrect1')
+  if (!user) throw new Error('Email or password incorrect')
 
   const attemptAllowed = await user.validateLocalLoginAttempt(req.connection.remoteAddress)
   if (!attemptAllowed) throw new Error('Too many unsuccessful login attempts. Check your email.')
@@ -21,7 +21,10 @@ module.exports.localLogin = async (req, res) => {
   console.log(JSON.stringify(isMatch));
   if (!isMatch) {
     
-    throw new Error('Email or password incorrect2')
+    throw new Error('Email or password incorrect1')
+  }
+  if (user.auth.enabled){
+    if (!token) throw new InsertToken('Please insert token!')
   }
 
   user.login.localLoginAttempts = []

@@ -30,7 +30,7 @@ class Login extends React.Component {
     super(props)
     this.state = {
       loading: props.login.loading,
-      factoryEnabled: true
+      factoryEnabled: false
     }
     this.submit = this.submit.bind(this)
     this.formRef = React.createRef()
@@ -41,6 +41,9 @@ class Login extends React.Component {
     if (nextProps.login.loading !== this.state.loading) {
       this.setState({ loading: nextProps.login.loading })
       if (nextProps.login.hasError) {
+        if (nextProps.login.factoryEnabled){
+          this.state.factoryEnabled = true
+        }
         message.error(nextProps.login.error.message)
       }
     }
