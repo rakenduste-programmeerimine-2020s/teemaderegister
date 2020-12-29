@@ -3,7 +3,7 @@ import Breadcrumbs from './Breadcrumbs'
 import PropTypes from 'prop-types'
 import QRCode from 'qrcode.react'
 import { Row, Col, Form, Input, Button, message, Image, notification } from 'antd'
-import { get2factor, createQR, enable, insert } from '../actions/2faActions'
+import { get2factor, createQR, enable, insert, disable } from '../actions/2faActions'
 import { connect } from 'react-redux'
 
 const FormItem = Form.Item
@@ -57,6 +57,16 @@ const Settings2fa = (props) => {
     notification.error({ message: message })
 
   }
+  const onClose = async (values) => {
+    const response = await props.disable(values)
+    const { message, error } = response
+    if (!error) {
+      window.location.reload(false)
+      return notification.success({ message: message })
+    }
+    notification.error({ message: message })
+
+  }
 
   const checkToken = async (values) => {
     const response = await props.insert(values)
@@ -90,6 +100,25 @@ const Settings2fa = (props) => {
                 </Button>
               </Form.Item>
             </Form>
+
+            <Form
+              name='basic'
+              onFinish={onClose}
+            >
+              <Form.Item
+                label='Token'
+                name='token'
+                rules={[{ required: true, message: 'Please input your token!' }]}
+              >
+                <Input />
+              </Form.Item>
+
+              <Form.Item>
+                <Button type='primary' htmlType='submit'>
+                  Disable
+                </Button>
+              </Form.Item>
+            </Form>
           </div>
         ) : (
             <div>
@@ -116,7 +145,7 @@ const Settings2fa = (props) => {
           )
       ) : (
           <div>
-            <Button onClick={createQR}>Generate image</Button>
+            <Button onClick={createQR}>Generate QR for 2fa</Button>
           </div>
         )}
     </div>
@@ -124,4 +153,4 @@ const Settings2fa = (props) => {
 }
 
 export default connect(() => {
-}, { get2factor, createQR, enable, insert })(Settings2fa)
+}, { get2factor, createQR, enable, insert, disable })(Settings2fa)

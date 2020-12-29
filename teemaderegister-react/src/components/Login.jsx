@@ -5,7 +5,7 @@ import { Redirect, Link } from 'react-router-dom'
 import { getToken } from '../utils/jwt'
 import Breadcrumbs from './Breadcrumbs'
 import { Row, Col, Form, Input, Button, message, Tooltip } from 'antd'
-import { UserOutlined, LockOutlined } from '@ant-design/icons'
+import { UserOutlined, LockOutlined, BulbOutlined } from '@ant-design/icons'
 import { setDocTitle } from '../utils/Helpers'
 
 const FormItem = Form.Item
@@ -26,16 +26,17 @@ const propTypes = {
 }
 
 class Login extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
-      loading: props.login.loading
+      loading: props.login.loading,
+      factoryEnabled: true
     }
     this.submit = this.submit.bind(this)
     this.formRef = React.createRef()
   }
 
-  UNSAFE_componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     // You don't have to do this check first, but it can help prevent an unneeded render
     if (nextProps.login.loading !== this.state.loading) {
       this.setState({ loading: nextProps.login.loading })
@@ -45,15 +46,15 @@ class Login extends React.Component {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     setDocTitle('Login')
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.props.initLogin()
   }
 
-  submit (values) {
+  submit(values) {
     this.setState({ loading: true })
     // show user loading
     window.setTimeout(() => {
@@ -61,7 +62,7 @@ class Login extends React.Component {
     }, 1500)
   }
 
-  render () {
+  render() {
     const {
       location: { search }
     } = this.props
@@ -105,6 +106,17 @@ class Login extends React.Component {
                 </FormItem>
                 <p className='login__forgot' ><Link to='/account/forgot'>Forgot password?</Link></p>
               </FormItem>
+              {
+                this.state.factoryEnabled ? (
+                  <FormItem name='token'>
+                    <Input prefix={<BulbOutlined />} placeholder='Token' />
+                  </FormItem>
+                ) : (
+                    <div>
+
+                    </div>
+                  )
+              }
               <FormItem>
                 <FormItem noStyle>
                   <Button
@@ -113,7 +125,7 @@ class Login extends React.Component {
                     className='button--fullWidth'
                     loading={loading}
                   >
-                  Log in
+                    Log in
                   </Button>
                 </FormItem>
                 <p>

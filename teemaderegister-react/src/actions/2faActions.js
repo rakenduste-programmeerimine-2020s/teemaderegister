@@ -1,6 +1,6 @@
 import Api from '../utils/Api'
 
-import {USER_FACTOR,USER_FACTOR_ENABLE,USER_FACTOR_INSERT} from '../constants/ApiConstants'
+import {USER_FACTOR,USER_FACTOR_ENABLE,USER_FACTOR_INSERT,USER_FACTOR_DISABLE} from '../constants/ApiConstants'
 
 
 // // export const get2factor = () => dispatch => {
@@ -40,6 +40,15 @@ export const enable = userData => {
     return async () => {
         try {
             return await Api('POST', USER_FACTOR_ENABLE,  {data:userData})
+        } catch (err){
+            return err.data
+        }
+    }
+}
+export const disable = userData => {
+    return async () => {
+        try {
+            return await Api('POST', USER_FACTOR_DISABLE,  {data:userData})
         } catch (err){
             return err.data
         }
