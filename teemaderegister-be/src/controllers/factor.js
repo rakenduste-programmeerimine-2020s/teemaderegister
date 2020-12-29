@@ -3,6 +3,7 @@ const speakeasy = require('speakeasy')
 const qrcode = require('qrcode')
 
 
+
 const secret = speakeasy.generateSecret({
     name: process.env.QR_SECRET
 })
@@ -17,15 +18,48 @@ module.exports.create = async (req, res) => {
     }
 
     console.log(qrcode.toDataURL(secret.otpauth_url, async (err, data) => {
-        user.factor=data
+        user.auth.secret = secret.base32
+        user.auth.image = data
         await new User(user).save()
         res.json(user)
     }))
 
 }
+module.exports.enable = async (req, res) => {
+    const{_id}=req.user
+    const token = req.body.token
+    const user = await User.findOne({_id})
+    const secret = user.auth.secret
+    
+    const verified = speakeasy.totp.verify({
+        secret: secret,
+        encoding: 'base32',
+        token: token
+    });
+    if (!verified) return res.json({error: true, message: "False code!"})
+
+    user.auth.enabled = true
+    await new User(user).save()
+    res.json({error: false, message: "2f enabled!"})
+}
 
 module.exports.get = async (req, res) => {
     const {_id} = req.user
-    const {factor} = await User.findOne({_id})
-    return res.json(factor)
+    const {auth} = await User.findOne({_id})
+    return res.json(auth)
+}
+
+module.exports.insert = async (req,res)=>{
+    const{_id}=req.user
+    const token = req.body.token
+    const user = await User.findOne({_id})
+    const secret = user.auth.secret
+    const verified = speakeasy.totp.verify({
+        secret: secret,
+        encoding: 'base32',
+        token: token
+        
+    });
+
+    return res.json(verified)
 }

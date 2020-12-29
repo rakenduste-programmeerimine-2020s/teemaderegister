@@ -59,3 +59,4 @@ export const PASSWORD_CHANGE_END = 'PASSWORD_CHANGE_END'
 //Getting QR data
 export const FACTOR_LOADED='FACTOR_LOADED'
 
+

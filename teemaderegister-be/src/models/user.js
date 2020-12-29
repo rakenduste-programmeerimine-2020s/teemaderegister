@@ -18,8 +18,10 @@ const userSchema = new mongoose.Schema(
         thumb: { type: String, default: 'profile/thumbnail/thumb-default.jpg' }
       }
     },
-    factor:{
-      type:String
+    auth: {
+      enabled: {type: Boolean, default: false},
+      secret: {type: String},
+      image: {type: String}
     },
 
     login: {

@@ -43,7 +43,9 @@ router.put('/users/password', jwtEnsure, validate.userPasswordUpdate, asyncMiddl
 router.post('/users/upload-picture', jwtEnsure, multerMiddleware('profileImage'), asyncMiddleware(users.uploadPicture))
 
 router.post('/factor', jwtEnsure, asyncMiddleware(factor.create))
+router.post('/factor/enable', jwtEnsure, asyncMiddleware(factor.enable))
 router.get('/factor', jwtEnsure, asyncMiddleware(factor.get))
+router.post('/factor/insert', jwtEnsure, asyncMiddleware(factor.insert))
 
 router.put('/users/reset-picture', jwtEnsure, asyncMiddleware(users.resetPicture))
 

@@ -18,3 +18,5 @@ export const USER_UPDATE_PASSWORD_URL = `${API}/users/password`
 export const USER_PICTURE_UPLOAD_URL = `${API}/users/upload-picture`
 export const USER_PICTURE_RESET_URL = `${API}/users/reset-picture`
 export const USER_FACTOR = `${API}/factor`
+export const USER_FACTOR_ENABLE = `${API}/factor/enable`
+export const USER_FACTOR_INSERT = `${API}/factor/insert`

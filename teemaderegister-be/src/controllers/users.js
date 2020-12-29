@@ -29,6 +29,11 @@ module.exports.getUser = async (req, res) => {
           full: user.profile.image.full,
           thumb: user.profile.image.thumb
         },
+        auth: {
+      enabled: user.auth.enabled,
+      secret: user.auth.secret,
+      image: user.auth.image
+    },
         
       },
       login: {
@@ -72,8 +77,7 @@ module.exports.getProfile = async (req, res) => {
       -login.passwordResetExpires 
       -login.passwordUpdatedAt 
       -user.profile.image.original
-      -profile.dataQR
-      -profile.asciiQR
+
 
     `)
  
