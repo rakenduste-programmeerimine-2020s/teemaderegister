@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react'
-import { Layout, Table } from 'antd'
+import { Table } from 'antd'
+import API from '../utils/Api'
+import {ADMIN_VIEW_USERS_URL} from '../constants/ApiConstants'
 
 const columns = [
   {
@@ -14,32 +16,21 @@ const columns = [
   },
 ]
 
-function ViewAllUsers() {
+export default function ViewAllUsers() {
   const [users, setUsers] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    const getUserData = async () => {
-      var jwt = localStorage.getItem('jwtToken')
-      const response = await fetch('http://localhost:8080/api/admin/users', {
-        method: 'GET',
-        headers: {
-          Authorization: 'Bearer ' + jwt,
-        },
-      })
-      const jsonData = await response.json()
-      const userInfo = jsonData.map((userData, i) => ({
-        key: i,
-        firstName: userData.profile.firstName,
-        lastName: userData.profile.lastName,
-      }))
-      console.log(userInfo)
-      return userInfo
-    
-    }
-    getUserData().then(setUsers)
-  }, [])
+      API('GET', ADMIN_VIEW_USERS_URL)
+      .then(res => {
+        const userInfo = res.map((userData) => ({
+          key: userData._id,
+          firstName: userData.profile.firstName,
+          lastName: userData.profile.lastName,
+        }))
+        setUsers(userInfo)
+        setIsLoading(false)
+      })}, [])
 
   return <Table dataSource={users} columns={columns} />
 }
-
-export default ViewAllUsers
