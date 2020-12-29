@@ -1,7 +1,7 @@
 const SubclassError = require('subclass-error')
 
 exports.Error = SubclassError('Error', { status: 400, message: 'Bad request' })
-exports.InsertToken = SubclassError('Error', { status: 401, message: 'Please insert token', factoryEnabled: true })
+exports.InsertToken = SubclassError('Error', { status: 401, message: 'Please insert token'})
 
 exports.NotAuthorizedError = SubclassError('NotAuthorizedError', { status: 401, message: 'Unauthorized' })
 exports.ForbiddenError = SubclassError('ForbiddenError', { status: 403 })

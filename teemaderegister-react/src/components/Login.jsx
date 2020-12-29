@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import queryString from 'query-string'
 import { Redirect, Link } from 'react-router-dom'
@@ -41,7 +41,7 @@ class Login extends React.Component {
     if (nextProps.login.loading !== this.state.loading) {
       this.setState({ loading: nextProps.login.loading })
       if (nextProps.login.hasError) {
-        if (nextProps.login.factoryEnabled){
+        if ('Please insert token!' === nextProps.login.error.message){
           this.state.factoryEnabled = true
         }
         message.error(nextProps.login.error.message)
