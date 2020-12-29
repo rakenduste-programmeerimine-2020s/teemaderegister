@@ -2,9 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Breadcrumbs from './Breadcrumbs'
 import { Link } from 'react-router-dom'
+
 import { USER_PICTURE_UPLOAD_URL } from '../constants/ApiConstants'
 import { getToken } from '../utils/jwt'
-import { Row, Col, Checkbox, Form, Input, Button, Upload, message, Avatar, Spin, Modal, Dropdown, Menu, Select } from 'antd'
+
+import { Row, Col, Form, Input, Button, Upload, message, Avatar, Spin, Modal, Dropdown, Menu, Select } from 'antd'
 import { UploadOutlined, CloseCircleOutlined, EditOutlined } from '@ant-design/icons'
 const FormItem = Form.Item
 const { confirm } = Modal
@@ -57,10 +59,7 @@ class SettingsAccount extends React.Component {
     this.submitUpdateProfile = this.submitUpdateProfile.bind(this)
     this.resetPictureConfirm = this.resetPictureConfirm.bind(this)
     this.onUploadPictureChange = this.onUploadPictureChange.bind(this)
-    this.updateTwoFA = this.updateTwoFA.bind(this)
     this.formRef = React.createRef()
-
-    this.state = {}
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -123,19 +122,6 @@ class SettingsAccount extends React.Component {
     })
   }
 
-  updateTwoFA(e) {
-    const { checked } = e.target
-
-    if (checked !== this.props.settings.twofa) {
-      this.setState({ showPasswordConfirm: true })
-      console.log('different')
-
-      return
-    }
-
-    this.setState({ showPasswordConfirm: false })
-  }
-
   render() {
     const crumbs = [{ url: null, name: 'Settings' }]
     const {
@@ -146,8 +132,7 @@ class SettingsAccount extends React.Component {
           profile: { firstName, lastName, image },
           login: { email, roles },
           updatedAt
-        },
-        twofa
+        }
       }
     } = this.props
 
@@ -240,20 +225,6 @@ class SettingsAccount extends React.Component {
                       )}
                     </Select>
                   </FormItem>
-                  <FormItem label='2FA' name='2fa' initialValue={twofa} rules={[{ required: true }]}>
-                    <Checkbox defaultChecked={twofa} onChange={this.updateTwoFA}>2FA enabled</Checkbox>
-                  </FormItem>
-                  {this.state.showPasswordConfirm &&
-                    <div>
-                      QR code
-                    <FormItem label='Password' name='password'>
-                        <Input type='password' />
-                      </FormItem>
-                      <FormItem label='one time password' name='onetimepass'>
-                        <Input type='number' />
-                      </FormItem>
-                    </div>
-                  }
                   <FormItem>
                     <Button
                       type='primary'
@@ -269,12 +240,12 @@ class SettingsAccount extends React.Component {
                     <Button type='primary' className='button--fullWidth'>
                       <Link to='/settings/password'>Change Password</Link>
                     </Button>
-                  </FormItem>
-                  <h2 className='text-align--center'>2FA</h2>
-                  <FormItem>
-                    <Button type='primary' className='button--fullWidth'>
-                      <Link to='/settings/2fa'>Enable 2FA</Link>
-                    </Button>
+                    <h2 className='text-align--center'>2FA</h2>
+                    <FormItem>
+                      <Button type='primary' className='button--fullWidth'>
+                        <Link to='/settings/2fa'>Enable 2FA</Link>
+                      </Button>
+                    </FormItem>
                   </FormItem>
                 </Form>
               </Col>

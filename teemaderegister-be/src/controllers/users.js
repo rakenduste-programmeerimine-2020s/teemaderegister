@@ -8,7 +8,8 @@ const User = require('../models/user')
 const log = require('../utils/logger')
 const { signToken, blacklistToken } = require('../utils/jwt')
 const { Error, NotAuthorizedError } = require('../utils/errors')
-
+const speakeasy=require('speakeasy')
+const qrcode=require('qrcode')
 module.exports.getUser = async (req, res) => {
   // Check if user from token exists
   const user = await User.findById(req.user._id)
@@ -22,16 +23,20 @@ module.exports.getUser = async (req, res) => {
         firstName: user.profile.firstName,
         lastName: user.profile.lastName,
         slug: user.profile.slug,
+        authentication: user.profile.dataQR,
+        asciiQR: user.profile.asciiQR,
         image: {
           full: user.profile.image.full,
           thumb: user.profile.image.thumb
-        }
+        },
+        
       },
       login: {
         email: user.login.email,
         roles: user.login.roles
       },
       updatedAt: user.updatedAt
+
     }
   }
 
@@ -55,17 +60,23 @@ module.exports.getUser = async (req, res) => {
   return res.json(data)
 }
 
+
+
 module.exports.getProfile = async (req, res) => {
   const user = await User
     .findById(req.user._id)
     .select(`
+      
       -login.password 
       -login.passwordResetToken 
       -login.passwordResetExpires 
       -login.passwordUpdatedAt 
-      -profile.image.original
-    `)
+      -user.profile.image.original
+      -profile.dataQR
+      -profile.asciiQR
 
+    `)
+ 
   return res.json({ user })
 }
 
@@ -179,3 +190,28 @@ module.exports.resetPicture = async (req, res) => {
 
   return res.json({ user, message: 'Picture updated successfully' })
 }
+
+// router.post('/factor', async (req, res, next) => {
+//   const { qr_data, ascii } = req.body;
+//
+//   const token = jwt.decode(req.headers['x-auth-token'], process.env.SECRET);
+//   const { _id } = token;
+//   const user = await UserDB.findOne({ _id });
+//   if (!user) return res.json('something is seriously wrong');
+//
+//   try {
+//     if (user.login.factor.enabled) return res.json('Cannot add anymore!');
+//   } catch (e) {
+//     console.log(e);
+//   }
+//
+//   const factorData = {
+//     qr_data,
+//     ascii,
+//     enabled: true
+//   };
+//   await UserDB.update({ _id }, { $set: { 'login.factor': factorData } });
+//   user.login.factor = factorData;
+//
+//   res.json(user);
+// });

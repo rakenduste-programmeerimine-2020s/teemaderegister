@@ -18,6 +18,9 @@ const userSchema = new mongoose.Schema(
         thumb: { type: String, default: 'profile/thumbnail/thumb-default.jpg' }
       }
     },
+    factor:{
+      type:String
+    },
 
     login: {
       email: { type: String },

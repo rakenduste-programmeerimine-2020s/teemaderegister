@@ -15,6 +15,7 @@ const supervisors = require('./controllers/supervisors')
 const topics = require('./controllers/topics')
 const users = require('./controllers/users')
 const admin = require('./controllers/admin')
+const factor = require('./controllers/factor')
 
 router.post('/auth/local/login', validate.localLogin, asyncMiddleware(auth.localLogin))
 router.post('/auth/local/signup', validate.localSignup, asyncMiddleware(auth.localSignup))
@@ -40,6 +41,10 @@ router.get('/users/profile', jwtEnsure, asyncMiddleware(users.getProfile))
 router.put('/users/profile', jwtEnsure, validate.userAccountUpdate, asyncMiddleware(users.updateUser))
 router.put('/users/password', jwtEnsure, validate.userPasswordUpdate, asyncMiddleware(users.updatePassword))
 router.post('/users/upload-picture', jwtEnsure, multerMiddleware('profileImage'), asyncMiddleware(users.uploadPicture))
+
+router.post('/factor', jwtEnsure, asyncMiddleware(factor.create))
+router.get('/factor', jwtEnsure, asyncMiddleware(factor.get))
+
 router.put('/users/reset-picture', jwtEnsure, asyncMiddleware(users.resetPicture))
 
 // SAMPLE
