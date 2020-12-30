@@ -7,30 +7,31 @@ const columns = [
   {
     title: 'First Name',
     dataIndex: 'firstName',
-    key: 'firstName',
+    key: 'firstName'
   },
   {
     title: 'Last Name',
     dataIndex: 'lastName',
-    key: 'lastName',
-  },
+    key: 'lastName'
+  }
 ]
 
-export default function ViewAllUsers() {
+export default function ViewAllUsers () {
   const [users, setUsers] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-      API('GET', ADMIN_VIEW_USERS_URL)
+    API('GET', ADMIN_VIEW_USERS_URL)
       .then(res => {
         const userInfo = res.map((userData) => ({
           key: userData._id,
           firstName: userData.profile.firstName,
-          lastName: userData.profile.lastName,
+          lastName: userData.profile.lastName
         }))
         setUsers(userInfo)
         setIsLoading(false)
-      })}, [])
+      })
+  }, [])
 
-  return <Table dataSource={users} columns={columns} />
+  return <Table dataSource={users} columns={columns} loading={isLoading}/>
 }
