@@ -8,6 +8,13 @@ const { signToken, blacklistToken } = require('../utils/jwt')
 
 const { Error } = require('../utils/errors')
 
+module.exports.getPasswordResetTokenValues = () => {
+  return {
+    passwordResetToken: crypto.randomBytes(20).toString('hex'),
+    passwordResetExpires: Date.now() + parseInt(process.env.PASSWORD_RESET_TOKEN_EXPIRES)
+  }
+}
+
 module.exports.localLogin = async (req, res) => {
   const { email, password } = req.body
 
@@ -83,8 +90,7 @@ module.exports.forgotPassword = async (req, res) => {
   }
   user.login = {
     ...user.login,
-    passwordResetToken: crypto.randomBytes(20).toString('hex'),
-    passwordResetExpires: Date.now() + parseInt(process.env.PASSWORD_RESET_TOKEN_EXPIRES)
+    ...this.getPasswordResetTokenValues()
   }
 
   await user.save()

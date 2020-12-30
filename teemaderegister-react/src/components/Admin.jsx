@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {Layout, Menu} from 'antd'
-import {BookOutlined, LaptopOutlined, UserOutlined} from '@ant-design/icons'
+import {BookOutlined, LaptopOutlined, UserOutlined, UserAddOutlined} from '@ant-design/icons'
 import AdminConfirmations from './AdminConfirmations'
 import AdminTopics from './AdminTopics'
 import AdminUsers from './AdminUsers'
@@ -38,7 +38,8 @@ class Admin extends React.Component {
       defended: <AdminTopics type='defended'/>,
       confs: <AdminConfirmations/>,
       supervisors: <AdminUsers type='supervisor'/>,
-      students: <AdminUsers type='students'/>
+      students: <AdminUsers type='students'/>,
+      addNewUser: <AdminUsers type='add-new-user'/>
     }
 
     this.defaultPage = 'registered'
@@ -102,6 +103,10 @@ class Admin extends React.Component {
                 {(isAdmin || isStudyAssistant) &&
                 <SubMenu key='users' title={<span><UserOutlined/>Users</span>}>
                   <Menu.Item key='allusers'>All users</Menu.Item>
+                  <Menu.Item
+                    key='addNewUser'
+                    icon={<UserAddOutlined/>}>Add new user</Menu.Item>
+
                 </SubMenu>
                 }
               </Menu>

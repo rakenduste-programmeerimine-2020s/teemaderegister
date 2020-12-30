@@ -1,0 +1,22 @@
+body {
+  background-color: white;
+  text-align: center;
+}
+
+h1 {
+  color: rgb(60, 114, 105);
+}
+
+.reset-btn {
+  display: inline-block;
+  background: lightblue;
+  border: none;
+  color: black;
+  padding: 10px 20px;
+  text-decoration: none;
+  margin: 40px;
+}
+
+.reset-btn:hover {
+ cursor: pointer;
+}
