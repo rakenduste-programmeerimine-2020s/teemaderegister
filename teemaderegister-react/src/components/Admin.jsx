@@ -38,7 +38,7 @@ class Admin extends React.Component {
       defended: <AdminTopics type='defended'/>,
       confs: <AdminConfirmations/>,
       supervisors: <AdminUsers type='supervisor'/>,
-      students: <AdminUsers type='students'/>,
+      students: <AdminUsers type='students'/>
     }
 
     this.defaultPage = 'registered'
@@ -101,7 +101,7 @@ class Admin extends React.Component {
                 </Menu.Item>
                 {(isAdmin || isStudyAssistant) &&
                 <SubMenu key='users' title={<span><UserOutlined/>Users</span>}>
-                  <Menu.Item key='supervisors'>All users</Menu.Item>
+                  <Menu.Item key='allusers'>All users</Menu.Item>
                 </SubMenu>
                 }
               </Menu>

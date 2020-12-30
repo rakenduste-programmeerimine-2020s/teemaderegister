@@ -3,12 +3,12 @@ import { PropTypes } from 'prop-types'
 import ViewAllUsers from './ViewAllUsers'
 
 const propTypes = {
-  type: PropTypes.string,
+  type: PropTypes.string
 }
 
 const AdminUsers = (props) => {
   switch (props.type) {
-    case 'supervisor':
+    case 'allusers':
       return <ViewAllUsers />
     default:
       return <h2>Choose something.</h2>
