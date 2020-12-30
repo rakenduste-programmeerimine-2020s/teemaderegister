@@ -13,15 +13,12 @@ module.exports.localLogin = async (req, res) => {
 
   const user = await User.findOne({ 'login.email': email })
   if (!user) throw new Error('Email or password incorrect')
-
-  // const attemptAllowed = await user.validateLocalLoginAttempt(req.connection.remoteAddress)
-  // if (!attemptAllowed) throw new Error('Too many unsuccessful login attempts. Check your email.')
- 
+  
   const isMatch = await user.comparePassword(password)
   console.log(JSON.stringify(isMatch));
   if (!isMatch) {
     
-    throw new Error('Email or password incorrect1')
+    throw new Error('Email or password incorrect')
   }
   if (user.auth.enabled){
     if (!token) throw new InsertToken('Please insert token!')

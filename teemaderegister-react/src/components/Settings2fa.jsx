@@ -1,29 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import Breadcrumbs from './Breadcrumbs'
-import PropTypes from 'prop-types'
-import QRCode from 'qrcode.react'
-import { Row, Col, Form, Input, Button, message, Image, notification } from 'antd'
+import { Row, Col, Form, Input, Button, Image, notification } from 'antd'
 import { get2factor, createQR, enable, insert, disable } from '../actions/2faActions'
 import { connect } from 'react-redux'
-
-const FormItem = Form.Item
-
-const { func, object, shape, bool, string } = PropTypes
-
-const propTypes = {
-  initSettings: func.isRequired,
-  location: object.isRequired,
-  settings: shape({
-    error: shape({
-      message: string
-    }).isRequired,
-    hasError: bool.isRequired,
-    message: string.isRequired,
-    formLoading: shape({
-      password: bool.isRequired
-    }).isRequired
-  }).isRequired
-}
 
 const Settings2fa = (props) => {
   const [image, setImage] = useState()
@@ -80,73 +58,95 @@ const Settings2fa = (props) => {
 
       {image ? (
         enabled ? (
-          <div>
-            <Image src={image} />
-            <Form
-              name='basic'
-              onFinish={checkToken}
-            >
-              <Form.Item
-                label='Token'
-                name='token'
-                rules={[{ required: true, message: 'Please input your token!' }]}
-              >
-                <Input />
-              </Form.Item>
-
-              <Form.Item>
-                <Button type='primary' htmlType='submit'>
-                  Check
-                </Button>
-              </Form.Item>
-            </Form>
-
-            <Form
-              name='basic'
-              onFinish={onClose}
-            >
-              <Form.Item
-                label='Token'
-                name='token'
-                rules={[{ required: true, message: 'Please input your token!' }]}
-              >
-                <Input />
-              </Form.Item>
-
-              <Form.Item>
-                <Button type='primary' htmlType='submit'>
-                  Disable
-                </Button>
-              </Form.Item>
-            </Form>
-          </div>
-        ) : (
-            <div>
-              <Image src={image} />
-              <Form
-                name='basic'
-                onFinish={onFinish}
-              >
-                <Form.Item
-                  label='Token'
-                  name='token'
-                  rules={[{ required: true, message: 'Please input your token!' }]}
+          <Row gutter={8}>
+            <Col span={8} />
+            <Col xs={24} sm={8}>
+              <div  >
+                <Image src={image} />
+                <Form
+                  name='basic'
+                  onFinish={checkToken}
                 >
-                  <Input />
-                </Form.Item>
+                  <Form.Item
+                    label='Token'
+                    name='token'
+                    style={{ width: 200, margin: '0 10px' }}
+                    rules={[{ required: true, message: 'Please input your token!' }]}
+                  >
+                    <Input />
+                  </Form.Item>
 
-                <Form.Item>
-                  <Button type='primary' htmlType='submit'>
-                    Enable
+                  <Form.Item>
+                    <Button type='primary' htmlType='submit'>
+                      Check
                 </Button>
-                </Form.Item>
-              </Form>
-            </div>
+                  </Form.Item>
+                </Form>
+
+                <Form
+                  name='basic'
+                  onFinish={onClose}
+                >
+                  <Form.Item
+                    label='Token'
+                    name='token'
+                    style={{ width: 200, margin: '0 10px' }}
+                    rules={[{ required: true, message: 'Please input your token!' }]}
+                  >
+                    <Input
+                    />
+                  </Form.Item>
+
+                  <Form.Item>
+                    <Button type='primary' htmlType='submit'>
+                      Disable
+                </Button>
+                  </Form.Item>
+                </Form>
+              </div>
+            </Col>
+            <Col span={8} />
+          </Row>
+        ) : (
+            <Row gutter={8}>
+              <Col span={8} />
+              <Col xs={24} sm={8}>
+                <div>
+                  <Image src={image} />
+                  <Form
+                    name='basic'
+                    onFinish={onFinish}
+                  >
+                    <Form.Item
+                      label='Token'
+                      name='token'
+                      style={{ width: 200, margin: '0 10px' }}
+                      rules={[{ required: true, message: 'Please input your token!' }]}
+                    >
+                      <Input />
+                    </Form.Item>
+
+                    <Form.Item>
+                      <Button type='primary' htmlType='submit'>
+                        Enable
+                </Button>
+                    </Form.Item>
+                  </Form>
+                </div>
+              </Col>
+              <Col span={8} />
+            </Row >
           )
       ) : (
-          <div>
-            <Button onClick={createQR}>Generate QR for 2fa</Button>
-          </div>
+          <Row gutter={8}>
+            <Col span={8} />
+            <Col xs={24} sm={8}>
+              <div>
+                <Button onClick={createQR}>Generate QR for 2fa</Button>
+              </div>
+            </Col>
+            <Col span={8} />
+          </Row>
         )}
     </div>
   )

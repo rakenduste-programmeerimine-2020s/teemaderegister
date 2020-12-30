@@ -194,28 +194,3 @@ module.exports.resetPicture = async (req, res) => {
 
   return res.json({ user, message: 'Picture updated successfully' })
 }
-
-// router.post('/factor', async (req, res, next) => {
-//   const { qr_data, ascii } = req.body;
-//
-//   const token = jwt.decode(req.headers['x-auth-token'], process.env.SECRET);
-//   const { _id } = token;
-//   const user = await UserDB.findOne({ _id });
-//   if (!user) return res.json('something is seriously wrong');
-//
-//   try {
-//     if (user.login.factor.enabled) return res.json('Cannot add anymore!');
-//   } catch (e) {
-//     console.log(e);
-//   }
-//
-//   const factorData = {
-//     qr_data,
-//     ascii,
-//     enabled: true
-//   };
-//   await UserDB.update({ _id }, { $set: { 'login.factor': factorData } });
-//   user.login.factor = factorData;
-//
-//   res.json(user);
-// });

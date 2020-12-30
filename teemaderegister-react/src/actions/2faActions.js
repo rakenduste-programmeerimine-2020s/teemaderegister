@@ -1,19 +1,5 @@
 import Api from '../utils/Api'
-
 import {USER_FACTOR,USER_FACTOR_ENABLE,USER_FACTOR_INSERT,USER_FACTOR_DISABLE} from '../constants/ApiConstants'
-
-
-// // export const get2factor = () => dispatch => {
-// export const get2factor = q => dispatch => {
-//     // return Api('POST', USER_FACTOR)
-//     return Api('GET', USER_FACTOR, { params: { q } })
-//         .then(data => {
-//             return data
-//         })
-//         .catch(err => {
-//             console.log(err)
-//         })
-// }
 
 export const get2factor = userData => {
     return async () => {
@@ -24,7 +10,6 @@ export const get2factor = userData => {
         }
     }
 }
-
 
 export const createQR = userData => {
     return async () => {
@@ -45,6 +30,7 @@ export const enable = userData => {
         }
     }
 }
+
 export const disable = userData => {
     return async () => {
         try {
