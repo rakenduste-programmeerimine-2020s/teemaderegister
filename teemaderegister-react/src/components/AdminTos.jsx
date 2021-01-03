@@ -22,37 +22,40 @@ const AdminTos = props => {
     flipEditable()
   }
 
+  const displayContent = (
+    <Content>
+      <Paragraph>{content}</Paragraph>
+      <Button
+        type='primary'
+        onClick={flipEditable}
+      >
+        {'Edit'}
+      </Button>
+    </Content>
+  )
+
+  const editForm = (
+    <Form onFinish={onFinish} initialValues={{ 'textInput': content, 'innerTextInput': content }}>
+      <Form.Item name={'textInput'}>
+        <TextArea name={'innerTextInput'} size={'large'} autoSize={true} />
+      </Form.Item>
+      <Space>
+        <Form.Item>
+          <Button type='primary' htmlType='submit'>{'Save'}</Button>
+        </Form.Item>
+        <Form.Item>
+          <Button type='danger' htmlType='reset' onClick={flipEditable}>Cancel</Button>
+        </Form.Item>
+      </Space>
+    </Form>
+  )
+
   return (
     <Layout className='layout termsOfService width--public-page'>
       <Space direction='vertical' align='center'>
         <Title>{'Teemaderegister Terms of Service'}</Title>
       </Space>
-      {!editable &&
-        <Content>
-          <Paragraph>{content}</Paragraph>
-          <Button
-            type='primary'
-            onClick={flipEditable}
-          >
-            {'Edit'}
-          </Button>
-        </Content>
-      }
-      {editable &&
-        <Form onFinish={onFinish} initialValues={{ 'textInput': content, 'innerTextInput': content }}>
-          <Form.Item name={'textInput'}>
-            <TextArea name={'innerTextInput'} size={'large'} autoSize={true} />
-          </Form.Item>
-          <Space>
-            <Form.Item>
-              <Button type='primary' htmlType='submit'>{'Save'}</Button>
-            </Form.Item>
-            <Form.Item>
-              <Button type='danger' htmlType='reset' onClick={flipEditable}>Cancel</Button>
-            </Form.Item>
-          </Space>
-        </Form>
-      }
+      {editable ? editForm : displayContent}
     </Layout>
   )
 }
