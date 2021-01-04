@@ -11,7 +11,7 @@ const propTypes = {
 const AdminUsers = (props) => {
   switch (props.type) {
     case 'allusers':
-      return <ViewAllUsers />
+      return <ViewAllUsers/>
     case 'add-new-user':
       return (
         <Card>
