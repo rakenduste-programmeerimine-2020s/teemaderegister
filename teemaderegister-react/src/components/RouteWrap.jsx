@@ -29,6 +29,7 @@ class RouteWrap extends React.Component {
     this.props.checkUser()
   }
 
+  // eslint-disable-next-line camelcase
   UNSAFE_componentWillReceiveProps (nextProps) {
     if (this.props.auth.authInProgress === true &&
         nextProps.auth.authInProgress === false) {

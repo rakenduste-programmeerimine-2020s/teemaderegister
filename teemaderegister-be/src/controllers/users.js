@@ -8,7 +8,6 @@ const User = require('../models/user')
 const log = require('../utils/logger')
 const { signToken, blacklistToken } = require('../utils/jwt')
 const { Error, NotAuthorizedError } = require('../utils/errors')
-
 module.exports.getUser = async (req, res) => {
   // Check if user from token exists
   const user = await User.findById(req.user._id)
@@ -22,16 +21,25 @@ module.exports.getUser = async (req, res) => {
         firstName: user.profile.firstName,
         lastName: user.profile.lastName,
         slug: user.profile.slug,
+        authentication: user.profile.dataQR,
+        asciiQR: user.profile.asciiQR,
         image: {
           full: user.profile.image.full,
           thumb: user.profile.image.thumb
+        },
+        auth: {
+          enabled: user.auth.enabled,
+          secret: user.auth.secret,
+          image: user.auth.image
         }
+
       },
       login: {
         email: user.login.email,
         roles: user.login.roles
       },
       updatedAt: user.updatedAt
+
     }
   }
 
@@ -59,11 +67,14 @@ module.exports.getProfile = async (req, res) => {
   const user = await User
     .findById(req.user._id)
     .select(`
+      
       -login.password 
       -login.passwordResetToken 
       -login.passwordResetExpires 
       -login.passwordUpdatedAt 
-      -profile.image.original
+      -user.profile.image.original
+
+
     `)
 
   return res.json({ user })

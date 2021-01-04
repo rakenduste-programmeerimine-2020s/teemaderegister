@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { Link } from 'react-router-dom'
@@ -162,7 +163,6 @@ class HeaderWrap extends Component {
                 className='search__input'
                 size='large'
                 placeholder='Search by title, author or supervisor'
-                defaultValue={this.defaultSearch}
                 onSearch={this.handleSearch}
               />
             </Form>

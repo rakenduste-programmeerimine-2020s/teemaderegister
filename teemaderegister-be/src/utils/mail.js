@@ -5,7 +5,6 @@ const juice = require('juice')
 const Promise = require('bluebird')
 const path = require('path')
 const TEMPLATE_FOLDER_PATH = path.join(__dirname, '../', 'mailTemplates')
-const log = require('./logger')
 
 const transporterSettings = {
   host: process.env.MAILSERVICE_HOST,
@@ -44,8 +43,6 @@ module.exports.sendMail = (options) => {
     html,
     text
   }
-
-  log.debug(mailOptions)
 
   const nodemailerSendMail = Promise.promisify(transport.sendMail, { context: transport })
   return nodemailerSendMail(mailOptions)

@@ -17,6 +17,7 @@ export const getProfile = () => dispatch => {
     .then(data => {
       const { user } = data
       dispatch({ type: types.USER_SETTINGS_LOADED, user })
+      console.log(data)
     })
     .catch(err => {
       console.log(err)

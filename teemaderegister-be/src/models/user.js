@@ -32,6 +32,11 @@ const userSchema = new mongoose.Schema(
         enum: Object.values(roles)
       }]
     },
+    auth: {
+      enabled: {type: Boolean, default: false},
+      secret: {type: String},
+      image: {type: String}
+    },
 
     settings: {
       language: { type: String }
@@ -73,8 +78,11 @@ userSchema.pre('save', async function (next) {
 * Helper method for validating user's password on login through user.comparePassword
 * Important! Do not use arrow function, will lose ref to (this)
 */
-userSchema.methods.comparePassword = function (candidatePassword) {
-  return bcrypt.compare(candidatePassword, this.login.password)
+userSchema.methods.comparePassword = async function (candidatePassword) {
+  const value = await bcrypt.compare(candidatePassword, this.login.password)
+  console.log(this.login.password)
+  console.log(candidatePassword)
+  return value
 }
 
 userSchema.methods.validateLocalLoginAttempt = async function (ip) {
