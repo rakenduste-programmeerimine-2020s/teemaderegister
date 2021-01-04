@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import { Route, Switch, BrowserRouter, browserHistory } from 'react-router-dom'
+import { Route, Switch, BrowserRouter, browserHistory, Link } from 'react-router-dom'
 import { GithubOutlined } from '@ant-design/icons'
 
 import {
@@ -15,7 +15,8 @@ import {
   ACCOUNT_FORGOT,
   ACCOUNT_PASSWORD,
   SETTINGS_ACCOUNT_PATH,
-  SETTINGS_PASSWORD_PATH
+  SETTINGS_PASSWORD_PATH,
+  TOS_PATH
 } from './constants/RouterConstants'
 
 import CurriculumContainer from './containers/CurriculumContainer'
@@ -32,6 +33,7 @@ import AccountPasswordContainer from './containers/AccountPasswordContainer'
 import SettingsAccountContainer from './containers/SettingsAccountContainer'
 import SettingsPasswordContainer from './containers/SettingsPasswordContainer'
 import CurriculumAddContainer from './containers/CurriculumAddContainer'
+import TermsOfServiceContainer from './containers/TermsOfServiceContainer'
 
 import store from './store/configureStore'
 import { initAnalytics } from './utils/Analytics'
@@ -95,6 +97,9 @@ render(
                 <Route path={ACCOUNT_PASSWORD} component={
                   RouteWrapContainer(props => <AccountPasswordContainer {...props} />)
                 } />
+                <Route path={TOS_PATH} component={
+                  RouteWrapContainer(props => <TermsOfServiceContainer {...props} />)
+                } />
                 <Route component={
                   RouteWrapContainer(props => <NotFound {...props} />)
                 } />
@@ -102,9 +107,10 @@ render(
             </div>
           </Content>
           <Footer className='layout__footer'>
-            <a href={links.project}><GithubOutlined /> Teemaderegister</a><br/>
+            <a href={links.project}> Teemaderegister</a><br/>
             Code licensed under <a href={links.license}>MIT License</a><br/>
-            Content © 2010-{new Date().getFullYear()} <a href={links.content}>Tallinn University</a>
+            Content © 2010-{new Date().getFullYear()} <a href={links.content}>Tallinn University</a><br/>
+            <Link to={TOS_PATH}>Terms of Service</Link>
           </Footer>
         </Layout>
       </ConfigProvider>
