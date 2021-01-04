@@ -15,8 +15,7 @@ module.exports.create = async (req, res) => {
     console.log(e)
   }
 
-  // eslint-disable-next-line handle-callback-err
-  console.log(qrcode.toDataURL(secret.otpauth_url, async (err, data) => {
+  console.log(qrcode.toDataURL(secret.otpauth_url, async (_err, data) => {
     user.auth.secret = secret.base32
     user.auth.image = data
     await user.save()

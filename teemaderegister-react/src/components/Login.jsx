@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import React from 'react'
 import PropTypes from 'prop-types'
 import queryString from 'query-string'
@@ -43,8 +42,7 @@ class Login extends React.Component {
       this.setState({ loading: nextProps.login.loading })
       if (nextProps.login.hasError) {
         if (nextProps.login.error.message === 'Please insert token!') {
-          // eslint-disable-next-line react/no-direct-mutation-state
-          this.state.factoryEnabled = true
+          this.setState({factoryEnabled: true})
         }
         message.error(nextProps.login.error.message)
       }

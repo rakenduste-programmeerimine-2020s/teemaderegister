@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
 import { Row, Col, Form, Input, Button, Image, notification } from 'antd'
 import { get2factor, createQR, enable, insert, disable } from '../actions/2faActions'

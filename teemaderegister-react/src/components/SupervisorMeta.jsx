@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import React, { PureComponent } from 'react'
 import { PropTypes } from 'prop-types'
 import { Row, Col, Popover, Card } from 'antd'

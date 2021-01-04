@@ -25,7 +25,7 @@ const AddNewUserForm = (props) => {
 
   const onFinish = async (values) => {
     setIsLoading(true)
-    // eslint-disable-next-line react/prop-types
+
     const response = await props.adminAddNewUser(values)
     const {message, success} = response
 

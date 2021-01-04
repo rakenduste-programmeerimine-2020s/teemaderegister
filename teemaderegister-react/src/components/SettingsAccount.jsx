@@ -62,7 +62,6 @@ class SettingsAccount extends React.Component {
     this.formRef = React.createRef()
   }
 
-  // eslint-disable-next-line camelcase
   UNSAFE_componentWillReceiveProps (nextProps) {
     const { settings: { formLoading } } = this.props
     const {

@@ -32,7 +32,6 @@ class AccountForgot extends React.Component {
     this.formRef = React.createRef()
   }
 
-  // eslint-disable-next-line camelcase
   UNSAFE_componentWillReceiveProps (nextProps) {
     const { password } = this.props
     const { message: newMessage, hasError, loading, error } = nextProps.password
@@ -48,7 +47,6 @@ class AccountForgot extends React.Component {
     }
   }
 
-  // eslint-disable-next-line camelcase
   UNSAFE_componentWillMount () {
     this.props.initPasswordReset()
 

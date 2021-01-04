@@ -41,7 +41,6 @@ const propTypes = {
 }
 
 class Supervisor extends React.Component {
-  // eslint-disable-next-line camelcase
   UNSAFE_componentWillReceiveProps (nextProps) {
     // FIX new supervisor slug update view
     const isNewSlug =

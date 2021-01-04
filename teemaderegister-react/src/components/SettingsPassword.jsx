@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import React from 'react'
 import Breadcrumbs from './Breadcrumbs'
 import PropTypes from 'prop-types'
