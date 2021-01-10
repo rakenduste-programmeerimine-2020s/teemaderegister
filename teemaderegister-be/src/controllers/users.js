@@ -181,7 +181,7 @@ module.exports.resetPicture = async (req, res) => {
 }
 
 module.exports.getAllUsers = async (req, res) => {
-  const users = await User.find({}, {login: 0})
+  const users = await User.find({}, {'login.password': 0})
 
   return res.json(users)
 }
