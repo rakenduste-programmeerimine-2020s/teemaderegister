@@ -35,6 +35,7 @@ router.get('/supervisors/curriculumForm/', asyncMiddleware(supervisors.getSuperv
 router.get('/supervisors/:slug', asyncMiddleware(supervisors.getSupervisorBySlug))
 
 router.get('/topics/', asyncMiddleware(topics.getTopics))
+router.post('/topics/supervisor', jwtEnsure, allowRoles([SUPERVISOR, ADMIN]), asyncMiddleware(topics.getSupervisorTopics))
 
 router.get('/users/me', jwtEnsure, asyncMiddleware(users.getUser))
 router.get('/users/profile', jwtEnsure, asyncMiddleware(users.getProfile))

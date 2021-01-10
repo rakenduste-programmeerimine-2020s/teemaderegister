@@ -63,6 +63,26 @@ module.exports.getTopics = async (req, res) => {
   return res.json({ topics, count, query })
 }
 
+module.exports.getSupervisorTopics = async (req, res) => {
+  const {_id} = req.user
+  const {search} = req.body
+
+  if (search === 'available') {
+    // eslint-disable-next-line standard/object-curly-even-spacing
+    const topics = await Topic.find({'supervisors.supervisor': _id, available: {$exists: true} })
+    return res.json(topics)
+  } else if (search === 'defended') {
+    // eslint-disable-next-line standard/object-curly-even-spacing
+    const topics = await Topic.find({'supervisors.supervisor': _id, defended: {$exists: true} })
+    return res.json(topics)
+  } else if (search === 'registered') {
+    // eslint-disable-next-line standard/object-curly-even-spacing
+    const topics = await Topic.find({'supervisors.supervisor': _id, registered: {$exists: true} })
+    return res.json(topics)
+  }
+  res.json('ERROR')
+}
+
 exports.getRelatedTopicsIds = async q => (await Topic.aggregate([
   {
     $project: {

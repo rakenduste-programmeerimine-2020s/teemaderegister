@@ -4,6 +4,7 @@ export const AUTH_LOCAL_LOGIN_URL = `${API}/auth/local/login`
 export const AUTH_LOGOUT_URL = `${API}/auth/logout`
 export const CURRICULUMS_URL = `${API}/curriculums`
 export const CURRICULUM_SLUG_URL = `${API}/curriculums/:slug`
+export const TOPICS_SUPERVISOR_URL = `${API}/topics/supervisor`
 export const PASSWORD_FORGOT_URL = `${API}/auth/forgot`
 export const PASSWORD_RESET_URL = `${API}/auth/reset/:token`
 export const SEARCH_COUNTS_URL = `${API}/search/counts`

@@ -1,6 +1,5 @@
 import * as types from '../constants/ActionTypes'
 import Api from '../utils/Api'
-
 import {
   CURRICULUMS_URL,
   CURRICULUM_SLUG_URL
