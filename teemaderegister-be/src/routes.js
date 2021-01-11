@@ -15,6 +15,7 @@ const supervisors = require('./controllers/supervisors')
 const topics = require('./controllers/topics')
 const users = require('./controllers/users')
 const admin = require('./controllers/admin')
+const tos = require('./controllers/tos')
 const factor = require('./controllers/factor')
 
 router.post('/auth/local/login', validate.localLogin, asyncMiddleware(auth.localLogin))
@@ -52,5 +53,7 @@ router.put('/users/reset-picture', jwtEnsure, asyncMiddleware(users.resetPicture
 
 // SAMPLE
 router.get('/admin/', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(admin.getSecret))
-
+router.post('/admin/createUser', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(admin.createUser))
+router.post('/admin/tos/save', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(tos.saveTos))
+router.get('/tos', asyncMiddleware(tos.getTos))
 module.exports = router

@@ -37,6 +37,9 @@ class AccountPassword extends React.Component {
     this.handleInactiveInput = this.handleInactiveInput.bind(this)
     this.submit = this.submit.bind(this)
     this.formRef = React.createRef()
+    let uri = window.location.search.substring(1)
+    let params = new URLSearchParams(uri)
+    this.is_new = !!params.get('is-new')
   }
 
   UNSAFE_componentWillReceiveProps (nextProps) {
@@ -110,6 +113,7 @@ class AccountPassword extends React.Component {
           <Col span={8} />
           <Col xs={24} sm={8}>
             <Form ref={this.formRef} onFinish={this.submit} className='form--narrow'>
+              <h2 className='text-align--center'>{this.is_new ? 'Password create' : 'Password reset'}</h2>
               <h2 className='text-align--center'>Password reset</h2>
               <FormItem name='password' rules={[
                 { required: true, message: 'Please input your password!' },
@@ -142,6 +146,7 @@ class AccountPassword extends React.Component {
                   className='button--fullWidth'
                   loading={loading}
                 >
+                  {this.is_new ? 'Create password' : 'Reset password'}
                   Reset password
                 </Button>
               </FormItem>
