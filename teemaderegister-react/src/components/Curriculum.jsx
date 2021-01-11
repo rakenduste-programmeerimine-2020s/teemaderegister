@@ -5,6 +5,8 @@ import Breadcrumbs from './Breadcrumbs'
 import TableWrap from '../components/TableWrap'
 import getTabs from '../utils/getTabs'
 import CurriculumMeta from './CurriculumMeta'
+import {Button, Result} from 'antd'
+import {Link} from 'react-router-dom'
 
 const { bool, func, object, shape } = PropTypes
 
@@ -55,23 +57,34 @@ class Curriculum extends React.Component {
       topics
     } = this.props
 
+    console.log(this.props)
     return (
-      <div className='curriculum width--public-page'>
-        {!loading &&
+        <div className='curriculum width--public-page'>
+
+          {
+            curriculum.error && <Result
+                status='404'
+                title='404'
+                subTitle={curriculum.message}
+                extra={<Button type='primary'><Link to='/'>Back Home</Link></Button>}
+            />
+          }
+
+          {!loading &&
           <div>
             <Breadcrumbs crumbs={this.getCrumbs(meta.names.et)} />
             <CurriculumMeta meta={meta} />
             <TableWrap
-              clearTableContent={clearTableContent}
-              curriculum={curriculum}
-              getTableContent={getTableContent}
-              history={this.props.history}
-              queryExtend={{ curriculumId: meta._id }}
-              tabs={getTabs({ topics, supervisors })}
-              tableContent={tableContent}
+                clearTableContent={clearTableContent}
+                curriculum={curriculum}
+                getTableContent={getTableContent}
+                history={this.props.history}
+                queryExtend={{ curriculumId: meta._id }}
+                tabs={getTabs({ topics, supervisors })}
+                tableContent={tableContent}
             />
           </div>}
-      </div>
+        </div>
     )
   }
 }

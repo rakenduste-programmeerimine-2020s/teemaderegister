@@ -31,19 +31,19 @@ export const getCurriculums = () => dispatch => {
       type: types.CURRICULUMS_LOADED,
       curriculums: data.curriculums
     }))
-    .catch(err => {
-      console.log(err)
-    })
+      .catch(err => {
+          console.log(err)
+      })
 }
 
 export const getCurriculum = slug => dispatch => {
-  return Api('GET', CURRICULUM_SLUG_URL.replace(':slug', slug))
-    .then(data => {
-      const { meta, supervisors, topics } = data
-      dispatch(loadedTableContentCount({ topics, supervisors }))
-      dispatch({ type: types.CURRICULUM_LOADED, meta })
-    })
-    .catch(err => {
-      console.log(err)
-    })
+    return Api('GET', CURRICULUM_SLUG_URL.replace(':slug', slug))
+        .then(data => {
+            const { meta, supervisors, topics } = data
+            dispatch(loadedTableContentCount({ topics, supervisors }))
+            dispatch({ type: types.CURRICULUM_LOADED, meta })
+        })
+        .catch(err => {
+            dispatch({ type: types.CURRICULUM_NOT_FOUND, message: err.data.message})
+        })
 }

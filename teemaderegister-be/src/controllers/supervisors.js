@@ -2,6 +2,7 @@ const Topic = require('../models/topic')
 const User = require('../models/user')
 const moment = require('moment')
 const mongoose = require('mongoose')
+const {NotFoundError} = require('../utils/errors')
 const { validateGetSupervisorsQuery } = require('./../utils/queryValidation')
 
 module.exports.getSupervisors = async (req, res) => {
@@ -150,6 +151,7 @@ module.exports.getSupervisorBySlug = async (req, res) => {
   const supervisor = await User
     .findOne({ 'profile.slug': req.params.slug })
     .select('_id profile')
+  if (!supervisor) throw new NotFoundError(`no supervisor with slug ${req.params.slug}`)
 
   const topics = await Topic
     .find({ 'supervisors.supervisor': { $in: [supervisor._id] } })
