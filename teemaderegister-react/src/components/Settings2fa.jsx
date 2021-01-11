@@ -64,6 +64,8 @@ const Settings2fa = (props) => {
                   name='basic'
                   onFinish={checkToken}
                 >
+                  <h2 >Check if your QR code still matches</h2>
+                  <h3 >Insert the QR token and press Check to verify your 2fa setup</h3>
                   <Form.Item
                     label='Token'
                     name='token'
@@ -84,6 +86,8 @@ const Settings2fa = (props) => {
                   name='basic'
                   onFinish={onClose}
                 >
+                  <h2 >Currently the 2FA is Enabled</h2>
+                  <h3 >Insert the QR token and press Disable to deactivate 2fa</h3>
                   <Form.Item
                     label='Token'
                     name='token'
@@ -109,6 +113,8 @@ const Settings2fa = (props) => {
             <Col span={8} />
             <Col xs={24} sm={8}>
               <div>
+                <h2 >Currently the 2FA is Disabled</h2>
+                <h3 >Insert the QR token and press enable to activate 2fa</h3>
                 <Image src={image} />
                 <Form
                   name='basic'
