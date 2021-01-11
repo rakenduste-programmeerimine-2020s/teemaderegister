@@ -139,7 +139,11 @@ const Settings2fa = (props) => {
           <Col span={8} />
           <Col xs={24} sm={8}>
             <div>
-              <Button onClick={createQR}>Generate QR for 2fa</Button>
+              <Form.Item
+                style={{height: 200, width: 200, margin: 'auto', marginTop: '10%'}}>
+                <h2 className='text-align--center'>It seems you haven't setup any 2FA</h2>
+                <Button onClick={createQR}>Generate QR for 2fa</Button>
+              </Form.Item>
             </div>
           </Col>
           <Col span={8} />

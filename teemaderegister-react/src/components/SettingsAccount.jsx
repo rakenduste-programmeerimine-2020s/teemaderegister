@@ -243,7 +243,7 @@ class SettingsAccount extends React.Component {
                     <h2 className='text-align--center'>2FA</h2>
                     <FormItem>
                       <Button type='primary' className='button--fullWidth'>
-                        <Link to='/settings/2fa'>Enable 2FA</Link>
+                        <Link to='/settings/2fa'>2FA Setup</Link>
                       </Button>
                     </FormItem>
                   </FormItem>
