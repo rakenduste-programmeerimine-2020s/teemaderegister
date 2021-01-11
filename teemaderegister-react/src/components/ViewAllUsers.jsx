@@ -6,13 +6,11 @@ import {ADMIN_VIEW_USERS_URL} from '../constants/ApiConstants'
 const columns = [
   {
     title: 'First Name',
-    dataIndex: 'firstName',
-    key: 'firstName'
+    dataIndex: 'firstName'
   },
   {
     title: 'Last Name',
-    dataIndex: 'lastName',
-    key: 'lastName'
+    dataIndex: 'lastName'
   }
 ]
 
