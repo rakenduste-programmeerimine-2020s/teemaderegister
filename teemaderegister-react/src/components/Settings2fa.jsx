@@ -62,28 +62,6 @@ const Settings2fa = (props) => {
                 <Image src={image} />
                 <Form
                   name='basic'
-                  onFinish={checkToken}
-                >
-                  <h2 >Check if your QR code still matches</h2>
-                  <h3 >Insert the QR token and press Check to verify your 2fa setup</h3>
-                  <Form.Item
-                    label='Token'
-                    name='token'
-                    style={{ width: 200, margin: '0 10px' }}
-                    rules={[{ required: true, message: 'Please input your token!' }]}
-                  >
-                    <Input />
-                  </Form.Item>
-
-                  <Form.Item>
-                    <Button type='primary' htmlType='submit'>
-                      Check
-                    </Button>
-                  </Form.Item>
-                </Form>
-
-                <Form
-                  name='basic'
                   onFinish={onClose}
                 >
                   <h2 >Currently the 2FA is Enabled</h2>
