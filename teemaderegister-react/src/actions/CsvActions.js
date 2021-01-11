@@ -16,36 +16,30 @@ export const getCsvData = (status, course) => {
 }
 
 const createCsv = data => {
-  console.log(data[0].title)
   let fileName = data[0].curriculums[0].abbreviation
   let mappedData
 
-  if (typeof data[0].defended === 'undefined' && typeof data[0].registered !== 'undefined') {
-    mappedData = data.map(row => ({
+  const formatRow = row => {
+    const response = {
       Title: row.title,
-      Name: row.author.firstName + ' ' + row.author.lastName,
-      Supervisor: row.supervisors[0].supervisor.profile.firstName + ' ' + row.supervisors[0].supervisor.profile.lastName,
-      Registered: moment(row.registered).format('DD.MM.YY')
-    }))
-    fileName += '-registered'
-  } else if (typeof data[0].defended !== 'undefined') {
-    mappedData = data.map(row => ({
-      Title: row.title,
-      Name: row.author.firstName + ' ' + row.author.lastName,
-      Supervisor: row.supervisors[0].supervisor.profile.firstName + ' ' + row.supervisors[0].supervisor.profile.lastName,
-      Defended: moment(row.defended).format('DD.MM.YY')
-    }))
-    fileName += '-defended'
-  } else {
-    mappedData = data.map(row => ({
-      Title: row.title,
-      ÕK: row.curriculums.length > 1 ? '■' : '',
-      Supervisor: row.supervisors[0].supervisor.profile.firstName + ' ' + row.supervisors[0].supervisor.profile.lastName,
-      Added: moment(row.added).format('DD.MM.YY')
-    }))
-    fileName += '-available'
+      Name: typeof row.author !== 'undefined' ? row.author.firstName + ' ' + row.author.lastName : 'blank name',
+      Supervisor: row.supervisors[0].supervisor.profile.firstName + ' ' + row.supervisors[0].supervisor.profile.lastName
+    }
+
+    if (typeof data[0].defended === 'undefined' && typeof data[0].registered !== 'undefined') {
+      response.Registered = moment(row.registered).format('DD.MM.YY')
+    } else if (typeof data[0].defended !== 'undefined') {
+      response.Defended = moment(row.defended).format('DD.MM.YY')
+    } else {
+      delete response.Name
+      response.CrossCurriculum = row.curriculums.length > 1 ? 'Yes' : 'No'
+      response.Added = moment(row.added).format('DD.MM.YY')
+    }
+    return response
   }
-  console.log(mappedData)
+
+  mappedData = data.map(formatRow)
+
   const workSheet = xlsx.utils.json_to_sheet(mappedData)
   const workBook = xlsx.utils.book_new()
   xlsx.utils.book_append_sheet(workBook, workSheet)

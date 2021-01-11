@@ -2,77 +2,38 @@ const Topic = require('../models/topic')
 
 module.exports.findCsvData = async (req, res) => {
   const { status, course } = req.query
+  let query = { curriculums: course }
+  let sort
+  let select
   switch (status) {
     case 'registered':
-      await Topic.find({
-        'curriculums': course,
-        'defended': { $exists: false },
-        'registered': {$exists: true}},
-      (err, docs) => {
-        if (!err) {
-          return docs
-        } else {
-          throw err
-        }
-      })
-        .sort({registered: 'desc'})
-        .populate('supervisors.supervisor', '_id profile.firstName profile.lastName')
-        .populate('curriculums')
-        .select('title author registered curriculums')
-        .exec((err, data) => {
-          if (!err) {
-            res.send(JSON.stringify(data))
-          } else {
-            console.log(err)
-          }
-        })
+      query.defended = { $exists: false }
+      query.registered = { $exists: true }
+      sort = { registered: 'desc' }
+      select = 'title author registered curriculums'
       break
     case 'available':
-      await Topic.find({
-        'curriculums': course,
-        'defended': {$exists: false},
-        'registered': {$exists: false}},
-      (err, docs) => {
-        if (!err) {
-          return docs
-        } else {
-          throw err
-        }
-      })
-        .sort({accepted: 'desc'})
-        .populate('supervisors.supervisor', '_id profile.firstName profile.lastName')
-        .populate('curriculums')
-        .select('title createdAt curriculums')
-        .exec((err, data) => {
-          if (!err) {
-            res.send(JSON.stringify(data))
-          } else {
-            console.log(err)
-          }
-        })
+      query.defended = { $exists: false }
+      query.registered = { $exists: false }
+      sort = { accepted: 'desc' }
+      select = 'title createdAt curriculums'
       break
     case 'defended':
-      await Topic.find({
-        'curriculums': course,
-        'defended': {$exists: true}},
-      (err, docs) => {
-        if (!err) {
-          return docs
-        } else {
-          throw err
-        }
-      })
-        .sort({defended: 'desc'})
-        .populate('supervisors.supervisor', '_id profile.firstName profile.lastName')
-        .populate('curriculums')
-        .select('title author defended curriculums')
-        .exec((err, data) => {
-          if (!err) {
-            res.send(JSON.stringify(data))
-          } else {
-            console.log(err)
-          }
-        })
+      query.defended = { $exists: true }
+      sort = { defended: 'desc' }
+      select = 'title author defended curriculums'
       break
   }
+  await Topic.find(query)
+    .sort(sort)
+    .populate('supervisors.supervisor', '_id profile.firstName profile.lastName')
+    .populate('curriculums')
+    .select(select)
+    .exec((err, data) => {
+      if (!err) {
+        res.send(JSON.stringify(data))
+      } else {
+        console.log(err)
+      }
+    })
 }
