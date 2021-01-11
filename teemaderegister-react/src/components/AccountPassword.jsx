@@ -58,6 +58,7 @@ class AccountPassword extends React.Component {
   }
 
   UNSAFE_componentWillMount () {
+    if (this.is_new) return setDocTitle('Create password')
     setDocTitle('Reset password')
   }
 
@@ -114,7 +115,6 @@ class AccountPassword extends React.Component {
           <Col xs={24} sm={8}>
             <Form ref={this.formRef} onFinish={this.submit} className='form--narrow'>
               <h2 className='text-align--center'>{this.is_new ? 'Password create' : 'Password reset'}</h2>
-              <h2 className='text-align--center'>Password reset</h2>
               <FormItem name='password' rules={[
                 { required: true, message: 'Please input your password!' },
                 { min: 8, message: 'Password must be 8 characters long' },
@@ -147,7 +147,6 @@ class AccountPassword extends React.Component {
                   loading={loading}
                 >
                   {this.is_new ? 'Create password' : 'Reset password'}
-                  Reset password
                 </Button>
               </FormItem>
             </Form>
