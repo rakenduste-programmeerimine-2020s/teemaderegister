@@ -51,8 +51,8 @@ router.post('/auth/local/factor/insert', jwtEnsure, asyncMiddleware(factor.inser
 
 router.put('/users/reset-picture', jwtEnsure, asyncMiddleware(users.resetPicture))
 
-// SAMPLE
 router.get('/admin/', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(admin.getSecret))
+router.post('/admin/topics', jwtEnsure, allowRoles([ADMIN, SUPERVISOR]), asyncMiddleware(admin.getSupervisorTopics))
 router.post('/admin/createUser', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(admin.createUser))
 router.get('/admin/users', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(users.getAllUsers))
 router.post('/admin/tos/save', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(tos.saveTos))

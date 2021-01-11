@@ -1,7 +1,26 @@
 const User = require('../models/user')
+const Topic = require('../models/topic')
+const Joi = require('joi')
 const slug = require('slug')
 const mail = require('./../utils/mail')
+const {ForbiddenError} = require('../utils/errors')
 const {getPasswordResetTokenValues} = require('./auth')
+
+const createSchema = Joi.object({
+  status: Joi.string().allow('registered', 'available', 'defended').required()
+})
+
+module.exports.getSupervisorTopics = async (req, res) => {
+  const {_id} = req.user
+  const { value, error } = await createSchema.validate(req.body)
+  const {status} = value
+  if (error) throw new ForbiddenError(error)
+
+  const query = { 'supervisors.supervisor': _id }
+  query[status] = {$exists: true}
+  const topics = await Topic.find(query)
+  return res.json(topics)
+}
 
 module.exports.createUser = async (req, res) => {
   const {firstName, lastName, email, role} = req.body
@@ -39,6 +58,7 @@ module.exports.createUser = async (req, res) => {
 
   return res.status(201).json({message: 'Created successfully!', success: 1})
 }
+
 module.exports.getSecret = async (req, res) => {
   const { user: { _id } } = req
 
