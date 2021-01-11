@@ -5,6 +5,17 @@ import Breadcrumbs from './Breadcrumbs'
 import TableWrap from '../components/TableWrap'
 import getTabs from '../utils/getTabs'
 import CurriculumMeta from './CurriculumMeta'
+import Tags from "./tags2.json";
+const { Option } = Select;
+
+const children = [];
+Tags.titlen.map(item => {
+  children.push(<Option key={item.tag}>{item.tag}</Option>)
+});
+
+function handleChange(value) {
+  console.log(`selected ${value}`);
+}
 
 const { bool, func, object, shape } = PropTypes
 
@@ -61,6 +72,10 @@ class Curriculum extends React.Component {
           <div>
             <Breadcrumbs crumbs={this.getCrumbs(meta.names.et)} />
             <CurriculumMeta meta={meta} />
+	    <p></p>
+            <Select mode="multiple" style={{ width: "100%" }} placeholder="Vali" onChange={handleChange} >
+            {children}
+            </Select>
             <TableWrap
               clearTableContent={clearTableContent}
               curriculum={curriculum}
