@@ -179,3 +179,9 @@ module.exports.resetPicture = async (req, res) => {
 
   return res.json({ user, message: 'Picture updated successfully' })
 }
+
+module.exports.getAllUsers = async (req, res) => {
+  const users = await User.find({}, {'login.password': 0})
+
+  return res.json(users)
+}
