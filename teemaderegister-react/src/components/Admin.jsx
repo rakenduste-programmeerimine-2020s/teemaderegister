@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {Layout, Menu} from 'antd'
-import {BookOutlined, LaptopOutlined, UserOutlined, UserAddOutlined, FileTextOutlined, UnorderedListOutlined} from '@ant-design/icons'
+import {BookOutlined, LaptopOutlined, UserOutlined, UserAddOutlined, FileTextOutlined, UnorderedListOutlined, EditOutlined} from '@ant-design/icons'
 import AdminConfirmations from './AdminConfirmations'
 import AdminTopics from './AdminTopics'
 import AdminUsers from './AdminUsers'
@@ -40,7 +40,8 @@ class Admin extends React.Component {
       confs: <AdminConfirmations/>,
       allUsers: <AdminUsers type='allusers'/>,
       addNewUser: <AdminUsers type='add-new-user'/>,
-      tos: <AdminTosContainer />
+      tos: <AdminTosContainer />,
+      editCurriculums: <AdminUsers type='edit-curriculums'/>
     }
 
     this.defaultPage = 'registered'
@@ -106,6 +107,12 @@ class Admin extends React.Component {
                   <Menu.Item key='allUsers' icon={<UnorderedListOutlined/>}>All users</Menu.Item>
                   <Menu.Item key='addNewUser' icon={<UserAddOutlined/>}>Add new user</Menu.Item>
                 </SubMenu>
+                }
+                    {
+                  (isAdmin) &&
+                      <Menu.Item icon={<EditOutlined />} key={'editCurriculums'}>
+                        Edit curriculums
+                      </Menu.Item>
                 }
                 <Menu.Item key='tos'>
                   <FileTextOutlined />

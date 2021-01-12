@@ -21,3 +21,5 @@ export const ADMIN_VIEW_USERS_URL = `${API}/admin/users`
 export const ADMIN_ADD_NEW_USER = `${API}/admin/createUser`
 export const TOS_LOAD = `${API}/tos`
 export const TOS_SAVE = `${API}/admin/tos/save`
+export const ADMIN_GET_CURRICULUMS = `${API}/admin/curriculums`
+export const ADMIN_GET_USERS = `${API}/admin/user/ids`

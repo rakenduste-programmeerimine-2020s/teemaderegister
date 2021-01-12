@@ -2,6 +2,7 @@ const User = require('../models/user')
 const slug = require('slug')
 const mail = require('./../utils/mail')
 const {getPasswordResetTokenValues} = require('./auth')
+const Curriculum = require('../models/curriculum')
 
 module.exports.createUser = async (req, res) => {
   const {firstName, lastName, email, role} = req.body
@@ -43,4 +44,40 @@ module.exports.getSecret = async (req, res) => {
   const {user: {_id}} = req
 
   return res.json({_id})
+}
+
+module.exports.getCurriculums = async (req, res) => {
+  let curriculums = await Curriculum.find({})
+
+  for (const key in curriculums) {
+    const user = await User.findOne({_id: curriculums[key]['representative']})
+    curriculums[key]['representative_name'] = user.profile.slug
+  }
+  res.json(curriculums)
+}
+
+module.exports.getUserData = async (req, res) => {
+  const users = await User.find({}, {_id: 1, 'profile.slug': 1})
+  res.json(users)
+}
+
+module.exports.putCurriculums = async (req, res) => {
+  const {curriculum_id, userId, closed} = req.body
+
+  // eslint-disable-next-line standard/object-curly-even-spacing
+  let curriculum = await Curriculum.findOne({_id: curriculum_id })
+  if (userId) {
+    const user = await User.findOne({_id: userId})
+    if (!user) return res.json({message: 'User Not found', error: true})
+    curriculum.representative = userId
+  }
+
+  if (closed) {
+    curriculum.closed = new Date()
+  } else if (closed === false) {
+    curriculum.closed = null
+  }
+
+  await curriculum.save()
+  res.json({message: 'Curriculum Updated', error: false})
 }
