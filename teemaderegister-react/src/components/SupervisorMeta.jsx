@@ -13,13 +13,14 @@ const propTypes = {
   data: shape({
     profile: shape({
       firstName: string,
-      lastName: string
+      lastName: string,
+      description: string
     }).isRequired
   }).isRequired
 }
 
 class SupervisorMeta extends PureComponent {
-  UNSAFE_componentWillMount () {
+  UNSAFE_componentWillMount() {
     this.curriculumsChartColors = []
     const abbreviations = Object.keys(this.props.count.abbreviations.chartData)
     const mainRGB = '107,202,186'
@@ -29,7 +30,7 @@ class SupervisorMeta extends PureComponent {
     })
   }
 
-  renderTooltip (data) {
+  renderTooltip(data) {
     if (!data.payload || !data.payload[0]) return null
     const { name, counts } = data.payload[0].payload
     const { all, types } = counts
@@ -52,7 +53,7 @@ class SupervisorMeta extends PureComponent {
     )
   }
 
-  renderPopover (types) {
+  renderPopover(types) {
     return (
       <div>
         {Object.keys(types).map(key => {
@@ -66,7 +67,7 @@ class SupervisorMeta extends PureComponent {
     )
   }
 
-  render () {
+  render() {
     const {
       count: {
         registered,
@@ -76,13 +77,15 @@ class SupervisorMeta extends PureComponent {
       data: {
         profile: {
           firstName,
-          lastName
+          lastName,
+          description
         }
       }
     } = this.props
 
     const name = `${firstName} ${lastName}`
     const imgSrc = `http://via.placeholder.com/150/b1e3da/ffffff/?text=${firstName[0]} ${lastName[0]}`
+    const descriptionBox = `${description}`
 
     return (
       <div className='supervisorMeta width--public-page'>
@@ -111,10 +114,7 @@ class SupervisorMeta extends PureComponent {
           >
             <h4>Topics</h4>
             <div>
-              Tallinna Ülikooli vilistlane, kes on lõpetanud nii Informaatika
-              eriala bakalaureuse tasemel kui ka läbinud magistriõppe. Õppejõuna
-              üritab ta pidevalt ennast täiendada ning kasutada uusi
-              tehnoloogiaid, rõhudes alati praktilise lõppväljundi
+              {descriptionBox}
             </div>
           </Col>
         </Row>
@@ -151,7 +151,7 @@ class SupervisorMeta extends PureComponent {
                     placement='right'
                   >
                     {defended.all}
-                    <InfoCircleOutlined className='card__count__icon'/>
+                    <InfoCircleOutlined className='card__count__icon' />
                   </Popover>
                 </span>
                 <br />
@@ -208,7 +208,7 @@ class SupervisorMeta extends PureComponent {
               <Card className='card card--curriculums'>
                 <ResponsiveContainer height={118}>
                   <Row>
-                    <Col xs={{span: 16, offset: 3}} sm={{span: 24, offset: 0}}>
+                    <Col xs={{ span: 16, offset: 3 }} sm={{ span: 24, offset: 0 }}>
                       <PieChart width={235} height={118} className='pie-chart'>
                         <Pie
                           startAngle={90}
@@ -222,12 +222,12 @@ class SupervisorMeta extends PureComponent {
                           animationDuration={500}
                           animationEasing='ease-out'
                         >
-                          { abbreviations.chartData.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={this.curriculumsChartColors[index]}/>
-                          )) }
+                          {abbreviations.chartData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={this.curriculumsChartColors[index]} />
+                          ))}
                         </Pie>
                         <Legend layout='vertical' verticalAlign='middle' align='right' />
-                        <Tooltip/>
+                        <Tooltip />
                       </PieChart>
                     </Col>
                   </Row>

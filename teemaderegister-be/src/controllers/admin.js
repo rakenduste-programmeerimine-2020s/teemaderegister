@@ -1,21 +1,22 @@
 const User = require('../models/user')
 const slug = require('slug')
 const mail = require('./../utils/mail')
-const {getPasswordResetTokenValues} = require('./auth')
+const { getPasswordResetTokenValues } = require('./auth')
 
 module.exports.createUser = async (req, res) => {
-  const {firstName, lastName, email, role} = req.body
+  const { firstName, lastName, email, role, description } = req.body
   const slugs = `${slug(firstName)}-${slug(lastName)}`
 
-  const existingUser = await User.findOne({'login.email': email})
+  const existingUser = await User.findOne({ 'login.email': email })
   if (existingUser) {
-    return res.status(406).json({message: 'Email already in use!', success: 0})
+    return res.status(406).json({ message: 'Email already in use!', success: 0 })
   }
   const user = {
     profile: {
       firstName: firstName,
       lastName: lastName,
-      slug: slugs
+      slug: slugs,
+      description: description
     },
 
     login: {
@@ -33,14 +34,14 @@ module.exports.createUser = async (req, res) => {
     subject: `Password create`,
     template: {
       name: 'createPassword',
-      data: {passwordCreateURL}
+      data: { passwordCreateURL }
     }
   })
 
-  return res.status(201).json({message: 'Created successfully!', success: 1})
+  return res.status(201).json({ message: 'Created successfully!', success: 1 })
 }
 module.exports.getSecret = async (req, res) => {
-  const {user: {_id}} = req
+  const { user: { _id } } = req
 
-  return res.json({_id})
+  return res.json({ _id })
 }

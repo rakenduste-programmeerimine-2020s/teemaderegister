@@ -14,7 +14,8 @@ const SupervisorObj = {
     _id: string,
     profile: shape({
       firstName: string,
-      lastName: string
+      lastName: string,
+      description: string
     })
   }).isRequired,
   loading: bool.isRequired
@@ -41,7 +42,7 @@ const propTypes = {
 }
 
 class Supervisor extends React.Component {
-  UNSAFE_componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     // FIX new supervisor slug update view
     const isNewSlug =
       this.props.match.params.slug !== nextProps.match.params.slug
@@ -52,28 +53,28 @@ class Supervisor extends React.Component {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.getSupervisor()
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     // Reset all state params
     this.init()
   }
 
-  init () {
+  init() {
     this.props.initSupervisor()
     this.props.initTableContent()
   }
 
-  getCrumbs (name) {
+  getCrumbs(name) {
     return [
       { url: null, name: 'Supervisor' },
       { url: this.props.location.pathname, name }
     ]
   }
 
-  render () {
+  render() {
     const {
       clearTableContent,
       getTableContent,

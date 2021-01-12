@@ -25,7 +25,8 @@ module.exports.getUser = async (req, res) => {
         image: {
           full: user.profile.image.full,
           thumb: user.profile.image.thumb
-        }
+        },
+        description: user.profile.description
       },
       login: {
         email: user.login.email,
@@ -70,7 +71,7 @@ module.exports.getProfile = async (req, res) => {
 }
 
 module.exports.updateUser = async (req, res) => {
-  const { firstName, lastName, email } = matchedData(req) // validated data
+  const { firstName, lastName, email, description } = matchedData(req) // validated data
 
   const userWithSameEmail = await User
     .findOne({
@@ -87,7 +88,8 @@ module.exports.updateUser = async (req, res) => {
       'profile.lastName': lastName,
       // TODO Fix for unique slug, waiting(teemaderegister-be/pull/18)
       'profile.slug': slug(firstName + ' ' + lastName),
-      'login.email': email
+      'login.email': email,
+      'profile.description': description
     }
   })
 
@@ -181,7 +183,7 @@ module.exports.resetPicture = async (req, res) => {
 }
 
 module.exports.getAllUsers = async (req, res) => {
-  const users = await User.find({}, {'login.password': 0})
+  const users = await User.find({}, { 'login.password': 0 })
 
   return res.json(users)
 }

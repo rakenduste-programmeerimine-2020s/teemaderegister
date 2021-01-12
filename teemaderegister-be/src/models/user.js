@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema(
     profile: {
       firstName: { type: String, required: true },
       lastName: { type: String, required: true },
+      description: { type: String },
       slug: { type: String, required: true, unique: true },
       image: {
         original: { type: String, default: null },
