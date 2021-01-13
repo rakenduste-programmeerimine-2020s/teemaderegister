@@ -1,6 +1,5 @@
 import React from 'react'
 import {PropTypes} from 'prop-types'
-import ViewAllUsers from './ViewAllUsers'
 import AddNewUserForm from './AddNewUserForm'
 import {Card} from 'antd'
 
