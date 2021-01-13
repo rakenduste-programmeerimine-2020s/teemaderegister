@@ -183,7 +183,7 @@ module.exports.resetPicture = async (req, res) => {
     log.debug(`${err && err.code} - Probably ${original} already deleted`))
 
   return res.json({ user, message: 'Picture updated successfully' })
-
+}
 module.exports.getAllUsers = async (req, res) => {
   const users = await User.find({}, {'login.password': 0})
 

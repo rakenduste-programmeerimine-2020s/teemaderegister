@@ -9,7 +9,9 @@ const secret = speakeasy.generateSecret({
 module.exports.create = async (req, res) => {
   const {_id} = req.user
   const user = await User.findOne({_id})
+
   if (user.factor) return res.json('Cannot add anymore!')
+
   console.log(qrcode.toDataURL(secret.otpauth_url, async (_err, data) => {
     user.auth.secret = secret.base32
     user.auth.image = data
