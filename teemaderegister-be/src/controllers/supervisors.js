@@ -151,7 +151,7 @@ module.exports.getSupervisorBySlug = async (req, res) => {
   const supervisor = await User
     .findOne({ 'profile.slug': req.params.slug })
     .select('_id profile')
-  if (!supervisor) throw new NotFoundError(`no supervisor with slug ${req.params.slug}`)
+  if (!supervisor) throw new NotFoundError(`No supervisor with slug ${req.params.slug}`)
 
   const topics = await Topic
     .find({ 'supervisors.supervisor': { $in: [supervisor._id] } })

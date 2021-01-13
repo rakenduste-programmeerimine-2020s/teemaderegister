@@ -57,34 +57,33 @@ class Curriculum extends React.Component {
       topics
     } = this.props
 
-    console.log(this.props)
     return (
-        <div className='curriculum width--public-page'>
+      <div className='curriculum width--public-page'>
 
-          {
-            curriculum.error && <Result
-                status='404'
-                title='404'
-                subTitle={curriculum.message}
-                extra={<Button type='primary'><Link to='/'>Back Home</Link></Button>}
-            />
-          }
+        {
+          curriculum.error && <Result
+            status='404'
+            title='404'
+            subTitle={curriculum.message}
+            extra={<Button type='primary'><Link to='/'>Back Home</Link></Button>}
+          />
+        }
 
-          {!loading &&
+        {!loading &&
           <div>
             <Breadcrumbs crumbs={this.getCrumbs(meta.names.et)} />
             <CurriculumMeta meta={meta} />
             <TableWrap
-                clearTableContent={clearTableContent}
-                curriculum={curriculum}
-                getTableContent={getTableContent}
-                history={this.props.history}
-                queryExtend={{ curriculumId: meta._id }}
-                tabs={getTabs({ topics, supervisors })}
-                tableContent={tableContent}
+              clearTableContent={clearTableContent}
+              curriculum={curriculum}
+              getTableContent={getTableContent}
+              history={this.props.history}
+              queryExtend={{ curriculumId: meta._id }}
+              tabs={getTabs({ topics, supervisors })}
+              tableContent={tableContent}
             />
           </div>}
-        </div>
+      </div>
     )
   }
 }

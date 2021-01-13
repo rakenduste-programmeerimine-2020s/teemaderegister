@@ -5,8 +5,8 @@ import Breadcrumbs from './Breadcrumbs'
 import SupervisorMeta from './SupervisorMeta'
 import TableWrap from '../components/TableWrap'
 import getTabs from '../utils/getTabs'
-import {Button, Result} from "antd";
-import {Link} from "react-router-dom";
+import {Button, Result} from 'antd'
+import {Link} from 'react-router-dom'
 
 const { bool, func, object, shape, string } = PropTypes
 
@@ -97,10 +97,10 @@ class Supervisor extends React.Component {
       <div className='supervisor width--public-page'>
         {
           supervisor.error && <Result
-              status='404'
-              title='404'
-              subTitle={supervisor.message}
-              extra={<Button type='primary'><Link to='/'>Back Home</Link></Button>}
+            status='404'
+            title='404'
+            subTitle={supervisor.message}
+            extra={<Button type='primary'><Link to='/'>Back Home</Link></Button>}
           />
         }
         {!loading &&
