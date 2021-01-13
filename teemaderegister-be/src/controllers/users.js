@@ -3,7 +3,6 @@ const Jimp = require('jimp')
 const slug = require('slug')
 const fs = require('fs')
 const { matchedData } = require('express-validator/filter')
-
 const User = require('../models/user')
 const log = require('../utils/logger')
 const { signToken, blacklistToken } = require('../utils/jwt')
@@ -32,14 +31,12 @@ module.exports.getUser = async (req, res) => {
           secret: user.auth.secret,
           image: user.auth.image
         }
-
       },
       login: {
         email: user.login.email,
         roles: user.login.roles
       },
       updatedAt: user.updatedAt
-
     }
   }
 
@@ -67,14 +64,11 @@ module.exports.getProfile = async (req, res) => {
   const user = await User
     .findById(req.user._id)
     .select(`
-      
       -login.password 
       -login.passwordResetToken 
       -login.passwordResetExpires 
       -login.passwordUpdatedAt 
       -user.profile.image.original
-
-
     `)
 
   return res.json({ user })
