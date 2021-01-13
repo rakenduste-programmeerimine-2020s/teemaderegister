@@ -43,11 +43,11 @@ router.put('/users/profile', jwtEnsure, validate.userAccountUpdate, asyncMiddlew
 router.put('/users/password', jwtEnsure, validate.userPasswordUpdate, asyncMiddleware(users.updatePassword))
 router.post('/users/upload-picture', jwtEnsure, multerMiddleware('profileImage'), asyncMiddleware(users.uploadPicture))
 
-router.post('/factor', jwtEnsure, asyncMiddleware(factor.create))
-router.post('/factor/enable', jwtEnsure, asyncMiddleware(factor.enable))
-router.post('/factor/disable', jwtEnsure, asyncMiddleware(factor.disable))
-router.get('/factor', jwtEnsure, asyncMiddleware(factor.get))
-router.post('/factor/insert', jwtEnsure, asyncMiddleware(factor.insert))
+router.post('/auth/local/factor', jwtEnsure, asyncMiddleware(factor.create))
+router.post('/auth/local/factor/enable', jwtEnsure, asyncMiddleware(factor.enable))
+router.post('/auth/local/factor/disable', jwtEnsure, asyncMiddleware(factor.disable))
+router.get('/auth/local/factor', jwtEnsure, asyncMiddleware(factor.get))
+router.post('/auth/local/factor/insert', jwtEnsure, asyncMiddleware(factor.insert))
 
 router.put('/users/reset-picture', jwtEnsure, asyncMiddleware(users.resetPicture))
 
