@@ -23,6 +23,8 @@
     "file-saver": "^2.0.5",
     "lodash": "^4.17.20",
     "nprogress": "^0.2.0",
+    "qrcode": "^1.4.4",
+    "qrcode.react": "^1.0.0",
     "query-string": "^5.0.1",
     "react": "^17.0.1",
     "react-copy-to-clipboard": "^5.0.1",
@@ -35,7 +37,9 @@
     "recharts": "^1.0.0-beta.0",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
+    "speakeasy": "^2.0.0"
     "xlsx": "^0.16.9"
+
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

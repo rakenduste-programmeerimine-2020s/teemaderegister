@@ -3,12 +3,10 @@ const Jimp = require('jimp')
 const slug = require('slug')
 const fs = require('fs')
 const { matchedData } = require('express-validator/filter')
-
 const User = require('../models/user')
 const log = require('../utils/logger')
 const { signToken, blacklistToken } = require('../utils/jwt')
 const { Error, NotAuthorizedError } = require('../utils/errors')
-
 module.exports.getUser = async (req, res) => {
   // Check if user from token exists
   const user = await User.findById(req.user._id)
@@ -22,9 +20,16 @@ module.exports.getUser = async (req, res) => {
         firstName: user.profile.firstName,
         lastName: user.profile.lastName,
         slug: user.profile.slug,
+        authentication: user.profile.dataQR,
+        asciiQR: user.profile.asciiQR,
         image: {
           full: user.profile.image.full,
           thumb: user.profile.image.thumb
+        },
+        auth: {
+          enabled: user.auth.enabled,
+          secret: user.auth.secret,
+          image: user.auth.image
         }
       },
       login: {
@@ -63,7 +68,7 @@ module.exports.getProfile = async (req, res) => {
       -login.passwordResetToken 
       -login.passwordResetExpires 
       -login.passwordUpdatedAt 
-      -profile.image.original
+      -user.profile.image.original
     `)
 
   return res.json({ user })
@@ -179,7 +184,6 @@ module.exports.resetPicture = async (req, res) => {
 
   return res.json({ user, message: 'Picture updated successfully' })
 }
-
 module.exports.getAllUsers = async (req, res) => {
   const users = await User.find({}, {'login.password': 0})
 

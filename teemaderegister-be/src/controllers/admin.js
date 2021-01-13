@@ -40,7 +40,7 @@ module.exports.createUser = async (req, res) => {
   return res.status(201).json({message: 'Created successfully!', success: 1})
 }
 module.exports.getSecret = async (req, res) => {
-  const {user: {_id}} = req
+  const { user: { _id } } = req
 
-  return res.json({_id})
+  return res.json({ _id })
 }
