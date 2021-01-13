@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
-
 import TableContent from '../components/TableContent'
 import { Tabs, Radio } from 'antd'
-
+import DownloadCSV from './DownloadCSV'
 const { func, object, string } = PropTypes
 
 const propTypes = {
@@ -31,6 +30,7 @@ class TabsWrap extends Component {
       return (
         <Tabs.TabPane tab={this.createTabTitle(icon, title, count)} key={key}>
           {this.createSubTabs(subs)}
+          <DownloadCSV {...this.props} />
           <TableContent
             curriculum={curriculum}
             handleTableChange={handleTableChange}
@@ -48,7 +48,6 @@ class TabsWrap extends Component {
 
     subs = Object.keys(subs).map(key => {
       const { title, count } = subs[key]
-
       return (
         <Radio.Button
           disabled={curriculum && curriculum.meta.closed && title !== 'Defended'}
@@ -70,7 +69,7 @@ class TabsWrap extends Component {
   createTabTitle (Icon, title, count) {
     return (
       <span>
-        <Icon/>
+        <Icon />
         {title} {count > 0 && '| ' + count}
       </span>
     )

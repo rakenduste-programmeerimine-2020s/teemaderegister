@@ -1,13 +1,11 @@
 const express = require('express')
 const router = express.Router()
-
 const { jwtEnsure, allowRoles } = require('./utils/jwt')
 const validate = require('./utils/validate')
 const asyncMiddleware = require('./utils/asyncMiddleware')
 const multerMiddleware = require('./utils/multerMiddleware')
-
 const { ADMIN } = require('./constants/roles')
-
+const csv = require('./controllers/csv')
 const auth = require('./controllers/auth')
 const curriculums = require('./controllers/curriculums')
 const search = require('./controllers/search')
@@ -18,6 +16,7 @@ const admin = require('./controllers/admin')
 const tos = require('./controllers/tos')
 const factor = require('./controllers/factor')
 
+router.get('/csv', asyncMiddleware(csv.findCsvData))
 router.post('/auth/local/login', validate.localLogin, asyncMiddleware(auth.localLogin))
 router.post('/auth/local/signup', validate.localSignup, asyncMiddleware(auth.localSignup))
 router.post('/auth/logout', jwtEnsure, asyncMiddleware(auth.logout))
