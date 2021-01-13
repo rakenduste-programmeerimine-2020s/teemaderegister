@@ -6,7 +6,7 @@ const log = require('../utils/logger')
 const mail = require('./../utils/mail')
 const { signToken, blacklistToken } = require('../utils/jwt')
 
-const { Error } = require('../utils/errors')
+const { Error, InsertToken } = require('../utils/errors')
 
 module.exports.getPasswordResetTokenValues = () => {
   return {
@@ -25,7 +25,6 @@ module.exports.localLogin = async (req, res) => {
   if (!attemptAllowed) throw new Error('Too many unsuccessful login attempts. Check your email.')
 
   const isMatch = await user.comparePassword(password)
-  console.log(JSON.stringify(isMatch))
   if (!isMatch) {
     throw new Error('Email or password incorrect')
   }

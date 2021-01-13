@@ -30,7 +30,6 @@ export const getCurriculums = () => dispatch => {
     .then(data => dispatch({
       type: types.CURRICULUMS_LOADED,
       curriculums: data.curriculums
-
     }))
     .catch(err => {
       console.log(err)

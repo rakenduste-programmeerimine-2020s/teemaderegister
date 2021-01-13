@@ -51,7 +51,7 @@ const Settings2fa = (props) => {
   }
 
   return (
-    <div>
+    <div className='settings2fa'>
 
       {image ? (
         enabled ? (
@@ -69,7 +69,6 @@ const Settings2fa = (props) => {
                   <Form.Item
                     label='Token'
                     name='token'
-                    style={{ width: 200, margin: '0 10px' }}
                     rules={[{ required: true, message: 'Please input your token!' }]}
                   >
                     <Input
@@ -101,7 +100,6 @@ const Settings2fa = (props) => {
                   <Form.Item
                     label='Token'
                     name='token'
-                    style={{ width: 200, margin: '0 10px' }}
                     rules={[{ required: true, message: 'Please input your token!' }]}
                   >
                     <Input />
@@ -122,9 +120,8 @@ const Settings2fa = (props) => {
         <Row gutter={8}>
           <Col span={8} />
           <Col xs={24} sm={8}>
-            <div>
-              <Form.Item
-                style={{height: 200, width: 200, margin: 'auto', marginTop: '10%'}}>
+            <div className='generatorQR'>
+              <Form.Item>
                 <h2 className='text-align--center'>It seems you haven't setup any 2FA</h2>
                 <Button onClick={createQR}>Generate QR for 2fa</Button>
               </Form.Item>
