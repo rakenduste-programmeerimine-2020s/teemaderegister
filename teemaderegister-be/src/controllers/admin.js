@@ -3,7 +3,6 @@ const Topic = require('../models/topic')
 const Joi = require('joi')
 const slug = require('slug')
 const mail = require('./../utils/mail')
-const {ForbiddenError} = require('../utils/errors')
 const {getPasswordResetTokenValues} = require('./auth')
 
 const createSchema = Joi.object({
@@ -14,7 +13,7 @@ module.exports.getSupervisorTopics = async (req, res) => {
   const {_id} = req.user
   const { value, error } = await createSchema.validate(req.body)
   const {status} = value
-  if (error) throw new ForbiddenError(error)
+  if (error) return res.status(400)
 
   const query = { 'supervisors.supervisor': _id }
   query[status] = {$exists: true}
