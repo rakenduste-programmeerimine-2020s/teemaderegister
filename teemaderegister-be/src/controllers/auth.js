@@ -6,30 +6,83 @@ const log = require('../utils/logger')
 const mail = require('./../utils/mail')
 const { signToken, blacklistToken } = require('../utils/jwt')
 
-const { Error, InsertToken } = require('../utils/errors')
+const { Error } = require('../utils/errors')
 
-module.exports.getPasswordResetTokenValues = () => {
-  return {
-    passwordResetToken: crypto.randomBytes(20).toString('hex'),
-    passwordResetExpires: Date.now() + parseInt(process.env.PASSWORD_RESET_TOKEN_EXPIRES)
+
+module.exports.googleLogin = async (req, res) => {
+  /*
+  let email = req.body["email"];
+  let password = req.body["password"];
+  let roles = req.body["roles"];
+
+  let firstName = req.body["firstName"];
+  let lastName = req.body["lastName"];
+
+  let result = false;
+  const url =
+      `${process.env.SITE_URL}/settings/account/googlelogin`
+  //res.writeHead(301, { "Location": url });
+
+  const user = await User.findOne({ 'login.email': req.body["email"]  })
+  if (!user) {
+    result = false;
+
+    /*
+        const user = await new User({
+          profile: {
+            firstName,
+            lastName,
+            slug: slug(firstName + ' ' + lastName)
+          },
+          login: {
+            email,
+            password,
+            roles
+          }
+        }).save()
+
+    return res.json({
+      loggedIn: false,
+      message:"Sellist kasutajat pole"
+    })
+
   }
+  else{
+    result = true;
+
+    user.login.localLoginAttempts = []
+    user.login.localLoginBlocked = null
+    await user.save()
+   
+    return res.json({
+      loggedIn: true,
+      message:"kasutaja on juba olemas",
+      token: signToken(user)
+    })
+  }*/
+  const user = await User.findOne({ 'login.email': req.body["email"]  })
+  return res.json({
+    loggedIn: true,
+    message:"kasutaja on juba olemas",
+    token: signToken(user)
+  })
 }
 
 module.exports.localLogin = async (req, res) => {
-  const { email, password, token } = req.body
+  const { email, password } = req.body
 
   const user = await User.findOne({ 'login.email': email })
-  if (!user) throw new Error('Email or password incorrect')
+  if (!user){
+    throw new Error('Email or password incorrect')
+  }
 
   const attemptAllowed = await user.validateLocalLoginAttempt(req.connection.remoteAddress)
   if (!attemptAllowed) throw new Error('Too many unsuccessful login attempts. Check your email.')
 
+
   const isMatch = await user.comparePassword(password)
   if (!isMatch) {
     throw new Error('Email or password incorrect')
-  }
-  if (user.auth.enabled) {
-    if (!token) throw new InsertToken('Please insert token!')
   }
 
   user.login.localLoginAttempts = []
@@ -93,7 +146,6 @@ module.exports.forgotPassword = async (req, res) => {
   }
   user.login = {
     ...user.login,
-    ...this.getPasswordResetTokenValues(),
     passwordResetToken: crypto.randomBytes(20).toString('hex'),
     passwordResetExpires: Date.now() + parseInt(process.env.PASSWORD_RESET_TOKEN_EXPIRES)
   }

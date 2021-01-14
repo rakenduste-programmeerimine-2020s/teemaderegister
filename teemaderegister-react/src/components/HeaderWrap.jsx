@@ -162,7 +162,6 @@ class HeaderWrap extends Component {
                 className='search__input'
                 size='large'
                 placeholder='Search by title, author or supervisor'
-                defaultValue={this.defaultSearch}
                 onSearch={this.handleSearch}
               />
             </Form>

@@ -1,6 +1,5 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
-import TopicTable from './TopicTable'
 
 const propTypes = {
   type: PropTypes.string
@@ -10,15 +9,15 @@ const AdminTopics = props => {
   switch (props.type) {
     case 'registered':
       return (
-          <TopicTable title={'registered'} />
+        <h2>Registered topics</h2>
       )
     case 'available':
       return (
-          <TopicTable title={'available'} />
+        <h2>Available topics</h2>
       )
     case 'defended':
       return (
-          <TopicTable title={'defended'} />
+        <h2>Defended topics</h2>
       )
     default:
       return (<h2>Choose something.</h2>

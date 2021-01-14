@@ -43,10 +43,6 @@ export const TABLE_CLEAR = 'TABLE_CLEAR'
 export const TABLE_LOADED = 'TABLE_LOADED'
 export const TABLE_INIT = 'TABLE_INIT'
 
-// terms of service
-export const TOS_LOADED = 'TOS_LOADED'
-export const TOS_SAVED = 'TOS_SAVED'
-
 // settings
 export const USER_SETTINGS_LOADED = 'USER_SETTINGS_LOADED'
 export const USER_SETTINGS_INIT = 'USER_SETTINGS_INIT'

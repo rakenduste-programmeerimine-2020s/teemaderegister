@@ -1,25 +1,23 @@
 import React from 'react'
-import {PropTypes} from 'prop-types'
-import ViewAllUsers from './ViewAllUsers'
-import AddNewUserForm from './AddNewUserForm'
-import {Card} from 'antd'
+import { PropTypes } from 'prop-types'
 
 const propTypes = {
   type: PropTypes.string
 }
 
-const AdminUsers = (props) => {
+const AdminUsers = props => {
   switch (props.type) {
-    case 'allusers':
-      return <ViewAllUsers/>
-    case 'add-new-user':
+    case 'supervisor':
       return (
-        <Card>
-          <AddNewUserForm/>
-        </Card>
+        <h2>Registered supervisors</h2>
+      )
+    case 'students':
+      return (
+        <h2>Registered students</h2>
       )
     default:
-      return <h2>Choose something.</h2>
+      return (<h2>Choose something.</h2>
+      )
   }
 }
 

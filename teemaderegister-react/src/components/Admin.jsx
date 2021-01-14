@@ -1,11 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Layout, Menu} from 'antd'
-import {BookOutlined, LaptopOutlined, UserOutlined, UserAddOutlined, FileTextOutlined, UnorderedListOutlined} from '@ant-design/icons'
+import { Layout, Menu } from 'antd'
+import { BookOutlined, LaptopOutlined, UserOutlined } from '@ant-design/icons'
 import AdminConfirmations from './AdminConfirmations'
 import AdminTopics from './AdminTopics'
 import AdminUsers from './AdminUsers'
-import AdminTosContainer from '../containers/AdminTosContainer'
 import setUrl from '../utils/setUrl'
 
 const { SubMenu } = Menu
@@ -34,13 +33,12 @@ class Admin extends React.Component {
     super(props)
 
     this.Views = {
-      registered: <AdminTopics type='registered'/>,
-      available: <AdminTopics type='available'/>,
-      defended: <AdminTopics type='defended'/>,
-      confs: <AdminConfirmations/>,
-      allUsers: <AdminUsers type='allusers'/>,
-      addNewUser: <AdminUsers type='add-new-user'/>,
-      tos: <AdminTosContainer />
+      registered: <AdminTopics type='registered' />,
+      available: <AdminTopics type='available' />,
+      defended: <AdminTopics type='defended' />,
+      confs: <AdminConfirmations />,
+      supervisors: <AdminUsers type='supervisor' />,
+      students: <AdminUsers type='students' />
     }
 
     this.defaultPage = 'registered'
@@ -102,15 +100,11 @@ class Admin extends React.Component {
                   <span>Confirmation</span>
                 </Menu.Item>
                 {(isAdmin || isStudyAssistant) &&
-                <SubMenu key='users' title={<span><UserOutlined/>Users</span>}>
-                  <Menu.Item key='allUsers' icon={<UnorderedListOutlined/>}>All users</Menu.Item>
-                  <Menu.Item key='addNewUser' icon={<UserAddOutlined/>}>Add new user</Menu.Item>
-                </SubMenu>
+                  <SubMenu key='users' title={<span><UserOutlined />Users</span>}>
+                    <Menu.Item key='supervisors'>Supervisors</Menu.Item>
+                    <Menu.Item key='students'>Students</Menu.Item>
+                  </SubMenu>
                 }
-                <Menu.Item key='tos'>
-                  <FileTextOutlined />
-                  <span>Terms of Service</span>
-                </Menu.Item>
               </Menu>
             </Sider>
             <Layout className='Admin__layout'>

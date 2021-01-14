@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:feature" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:feature" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:admin-can-create-user" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ef9a1628-5bb4-41c5-a36c-5bd2af7da472" name="Default Changelist" comment="Check if google login email exists in database">
+      <change afterPath="$PROJECT_DIR$/teemaderegister-be/src/controllers/googlelogin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/teemaderegister-react/src/actions/GoogleLoginActions.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/teemaderegister-react/src/components/GoogleLogin.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/teemaderegister-be/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/teemaderegister-be/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/teemaderegister-be/src/controllers/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/teemaderegister-be/src/controllers/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/teemaderegister-be/src/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/teemaderegister-be/src/routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/teemaderegister-react/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/teemaderegister-react/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/teemaderegister-react/src/components/GoogleBtn.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/teemaderegister-react/src/components/GoogleBtn.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/teemaderegister-react/src/constants/ApiConstants.js" beforeDir="false" afterPath="$PROJECT_DIR$/teemaderegister-react/src/constants/ApiConstants.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/teemaderegister-react/src/constants/RouterConstants.js" beforeDir="false" afterPath="$PROJECT_DIR$/teemaderegister-react/src/constants/RouterConstants.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/teemaderegister-react/src/containers/LoginContainer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/teemaderegister-react/src/containers/LoginContainer.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/teemaderegister-react/src/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/teemaderegister-react/src/index.jsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Pull.Settings">
+    <option name="BRANCH" value="main" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1klx5AvIWOFqyrn2AQEtdFFJdH5" />
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/teemaderegister-react/src/actions" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.standard" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.standard" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.standard" value="" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="settings.nodejs" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/teemaderegister-react/src/actions" />
+      <recent name="$PROJECT_DIR$/teemaderegister-react/src/components" />
+      <recent name="$PROJECT_DIR$/teemaderegister-react/src/containers" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Node.js.auth.test.js">
+    <configuration name="auth.test.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/teemaderegister-be/src/tests/routes/auth.test.js" working-dir="$PROJECT_DIR$/teemaderegister-be/src/tests/routes">
+      <method v="2" />
+    </configuration>
+    <configuration name="teemaderegister-be/Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="imageTag" value="" />
+          <option name="buildCliOptions" value="" />
+          <option name="buildOnly" value="true" />
+          <option name="command" value="" />
+          <option name="containerName" value="" />
+          <option name="entrypoint" value="" />
+          <option name="commandLineOptions" value="" />
+          <option name="sourceFilePath" value="teemaderegister-be/Dockerfile" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="teemaderegister-react/Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="imageTag" value="" />
+          <option name="buildCliOptions" value="" />
+          <option name="command" value="" />
+          <option name="containerName" value="" />
+          <option name="entrypoint" value="" />
+          <option name="commandLineOptions" value="" />
+          <option name="sourceFilePath" value="teemaderegister-react/Dockerfile" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.auth.test.js" />
+        <item itemvalue="Docker.teemaderegister-react/Dockerfile" />
+        <item itemvalue="Docker.teemaderegister-be/Dockerfile" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ef9a1628-5bb4-41c5-a36c-5bd2af7da472" name="Default Changelist" comment="" />
+      <created>1606288793634</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1606288793634</updated>
+      <workItem from="1606288794945" duration="2809000" />
+      <workItem from="1606293172368" duration="88000" />
+      <workItem from="1606293344195" duration="2218000" />
+      <workItem from="1606889114423" duration="50000" />
+      <workItem from="1606889312409" duration="13328000" />
+      <workItem from="1607499565617" duration="16890000" />
+      <workItem from="1608722180282" duration="3355000" />
+      <workItem from="1608725924062" duration="7341000" />
+      <workItem from="1610307417730" duration="8000" />
+      <workItem from="1610448215680" duration="324000" />
+      <workItem from="1610552791586" duration="8501000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Check if google login email exists in database" />
+    <option name="LAST_COMMIT_MESSAGE" value="Check if google login email exists in database" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="3173" y="470" width="480" height="362" key="#Docker" timestamp="1606292783762">
+      <screen x="1920" y="0" width="2560" height="1440" />
+    </state>
+    <state x="3173" y="470" width="480" height="362" key="#Docker/1920.0.2560.1440/0.29.1920.1051@1920.0.2560.1440" timestamp="1606292783762" />
+    <state x="3020" y="551" width="298" height="224" key="#ESLint" timestamp="1606898523066">
+      <screen x="1920" y="0" width="2560" height="1440" />
+    </state>
+    <state x="3020" y="551" width="298" height="224" key="#ESLint/1920.0.2560.1440/0.29.1920.1051@1920.0.2560.1440" timestamp="1606898523066" />
+    <state x="2877" y="275" width="1084" height="710" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1606294040950">
+      <screen x="1920" y="0" width="2560" height="1440" />
+    </state>
+    <state x="2877" y="275" width="1084" height="710" key="#com.intellij.execution.impl.EditConfigurationsDialog/1920.0.2560.1440/0.29.1920.1051@1920.0.2560.1440" timestamp="1606294040950" />
+    <state x="2445" y="534" width="612" height="403" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1606892229754">
+      <screen x="1920" y="0" width="2560" height="1440" />
+    </state>
+    <state x="2445" y="534" width="612" height="403" key="#com.intellij.fileTypes.FileTypeChooser/1920.0.2560.1440/0.29.1920.1051@1920.0.2560.1440" timestamp="1606892229754" />
+    <state x="2895" y="649" width="524" height="509" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1606896412265">
+      <screen x="1920" y="0" width="2560" height="1440" />
+    </state>
+    <state x="2895" y="649" width="524" height="509" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/1920.0.2560.1440/0.29.1920.1051@1920.0.2560.1440" timestamp="1606896412265" />
+    <state x="3309" y="594" width="424" height="491" key="FileChooserDialogImpl" timestamp="1606292293070">
+      <screen x="1920" y="0" width="2560" height="1440" />
+    </state>
+    <state x="3309" y="594" width="424" height="491" key="FileChooserDialogImpl/1920.0.2560.1440/0.29.1920.1051@1920.0.2560.1440" timestamp="1606292293070" />
+    <state x="2913" y="458" width="712" height="640" key="RollbackChangesDialog" timestamp="1607499666748">
+      <screen x="1920" y="0" width="2560" height="1440" />
+    </state>
+    <state x="2913" y="458" width="712" height="640" key="RollbackChangesDialog/1920.0.2560.1440/0.29.1920.1051@1920.0.2560.1440" timestamp="1607499666748" />
+    <state x="3015" y="468" width="1022" height="737" key="SettingsEditor" timestamp="1606893701857">
+      <screen x="1920" y="0" width="2560" height="1440" />
+    </state>
+    <state x="3015" y="468" width="1022" height="737" key="SettingsEditor/1920.0.2560.1440/0.29.1920.1051@1920.0.2560.1440" timestamp="1606893701857" />
+    <state x="562" y="382" width="1764" height="870" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1608726384279">
+      <screen x="76" y="26" width="2484" height="1414" />
+    </state>
+    <state x="562" y="382" width="1764" height="870" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/76.26.2484.1414@76.26.2484.1414" timestamp="1608726384279" />
+    <state x="2163" y="461" width="1998" height="879" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1606900211181">
+      <screen x="1920" y="0" width="2560" height="1440" />
+    </state>
+    <state x="2163" y="461" width="1998" height="879" key="com.intellij.history.integration.ui.views.FileHistoryDialog/1920.0.2560.1440/0.29.1920.1051@1920.0.2560.1440" timestamp="1606900211181" />
+    <state x="1233" y="508" width="687" height="572" key="find.popup" timestamp="1610559509183">
+      <screen x="76" y="29" width="1844" height="1051" />
+    </state>
+    <state x="2965" y="383" width="683" height="783" key="find.popup/1920.0.2560.1440/0.29.1920.1051@1920.0.2560.1440" timestamp="1607533420902" />
+    <state x="1233" y="508" width="687" height="572" key="find.popup/1920.0.2560.1440/76.29.1844.1051@76.29.1844.1051" timestamp="1610559509183" />
+    <state x="1535" y="614" width="793" height="770" key="find.popup/76.26.2484.1414@76.26.2484.1414" timestamp="1608732929170" />
+    <state x="1535" y="616" width="793" height="768" key="find.popup/76.29.2484.1411@76.29.2484.1411" timestamp="1608723984845" />
+    <state x="1096" y="363" key="run.anything.popup" timestamp="1607536623382">
+      <screen x="76" y="29" width="1844" height="1051" />
+    </state>
+    <state x="1096" y="363" key="run.anything.popup/1920.0.2560.1440/76.29.1844.1051@76.29.1844.1051" timestamp="1607536623381" />
+    <state x="1107" y="518" width="672" height="678" key="search.everywhere.popup" timestamp="1608726103368">
+      <screen x="76" y="26" width="2484" height="1414" />
+    </state>
+    <state x="1107" y="518" width="672" height="678" key="search.everywhere.popup/76.26.2484.1414@76.26.2484.1414" timestamp="1608726103368" />
+    <state x="953" y="578" width="491" height="173" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1610554708701">
+      <screen x="76" y="29" width="1844" height="1051" />
+    </state>
+    <state x="953" y="578" width="491" height="173" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/1920.0.2560.1440/76.29.1844.1051@76.29.1844.1051" timestamp="1610554708701" />
+    <state x="1258" y="765" width="540" height="179" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/76.26.2484.1414@76.26.2484.1414" timestamp="1608731366808" />
+  </component>
+</project>

@@ -11,41 +11,23 @@ import { setDocTitle } from '../utils/Helpers'
 
 const FormItem = Form.Item
 
-const { bool, func, object, shape, string } = PropTypes
+const { bool, func, string } = PropTypes
 
 const propTypes = {
   initLogin: func.isRequired,
-  location: object.isRequired,
-  login: shape({
-    hasError: bool.isRequired,
-    loading: bool.isRequired,
-    error: shape({
-      message: string
-    }).isRequired
-  }).isRequired,
   triggerLogin: func.isRequired
 }
 
-class Login extends React.Component {
+class GoogleLogin extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      loading: props.login.loading
+
     }
     this.submit = this.submit.bind(this)
     this.formRef = React.createRef()
   }
 
-  // eslint-disable-next-line camelcase
-  UNSAFE_componentWillReceiveProps (nextProps) {
-    // You don't have to do this check first, but it can help prevent an unneeded render
-    if (nextProps.login.loading !== this.state.loading) {
-      this.setState({ loading: nextProps.login.loading })
-      if (nextProps.login.hasError) {
-        message.error(nextProps.login.error.message)
-      }
-    }
-  }
 
   componentDidMount () {
     setDocTitle('Login')
@@ -87,15 +69,7 @@ class Login extends React.Component {
           <Col span={8} />
           <Col xs={24} sm={8}>
             <Form ref={this.formRef} onFinish={this.submit} className='form--narrow'>
-              <h2 className='text-align--center'>
-                Sign in to <span className='emphisize'>Te</span>
-              </h2>
-              <FormItem name='email' rules={[
-                { required: true, message: 'Please input your email!' },
-                { type: 'email', message: 'Please enter correct email' }
-              ]}>
-                <Input autoFocus prefix={<UserOutlined />} placeholder='Email' />
-              </FormItem>
+
               <FormItem className='login__password'>
                 <FormItem name='password' rules={[
                   { required: true, message: 'Please input your Password!' }
@@ -106,7 +80,7 @@ class Login extends React.Component {
                     placeholder='Password'
                   />
                 </FormItem>
-                <p className='login__forgot' ><Link to='/account/forgot'>Forgot password?</Link></p>
+
               </FormItem>
               <FormItem>
                 <FormItem noStyle>
@@ -116,17 +90,12 @@ class Login extends React.Component {
                     className='button--fullWidth'
                     loading={loading}
                   >
-                  Log in
+                  Set Password
                   </Button>
                 </FormItem>
                 <p>
-                  <Tooltip
-                    placement='topLeft'
-                    title='If you do not have account please contact your school administrator'
-                  >
-                    <span>do not have account?</span>
-                    <GoogleBtn/>
-                  </Tooltip>
+
+
                 </p>
               </FormItem>
             </Form>
@@ -138,6 +107,6 @@ class Login extends React.Component {
   }
 }
 
-Login.propTypes = propTypes
+GoogleLogin.propTypes = propTypes
 
-export default Login
+export default GoogleLogin
