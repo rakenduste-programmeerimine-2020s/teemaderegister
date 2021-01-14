@@ -1,20 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import queryString from 'query-string'
-import { getToken } from '../utils/jwt'
 import Breadcrumbs from './Breadcrumbs'
 import { setDocTitle } from '../utils/Helpers'
-import { Redirect, Link } from 'react-router-dom'
-import { Row, Col, Form, Input, Button, Checkbox } from 'antd'
+import { Link } from 'react-router-dom'
+import { Row, Col, Form, Input, Button, Checkbox, message } from 'antd'
 import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons'
 
 const FormItem = Form.Item
 
-const { func, object } = PropTypes
+const { func, object, shape, bool, string } = PropTypes
 
 const propTypes = {
   initSignUp: func.isRequired,
   location: object.isRequired,
+  signup: shape({
+    hasError: bool.isRequired,
+    error: shape({
+      message: string
+    }).isRequired,
+    signUpSuccess: bool.isRequired
+  }).isRequired,
   triggerSignUp: func.isRequired
 }
 
@@ -23,6 +28,13 @@ class SignUp extends React.Component {
     super(props)
     this.submit = this.submit.bind(this)
     this.formRef = React.createRef()
+  }
+
+  UNSAFE_componentWillReceiveProps (nextProps) {
+    // You don't have to do this check first, but it can help prevent an unneeded render
+    if (nextProps.signup.hasError) {
+      message.error(nextProps.signup.error.message)
+    }
   }
 
   componentDidMount () {
@@ -37,24 +49,17 @@ class SignUp extends React.Component {
     const roles = { roles: ['student'] }
     const result = { ...values, ...roles }
     window.setTimeout(() => {
-      this.props.triggerSignUp(result)
+      this.props.triggerSignUp(result).then(() => {
+        if (this.props.signup.signUpSuccess) {
+          this.formRef.current.resetFields()
+          message.success('Account created, you can now log in')
+        }
+      })
     }, 1500)
   }
 
   render () {
-    const {
-      location: { search }
-    } = this.props
-
-    const params = queryString.parse(search)
-    const redirect = params.redirect || '/'
-
     const crumbs = [{ url: this.props.location.pathname, name: 'Sign Up' }]
-
-    if (getToken()) {
-      return <Redirect to={redirect} />
-    }
-
     return (
       <div className = 'signup width--public-page'>
         <Breadcrumbs crumbs={crumbs} />

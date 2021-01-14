@@ -3,7 +3,8 @@ import * as types from '../constants/ActionTypes'
 const INITIAL_STATE = {
   loading: false,
   hasError: false,
-  error: {}
+  error: {},
+  signUpSuccess: false
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -19,7 +20,8 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         hasError: !!action.error,
-        error: action.error || {}
+        error: action.error || {},
+        signUpSuccess: !action.error
       }
 
     case types.SIGNUP_INIT:
