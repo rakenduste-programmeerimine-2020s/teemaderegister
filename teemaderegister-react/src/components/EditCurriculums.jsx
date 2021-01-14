@@ -19,7 +19,7 @@ const EditCurriculums = (props) => {
       // eslint-disable-next-line react/display-name
       render: data => <Button onClick={() => {
         setCurriculumData(data)
-        showModal()
+        setIsModalVisible(true)
       }
       }>Edit</Button>
 
@@ -30,15 +30,17 @@ const EditCurriculums = (props) => {
       key: 'closed',
       // eslint-disable-next-line react/display-name
       render: data => {
-        console.log(data)
         if (!data) return <Tag color={'lime'}>Open</Tag>
         return (<Tag color={'red'}>Closed</Tag>)
       }
     },
     {
       title: 'Representative name',
-      dataIndex: 'representative_name',
-      key: 'representative_name'
+      dataIndex: 'representative',
+      key: 'representative',
+      render: data => {
+        return data.profile.slug
+      }
     },
     {
       title: 'Faculty',
@@ -85,19 +87,19 @@ const EditCurriculums = (props) => {
   }
 
   const generateCurriculum = () => {
-    if (usersData) {
+    if (usersData && curriculumData.representative) {
       return (
         <Form
           name='basic'
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}>
           <Form.Item
-            label='curriculum owner'
+            label='Curriculum owner'
             name='userId'
           >
             <Select
               style={{width: '100%'}}
-              placeholder={curriculumData.representative_name}
+              placeholder={curriculumData.representative.profile.slug}
             >
               {usersData.map((value) => {
                 return <Option key={value._id}>{value.profile.slug}</Option>
@@ -125,37 +127,25 @@ const EditCurriculums = (props) => {
     })
   }
 
-  const showModal = () => {
-    setIsModalVisible(true)
-  }
-
-  const handleOk = () => {
-    setIsModalVisible(false)
-  }
-
-  const handleCancel = () => {
-    setIsModalVisible(false)
-  }
-
   const onFinish = async (values) => {
-    console.log('Success:', values)
     values.curriculum_id = curriculumData._id
     // eslint-disable-next-line react/prop-types
     const updated = await props.UpdateCurriculum(values)
     if (updated.error) return notification.error({message: updated.message})
     notification.success({message: updated.message})
+    setIsModalVisible(false)
     reloadData()
   }
 
   const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo)
+    notification.error({message: errorInfo})
   }
 
   return (
     <Layout>
+      <Button style={{width : "20%"}}onClick={changeLanguage}>Change language</Button>
       <Table dataSource={tableData} columns={columns} />
-      <Button onClick={changeLanguage}>Change language</Button>
-      <Modal title='Edit Curriculum' visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+      <Modal title='Edit Curriculum' visible={isModalVisible} onCancel={() => setIsModalVisible(false)} footer={0}>
         {
           generateCurriculum()
         }

@@ -45,14 +45,9 @@ module.exports.getSecret = async (req, res) => {
 
   return res.json({_id})
 }
-
 module.exports.getCurriculums = async (req, res) => {
-  let curriculums = await Curriculum.find({})
+  const curriculums = await Curriculum.find({}).populate('representative', '_id profile')
 
-  for (const key in curriculums) {
-    const user = await User.findOne({_id: curriculums[key]['representative']})
-    curriculums[key]['representative_name'] = user.profile.slug
-  }
   res.json(curriculums)
 }
 
@@ -63,7 +58,6 @@ module.exports.getUserData = async (req, res) => {
 
 module.exports.putCurriculums = async (req, res) => {
   const {curriculum_id, userId, closed} = req.body
-
   // eslint-disable-next-line standard/object-curly-even-spacing
   let curriculum = await Curriculum.findOne({_id: curriculum_id })
   if (userId) {
@@ -72,11 +66,7 @@ module.exports.putCurriculums = async (req, res) => {
     curriculum.representative = userId
   }
 
-  if (closed) {
-    curriculum.closed = new Date()
-  } else if (closed === false) {
-    curriculum.closed = null
-  }
+  curriculum.closed = closed ? new Date() : null
 
   await curriculum.save()
   res.json({message: 'Curriculum Updated', error: false})
