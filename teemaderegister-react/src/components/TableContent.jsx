@@ -95,7 +95,6 @@ class TableContent extends React.Component {
     )
   }
 }
-
 const renderExpandedRow = record => {
   return (
     <span>

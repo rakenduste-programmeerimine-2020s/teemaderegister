@@ -174,7 +174,7 @@ class SettingsAccount extends React.Component {
                           >
                             <span className='profileResetDropdownMenu__link'>
                               <UploadOutlined /> Upload photo
-                          </span>
+
                           </Upload>
                         </Menu.Item>
                         {image.full !== this.defaultAvatarSrc &&
@@ -184,12 +184,7 @@ class SettingsAccount extends React.Component {
                               onClick={this.resetPictureConfirm}
                             >
                               <CloseCircleOutlined /> Remove
-                          </span>
-                          </Menu.Item>}
-                        <Menu.Item>
-                          <span className='profileResetDropdownMenu__link'>
-                            Cancel
-                        </span>
+
                         </Menu.Item>
                       </Menu>
                     }>
@@ -235,9 +230,7 @@ class SettingsAccount extends React.Component {
                       )}
                     </Select>
                   </FormItem>
-                  {descBox && (<FormItem label='Description' name='description' initialValue={description} rules={[{ required: false }]}>
-                    <Input.TextArea />
-                  </FormItem >)}
+
                   <FormItem>
                     <Button
                       type='primary'
@@ -246,13 +239,14 @@ class SettingsAccount extends React.Component {
                       loading={formLoading.account}
                     >
                       Save Changes
-                  </Button>
+
                   </FormItem>
                   <h2 className='text-align--center'>Password Settings</h2>
                   <FormItem>
                     <Button type='primary' className='button--fullWidth'>
                       <Link to='/settings/password'>Change Password</Link>
                     </Button>
+
                   </FormItem>
                 </Form>
               </Col>
