@@ -1,6 +1,5 @@
 version: '3.4'
 
-
 services:
   tr-mongo:
     image: mongo:latest
@@ -28,7 +27,6 @@ services:
       - '../teemaderegister-be:/home/node/app:delegated'
       - '../local-dev/data:/home/node/data:delegated'
     environment:
-      QR_SECRET: Teemaderegister
       MONGODB_URI: mongodb://root:root@tr-mongo/teemaderegister?authSource=admin
       MONGODB_TESTS_URI: mongodb://root:root@tr-mongo/teemaderegister-test?authSource=admin
       MONGOOSE_DEBUG: 'true'
