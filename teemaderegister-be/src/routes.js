@@ -35,6 +35,7 @@ router.get('/supervisors/curriculumForm/', asyncMiddleware(supervisors.getSuperv
 router.get('/supervisors/:slug', asyncMiddleware(supervisors.getSupervisorBySlug))
 
 router.get('/topics/', asyncMiddleware(topics.getTopics))
+router.post('/topics/supervisor', jwtEnsure, allowRoles([SUPERVISOR, ADMIN]), asyncMiddleware(topics.getSupervisorTopics))
 
 router.get('/users/me', jwtEnsure, asyncMiddleware(users.getUser))
 router.get('/users/profile', jwtEnsure, asyncMiddleware(users.getProfile))
@@ -50,8 +51,8 @@ router.post('/auth/local/factor/insert', jwtEnsure, asyncMiddleware(factor.inser
 
 router.put('/users/reset-picture', jwtEnsure, asyncMiddleware(users.resetPicture))
 
-// SAMPLE
 router.get('/admin/', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(admin.getSecret))
+router.post('/admin/topics', jwtEnsure, allowRoles([ADMIN, SUPERVISOR]), asyncMiddleware(admin.getSupervisorTopics))
 router.post('/admin/createUser', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(admin.createUser))
 router.get('/admin/users', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(users.getAllUsers))
 router.post('/admin/tos/save', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(tos.saveTos))
