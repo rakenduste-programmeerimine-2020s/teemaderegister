@@ -5,7 +5,7 @@ import { Redirect, Link } from 'react-router-dom'
 import { getToken } from '../utils/jwt'
 import Breadcrumbs from './Breadcrumbs'
 import { Row, Col, Form, Input, Button, message, Tooltip } from 'antd'
-import { UserOutlined, LockOutlined, BulbOutlined } from '@ant-design/icons'
+import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { setDocTitle } from '../utils/Helpers'
 
 const FormItem = Form.Item
@@ -29,8 +29,7 @@ class Login extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      loading: props.login.loading,
-      factoryEnabled: false
+      loading: props.login.loading
     }
     this.submit = this.submit.bind(this)
     this.formRef = React.createRef()
@@ -41,9 +40,6 @@ class Login extends React.Component {
     if (nextProps.login.loading !== this.state.loading) {
       this.setState({ loading: nextProps.login.loading })
       if (nextProps.login.hasError) {
-        if (nextProps.login.error.message === 'Please insert token!') {
-          this.setState({factoryEnabled: true})
-        }
         message.error(nextProps.login.error.message)
       }
     }
@@ -109,17 +105,6 @@ class Login extends React.Component {
                 </FormItem>
                 <p className='login__forgot' ><Link to='/account/forgot'>Forgot password?</Link></p>
               </FormItem>
-              {
-                this.state.factoryEnabled ? (
-                  <FormItem name='token'>
-                    <Input prefix={<BulbOutlined />} placeholder='Token' />
-                  </FormItem>
-                ) : (
-                  <div>
-
-                  </div>
-                )
-              }
               <FormItem>
                 <FormItem noStyle>
                   <Button
@@ -128,7 +113,7 @@ class Login extends React.Component {
                     className='button--fullWidth'
                     loading={loading}
                   >
-                    Log in
+                  Log in
                   </Button>
                 </FormItem>
                 <p>

@@ -6,7 +6,7 @@ const log = require('../utils/logger')
 const mail = require('./../utils/mail')
 const { signToken, blacklistToken } = require('../utils/jwt')
 
-const { Error, InsertToken } = require('../utils/errors')
+const { Error } = require('../utils/errors')
 
 module.exports.getPasswordResetTokenValues = () => {
   return {
@@ -16,7 +16,7 @@ module.exports.getPasswordResetTokenValues = () => {
 }
 
 module.exports.localLogin = async (req, res) => {
-  const { email, password, token } = req.body
+  const { email, password } = req.body
 
   const user = await User.findOne({ 'login.email': email })
   if (!user) throw new Error('Email or password incorrect')
@@ -27,9 +27,6 @@ module.exports.localLogin = async (req, res) => {
   const isMatch = await user.comparePassword(password)
   if (!isMatch) {
     throw new Error('Email or password incorrect')
-  }
-  if (user.auth.enabled) {
-    if (!token) throw new InsertToken('Please insert token!')
   }
 
   user.login.localLoginAttempts = []
@@ -93,9 +90,7 @@ module.exports.forgotPassword = async (req, res) => {
   }
   user.login = {
     ...user.login,
-    ...this.getPasswordResetTokenValues(),
-    passwordResetToken: crypto.randomBytes(20).toString('hex'),
-    passwordResetExpires: Date.now() + parseInt(process.env.PASSWORD_RESET_TOKEN_EXPIRES)
+    ...this.getPasswordResetTokenValues()
   }
 
   await user.save()

@@ -1,11 +1,13 @@
 const express = require('express')
 const router = express.Router()
+
 const { jwtEnsure, allowRoles } = require('./utils/jwt')
 const validate = require('./utils/validate')
 const asyncMiddleware = require('./utils/asyncMiddleware')
 const multerMiddleware = require('./utils/multerMiddleware')
+
 const { ADMIN } = require('./constants/roles')
-const csv = require('./controllers/csv')
+
 const auth = require('./controllers/auth')
 const curriculums = require('./controllers/curriculums')
 const search = require('./controllers/search')
@@ -14,9 +16,7 @@ const topics = require('./controllers/topics')
 const users = require('./controllers/users')
 const admin = require('./controllers/admin')
 const tos = require('./controllers/tos')
-const factor = require('./controllers/factor')
 
-router.get('/csv', asyncMiddleware(csv.findCsvData))
 router.post('/auth/local/login', validate.localLogin, asyncMiddleware(auth.localLogin))
 router.post('/auth/local/signup', validate.localSignup, asyncMiddleware(auth.localSignup))
 router.post('/auth/logout', jwtEnsure, asyncMiddleware(auth.logout))
@@ -41,13 +41,6 @@ router.get('/users/profile', jwtEnsure, asyncMiddleware(users.getProfile))
 router.put('/users/profile', jwtEnsure, validate.userAccountUpdate, asyncMiddleware(users.updateUser))
 router.put('/users/password', jwtEnsure, validate.userPasswordUpdate, asyncMiddleware(users.updatePassword))
 router.post('/users/upload-picture', jwtEnsure, multerMiddleware('profileImage'), asyncMiddleware(users.uploadPicture))
-
-router.post('/auth/local/factor', jwtEnsure, asyncMiddleware(factor.create))
-router.post('/auth/local/factor/enable', jwtEnsure, asyncMiddleware(factor.enable))
-router.post('/auth/local/factor/disable', jwtEnsure, asyncMiddleware(factor.disable))
-router.get('/auth/local/factor', jwtEnsure, asyncMiddleware(factor.get))
-router.post('/auth/local/factor/insert', jwtEnsure, asyncMiddleware(factor.insert))
-
 router.put('/users/reset-picture', jwtEnsure, asyncMiddleware(users.resetPicture))
 
 // SAMPLE
@@ -56,4 +49,5 @@ router.post('/admin/createUser', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware
 router.get('/admin/users', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(users.getAllUsers))
 router.post('/admin/tos/save', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(tos.saveTos))
 router.get('/tos', asyncMiddleware(tos.getTos))
+
 module.exports = router

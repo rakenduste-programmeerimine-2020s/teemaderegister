@@ -205,7 +205,7 @@ const title = ({ columnKey, order, sub, q }) => ({
     }
 
     const { starred, file: fileUrl, slug } = row
-    const fileInViewerUrl = <a href={'https://docs.google.com/gview?url=' + fileUrl} target='_blank' rel='noreferrer'>{finalTitle}</a>
+    const fileInViewerUrl = <a href={'https://docs.google.com/gview?url=' + fileUrl} target='_blank'>{finalTitle}</a>
     const topicTitle = sub === 'defended'
       ? fileInViewerUrl
       : finalTitle

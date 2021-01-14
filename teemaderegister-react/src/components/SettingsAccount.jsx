@@ -63,7 +63,7 @@ class SettingsAccount extends React.Component {
     this.formRef = React.createRef()
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     const { settings: { formLoading } } = this.props
     const {
       settings,
@@ -83,19 +83,19 @@ class SettingsAccount extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.props.getProfile()
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     this.props.initSettings()
   }
 
-  submitUpdateProfile(values) {
+  submitUpdateProfile (values) {
     this.props.updateProfile(values)
   }
 
-  beforeUpload(file) {
+  beforeUpload (file) {
     const fileTypes = new RegExp('jpeg|jpg|png')
     const allowedType = fileTypes.test(file.type.toLowerCase())
     if (!allowedType) message.error('You can only upload image files - jpg, jpeg, png!')
@@ -108,7 +108,7 @@ class SettingsAccount extends React.Component {
     return allowedType && allowedSize
   }
 
-  onUploadPictureChange({ file: { status, response } }) {
+  onUploadPictureChange ({ file: { status, response } }) {
     if (status === 'uploading' && !this.props.settings.formLoading.picture) {
       return this.props.uploadPictureStart()
     }
@@ -116,14 +116,14 @@ class SettingsAccount extends React.Component {
     if (status === 'error') return this.props.uploadPictureError(response)
   }
 
-  resetPictureConfirm() {
+  resetPictureConfirm () {
     confirm({
       title: 'Do you want to reset to default picture?',
       onOk: () => this.props.resetPicture()
     })
   }
 
-  render() {
+  render () {
     const crumbs = [{ url: null, name: 'Settings' }]
     const {
       settings: {
@@ -137,14 +137,7 @@ class SettingsAccount extends React.Component {
       }
     } = this.props
 
-    let descBox = true
-    if (typeof roles !== 'undefined') {
-      if (roles.includes('supervisor')) {
-        descBox = true
-      } else {
-        descBox = false
-      }
-    }
+    const showDescriptionBox = roles && roles.includes('supervisor')
 
     const avatarSrc = image
       ? `${process.env.UPLOAD_PATH + image.full}?updatedAt=${updatedAt}`
@@ -174,7 +167,7 @@ class SettingsAccount extends React.Component {
                           >
                             <span className='profileResetDropdownMenu__link'>
                               <UploadOutlined /> Upload photo
-
+                          </span>
                           </Upload>
                         </Menu.Item>
                         {image.full !== this.defaultAvatarSrc &&
@@ -184,7 +177,12 @@ class SettingsAccount extends React.Component {
                               onClick={this.resetPictureConfirm}
                             >
                               <CloseCircleOutlined /> Remove
-
+                          </span>
+                          </Menu.Item>}
+                        <Menu.Item>
+                          <span className='profileResetDropdownMenu__link'>
+                            Cancel
+                        </span>
                         </Menu.Item>
                       </Menu>
                     }>
@@ -230,7 +228,9 @@ class SettingsAccount extends React.Component {
                       )}
                     </Select>
                   </FormItem>
-
+                  {showDescriptionBox && (<FormItem label='Description' name='description' initialValue={description} rules={[{ required: false }]}>
+                    <Input.TextArea />
+                  </FormItem >)}
                   <FormItem>
                     <Button
                       type='primary'
@@ -239,14 +239,13 @@ class SettingsAccount extends React.Component {
                       loading={formLoading.account}
                     >
                       Save Changes
-
+                  </Button>
                   </FormItem>
                   <h2 className='text-align--center'>Password Settings</h2>
                   <FormItem>
                     <Button type='primary' className='button--fullWidth'>
                       <Link to='/settings/password'>Change Password</Link>
                     </Button>
-
                   </FormItem>
                 </Form>
               </Col>

@@ -42,8 +42,8 @@ export default (method, url, query) => {
     .request(config)
     .then(response => {
       nprogressHandler.delay()
+
       return Promise.resolve(response.data)
-      
     })
     .catch(err => {
       if (err.status === 403) {
