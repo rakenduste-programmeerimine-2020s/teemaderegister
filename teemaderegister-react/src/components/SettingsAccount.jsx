@@ -29,6 +29,7 @@ const propTypes = {
       profile: shape({
         firstName: string,
         lastName: string,
+        description: string,
         image: shape({
           full: string
         })
@@ -51,7 +52,7 @@ const propTypes = {
 }
 
 class SettingsAccount extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.defaultAvatarSrc = 'profile/full/default.jpg'
@@ -129,12 +130,14 @@ class SettingsAccount extends React.Component {
         loading,
         formLoading,
         user: {
-          profile: { firstName, lastName, image },
+          profile: { firstName, lastName, image, description },
           login: { email, roles },
           updatedAt
         }
       }
     } = this.props
+
+    const showDescriptionBox = roles && roles.includes('supervisor')
 
     const avatarSrc = image
       ? `${process.env.UPLOAD_PATH + image.full}?updatedAt=${updatedAt}`
@@ -225,6 +228,9 @@ class SettingsAccount extends React.Component {
                       )}
                     </Select>
                   </FormItem>
+                  {showDescriptionBox && (<FormItem label='Description' name='description' initialValue={description} rules={[{ required: false }]}>
+                    <Input.TextArea />
+                  </FormItem >)}
                   <FormItem>
                     <Button
                       type='primary'

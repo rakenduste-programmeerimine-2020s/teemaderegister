@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema(
     profile: {
       firstName: { type: String, required: true },
       lastName: { type: String, required: true },
+      description: { type: String, default: '-' },
       slug: { type: String, required: true, unique: true },
       image: {
         original: { type: String, default: null },
@@ -33,9 +34,9 @@ const userSchema = new mongoose.Schema(
       }]
     },
     auth: {
-      enabled: {type: Boolean, default: false},
-      secret: {type: String},
-      image: {type: String}
+      enabled: { type: Boolean, default: false },
+      secret: { type: String },
+      image: { type: String }
     },
 
     settings: {
