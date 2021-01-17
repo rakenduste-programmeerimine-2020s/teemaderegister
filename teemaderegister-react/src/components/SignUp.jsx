@@ -34,6 +34,7 @@ class SignUp extends React.Component {
     // You don't have to do this check first, but it can help prevent an unneeded render
     if (nextProps.signup.hasError) {
       message.error(nextProps.signup.error.message)
+      this.componentWillUnmount()
     }
   }
 
@@ -74,6 +75,7 @@ class SignUp extends React.Component {
                 { required: true, message: 'Please input your name!' }
               ]}>
                 <Input
+                  autoFocus
                   prefix={<UserOutlined />}
                   type='name'
                   placeholder='First name'
@@ -91,10 +93,12 @@ class SignUp extends React.Component {
               <FormItem name='email' rules={[
                 { required: true, message: 'Please input your email!' }
               ]}>
-                <Input autoFocus prefix={<MailOutlined />} placeholder='Email' />
+                <Input prefix={<MailOutlined />} placeholder='Email' />
               </FormItem>
               <FormItem name='password' className='signup__password' rules={[
                 { required: true, message: 'Please input your password!' },
+                { pattern: /(?=.*\d)/, message: 'Password must contain at least one number' },
+                { pattern: /(?=.*[A-Z])/, message: 'Password must contain at least one uppercase letter' },
                 { min: 8, message: 'Passwords must be at least 8 characters long' }
               ]}>
                 <Input
