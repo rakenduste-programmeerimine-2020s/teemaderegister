@@ -43,6 +43,7 @@ export const getCurriculum = slug => dispatch => {
       dispatch({ type: types.CURRICULUM_LOADED, meta })
     })
     .catch(err => {
+      dispatch({ type: types.CURRICULUM_NOT_FOUND, message: err.data.message })
       console.log(err)
     })
 }
