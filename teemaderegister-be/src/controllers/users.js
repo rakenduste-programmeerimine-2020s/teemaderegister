@@ -19,6 +19,7 @@ module.exports.getUser = async (req, res) => {
       profile: {
         firstName: user.profile.firstName,
         lastName: user.profile.lastName,
+        description: user.profile.description,
         slug: user.profile.slug,
         authentication: user.profile.dataQR,
         asciiQR: user.profile.asciiQR,
@@ -92,7 +93,8 @@ module.exports.updateUser = async (req, res) => {
       'profile.lastName': lastName,
       // TODO Fix for unique slug, waiting(teemaderegister-be/pull/18)
       'profile.slug': slug(firstName + ' ' + lastName),
-      'login.email': email
+      'login.email': email,
+      'profile.description': description
     }
   })
 
@@ -185,7 +187,7 @@ module.exports.resetPicture = async (req, res) => {
   return res.json({ user, message: 'Picture updated successfully' })
 }
 module.exports.getAllUsers = async (req, res) => {
-  const users = await User.find({}, {'login.password': 0})
+  const users = await User.find({}, { 'login.password': 0 })
 
   return res.json(users)
 }
