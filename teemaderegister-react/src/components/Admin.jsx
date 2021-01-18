@@ -40,7 +40,8 @@ class Admin extends React.Component {
       confs: <AdminConfirmations/>,
       allUsers: <AdminUsers type='allusers'/>,
       addNewUser: <AdminUsers type='add-new-user'/>,
-      tos: <AdminTosContainer />
+      tos: <AdminTosContainer />,
+      newTopic: <AdminUsers type='new-topic'/>
     }
 
     this.defaultPage = 'registered'
@@ -93,6 +94,7 @@ class Admin extends React.Component {
                 defaultOpenKeys={['topics', 'users']}
                 onSelect={this.onSelect}>
                 <SubMenu key='topics' title={<span><BookOutlined/>Topics</span>}>
+                  <Menu.Item key='newTopic'>New topic</Menu.Item>
                   <Menu.Item key='registered'>Registered</Menu.Item>
                   <Menu.Item key='available'>Available</Menu.Item>
                   <Menu.Item key='defended'>Defended</Menu.Item>
