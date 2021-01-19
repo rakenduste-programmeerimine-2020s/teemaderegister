@@ -1,10 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import DownloadCSV from './DownloadCSV'
 import Breadcrumbs from './Breadcrumbs'
 import TableWrap from '../components/TableWrap'
 import getTabs from '../utils/getTabs'
 import CurriculumMeta from './CurriculumMeta'
+import {Button, Result} from 'antd'
+import {Link} from 'react-router-dom'
 
 const { bool, func, object, shape } = PropTypes
 
@@ -27,24 +29,24 @@ const propTypes = {
 }
 
 class Curriculum extends React.Component {
-  componentDidMount () {
+  componentDidMount() {
     this.props.getCurriculum()
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     // Reset all state params
     this.props.initCurriculum()
     this.props.initTableContent()
   }
 
-  getCrumbs (name) {
+  getCrumbs(name) {
     return [
       { url: null, name: 'Curriculum' },
       { url: this.props.location.pathname, name }
     ]
   }
 
-  render () {
+  render() {
     const {
       clearTableContent,
       curriculum,
@@ -57,6 +59,16 @@ class Curriculum extends React.Component {
 
     return (
       <div className='curriculum width--public-page'>
+
+        {
+          curriculum.error && <Result
+            status='404'
+            title='404'
+            subTitle={curriculum.message}
+            extra={<Button type='primary'><Link to='/'>Back Home</Link></Button>}
+          />
+        }
+
         {!loading &&
           <div>
             <Breadcrumbs crumbs={this.getCrumbs(meta.names.et)} />

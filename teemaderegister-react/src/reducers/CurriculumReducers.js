@@ -31,6 +31,13 @@ export default (state = INITIAL_STATE, action) => {
         }
       }
 
+    case types.CURRICULUM_NOT_FOUND:
+      return {
+        ...state,
+        error: true,
+        message: action.message
+      }
+
     case types.CURRICULUM_ADD_END: {
       const { curriculum, error } = action
       return {

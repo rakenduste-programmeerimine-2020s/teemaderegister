@@ -18,6 +18,14 @@ export default (state = INITIAL_STATE, action) => {
       }
     }
 
+    case types.SUPERVISOR_NOT_FOUND: {
+      return {
+        ...state,
+        error: true,
+        message: action.message
+      }
+    }
+
     case types.SUPERVISOR_INIT:
       return INITIAL_STATE
 
