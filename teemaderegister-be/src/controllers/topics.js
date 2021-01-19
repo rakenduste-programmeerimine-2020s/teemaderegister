@@ -3,6 +3,7 @@ const Promise = require('bluebird')
 const { TopicsQuery } = require('../utils/queryHelpers')
 const { validateGetTopicsQuery } = require('./../utils/queryValidation')
 
+
 module.exports.getTopics = async (req, res) => {
   const query = validateGetTopicsQuery(req.query)
 

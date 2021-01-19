@@ -1,6 +1,5 @@
 import * as types from '../constants/ActionTypes'
 import Api from '../utils/Api'
-
 import {
   CURRICULUMS_URL,
   CURRICULUM_SLUG_URL
@@ -44,6 +43,7 @@ export const getCurriculum = slug => dispatch => {
       dispatch({ type: types.CURRICULUM_LOADED, meta })
     })
     .catch(err => {
+      dispatch({ type: types.CURRICULUM_NOT_FOUND, message: err.data.message })
       console.log(err)
     })
 }

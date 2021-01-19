@@ -6,13 +6,14 @@ import {ADMIN_VIEW_USERS_URL} from '../constants/ApiConstants'
 const columns = [
   {
     title: 'First Name',
-    dataIndex: 'firstName',
+    dataIndex: ['profile', 'firstName'],
     key: 'firstName'
   },
   {
     title: 'Last Name',
-    dataIndex: 'lastName',
+    dataIndex: ['profile', 'lastName'],
     key: 'lastName'
+
   }
 ]
 
@@ -23,15 +24,10 @@ export default function ViewAllUsers () {
   useEffect(() => {
     API('GET', ADMIN_VIEW_USERS_URL)
       .then(res => {
-        const userInfo = res.map((userData) => ({
-          key: userData._id,
-          firstName: userData.profile.firstName,
-          lastName: userData.profile.lastName
-        }))
-        setUsers(userInfo)
+        setUsers(res)
         setIsLoading(false)
       })
   }, [])
 
-  return <Table dataSource={users} columns={columns} loading={isLoading}/>
+  return <Table dataSource={users} columns={columns} loading={isLoading} rowKey={r => r._id}/>
 }
