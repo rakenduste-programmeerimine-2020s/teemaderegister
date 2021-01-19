@@ -25,6 +25,9 @@ const curriculumSchema = new mongoose.Schema(
       ref: 'User',
       required: true
     },
+    representative_name: {
+      type: String
+    },
     type: {
       type: String,
       enum: curriculumTypes,

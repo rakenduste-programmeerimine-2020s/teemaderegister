@@ -57,4 +57,9 @@ router.post('/admin/createUser', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware
 router.get('/admin/users', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(users.getAllUsers))
 router.post('/admin/tos/save', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(tos.saveTos))
 router.get('/tos', asyncMiddleware(tos.getTos))
+
+router.get('/admin/curriculums', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(admin.getCurriculums))
+router.put('/admin/curriculums', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(admin.putCurriculums))
+router.get('/admin/user/ids', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(admin.getUserData))
+
 module.exports = router

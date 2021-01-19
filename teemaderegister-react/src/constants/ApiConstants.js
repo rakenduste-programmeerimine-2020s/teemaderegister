@@ -23,7 +23,12 @@ export const ADMIN_VIEW_USERS_URL = `${API}/admin/users`
 export const ADMIN_ADD_NEW_USER = `${API}/admin/createUser`
 export const TOS_LOAD = `${API}/tos`
 export const TOS_SAVE = `${API}/admin/tos/save`
+
+export const ADMIN_GET_CURRICULUMS = `${API}/admin/curriculums`
+export const ADMIN_GET_USERS = `${API}/admin/user/ids`
+
 export const USER_FACTOR = `${API}/auth/local/factor`
 export const USER_FACTOR_ENABLE = `${API}/auth/local/factor/enable`
 export const USER_FACTOR_DISABLE = `${API}/auth/local/factor/disable`
 export const USER_FACTOR_INSERT = `${API}/auth/local/factor/insert`
+
