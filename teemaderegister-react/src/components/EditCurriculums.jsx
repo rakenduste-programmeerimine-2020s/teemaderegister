@@ -98,7 +98,7 @@ const EditCurriculums = (props) => {
             name='userId'
           >
             <Select
-              style={{width: '100%'}}
+              className = "editCurriculum"
               placeholder={curriculumData.representative.profile.slug}
             >
               {usersData.map((value) => {
@@ -143,7 +143,8 @@ const EditCurriculums = (props) => {
 
   return (
     <Layout>
-      <Button style={{width : "20%"}}onClick={changeLanguage}>Change language</Button>
+
+      <Button onClick={changeLanguage} className="changeLanguage">Change language</Button>
       <Table dataSource={tableData} columns={columns} />
       <Modal title='Edit Curriculum' visible={isModalVisible} onCancel={() => setIsModalVisible(false)} footer={0}>
         {
