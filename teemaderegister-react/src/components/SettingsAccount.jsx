@@ -36,7 +36,8 @@ const propTypes = {
       }).isRequired,
       login: shape({
         email: string,
-        roles: array
+        roles: array,
+        emailConfirmed: bool.isRequired
       }).isRequired,
       updatedAt: string.isRequired
     }).isRequired,
@@ -52,7 +53,7 @@ const propTypes = {
 }
 
 class SettingsAccount extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.defaultAvatarSrc = 'profile/full/default.jpg'
@@ -131,7 +132,7 @@ class SettingsAccount extends React.Component {
         formLoading,
         user: {
           profile: { firstName, lastName, image, description },
-          login: { email, roles },
+          login: { email, roles, emailConfirmed },
           updatedAt
         }
       }
@@ -142,6 +143,14 @@ class SettingsAccount extends React.Component {
     const avatarSrc = image
       ? `${process.env.UPLOAD_PATH + image.full}?updatedAt=${updatedAt}`
       : null
+
+    console.log('confirmed:' + emailConfirmed)
+
+    let emailConfirmedText = 'Email not verified!'
+
+    if (emailConfirmed) {
+      emailConfirmedText = 'Email verified!'
+    }
 
     return (
       <div className='settingsAccount width--public-page'>
@@ -220,6 +229,14 @@ class SettingsAccount extends React.Component {
                     { type: 'email', message: 'Please enter a correct email' }
                   ]}>
                     <Input type='email' />
+                  </FormItem>
+                  <FormItem>
+                    <Button
+                      type='primary'
+                      className='button--fullWidth'
+                    >
+                      {emailConfirmedText}
+                    </Button>
                   </FormItem>
                   <FormItem label='Roles' name='roles' initialValue={roles} rules={[{ required: true }]}>
                     <Select disabled mode='multiple'>

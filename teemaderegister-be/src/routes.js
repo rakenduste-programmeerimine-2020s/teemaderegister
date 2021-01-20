@@ -54,12 +54,12 @@ router.put('/users/reset-picture', jwtEnsure, asyncMiddleware(users.resetPicture
 router.get('/admin/', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(admin.getSecret))
 router.post('/admin/topics', jwtEnsure, allowRoles([ADMIN, SUPERVISOR]), asyncMiddleware(admin.getSupervisorTopics))
 router.post('/admin/createUser', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(admin.createUser))
-router.get('/admin/users', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(users.getAllUsers))
 router.post('/admin/tos/save', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(tos.saveTos))
 router.get('/tos', asyncMiddleware(tos.getTos))
 
 router.get('/admin/curriculums', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(admin.getCurriculums))
 router.put('/admin/curriculums', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(admin.putCurriculums))
 router.get('/admin/user/ids', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(admin.getUserData))
+router.get('/auth/emailconfirm/:token', asyncMiddleware(auth.emailVerification))
 
 module.exports = router

@@ -8,6 +8,37 @@ const { signToken, blacklistToken } = require('../utils/jwt')
 
 const { Error, InsertToken } = require('../utils/errors')
 
+
+module.exports.emailVerification = async (req, res) => {
+  //const {email, password} = req.body
+  //return res.status(201).send({ message: req.params.token })
+
+  const user = await User.findById(req.query.id)
+
+  var response = null;
+
+  if (user.login.emailConfirmToken === req.params.token){
+    response = true;
+    user.login.emailConfirmed = true;
+    //user.login.email =
+    await user.save()
+  }else{
+    response = false;
+  }
+
+  const url =
+      `${process.env.SITE_URL}/settings/account`
+
+
+  res.writeHead(301,
+      {Location: url}
+  );
+  res.end();
+  return res;
+
+  //return res.json({"response":response})
+}
+
 module.exports.getPasswordResetTokenValues = () => {
   return {
     passwordResetToken: crypto.randomBytes(20).toString('hex'),

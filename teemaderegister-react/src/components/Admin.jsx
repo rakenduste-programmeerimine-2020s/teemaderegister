@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {Layout, Menu} from 'antd'
-import {BookOutlined, LaptopOutlined, UserOutlined, UserAddOutlined, FileTextOutlined, UnorderedListOutlined, EditOutlined} from '@ant-design/icons'
+import { BookOutlined, LaptopOutlined, UserOutlined, UserAddOutlined, FileTextOutlined, EditOutlined } from '@ant-design/icons'
 import AdminConfirmations from './AdminConfirmations'
 import AdminTopics from './AdminTopics'
 import AdminUsers from './AdminUsers'
@@ -38,7 +38,8 @@ class Admin extends React.Component {
       available: <AdminTopics type='available'/>,
       defended: <AdminTopics type='defended'/>,
       confs: <AdminConfirmations/>,
-      allUsers: <AdminUsers type='allusers'/>,
+      supervisors: <AdminUsers type='supervisor'/>,
+      students: <AdminUsers type='students'/>,
       addNewUser: <AdminUsers type='add-new-user'/>,
       tos: <AdminTosContainer />,
       editCurriculums: <AdminUsers type='edit-curriculums'/>
@@ -104,11 +105,14 @@ class Admin extends React.Component {
                 </Menu.Item>
                 {(isAdmin || isStudyAssistant) &&
                 <SubMenu key='users' title={<span><UserOutlined/>Users</span>}>
-                  <Menu.Item key='allUsers' icon={<UnorderedListOutlined/>}>All users</Menu.Item>
-                  <Menu.Item key='addNewUser' icon={<UserAddOutlined/>}>Add new user</Menu.Item>
+                  <Menu.Item
+                    key='addNewUser'
+                    icon={<UserAddOutlined/>}>Add new user</Menu.Item>
+                  <Menu.Item key='supervisors'>Supervisors</Menu.Item>
+                  <Menu.Item key='students'>Students</Menu.Item>
                 </SubMenu>
                 }
-                    {
+                {
                   (isAdmin) &&
                       <Menu.Item icon={<EditOutlined />} key={'editCurriculums'}>
                         Edit curriculums

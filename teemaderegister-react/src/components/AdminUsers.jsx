@@ -1,6 +1,5 @@
 import React from 'react'
 import {PropTypes} from 'prop-types'
-import ViewAllUsers from './ViewAllUsers'
 import AddNewUserForm from './AddNewUserForm'
 import {Card} from 'antd'
 import EditCurriculums from './EditCurriculums'
@@ -9,7 +8,7 @@ const propTypes = {
   type: PropTypes.string
 }
 
-const AdminUsers = (props) => {
+const AdminUsers = props => {
   switch (props.type) {
     case 'allusers':
       return <ViewAllUsers/>
@@ -24,7 +23,8 @@ const AdminUsers = (props) => {
         </Card>
       )
     default:
-      return <h2>Choose something.</h2>
+      return (<h2>Choose something.</h2>
+      )
   }
 }
 

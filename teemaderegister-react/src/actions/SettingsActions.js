@@ -25,7 +25,7 @@ export const getProfile = () => dispatch => {
 
 export const updateProfile = user => dispatch => {
   dispatch({ type: types.USER_SETTINGS_SAVE_START })
-
+    console.log(user)
   return Api('PUT', USER_UPDATE_PROFILE_URL, { data: user })
     .then(data => {
       const { message } = data
