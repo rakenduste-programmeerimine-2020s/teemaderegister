@@ -185,6 +185,9 @@ class HeaderWrap extends Component {
               <div className='login'>
                 <Link to='/login'>Sign in</Link>
               </div>}
+            <div className='login'>
+              <Link to='/sign_up'>Sign up &nbsp;</Link>
+            </div>
           </div>
         </div>
       </Header>
