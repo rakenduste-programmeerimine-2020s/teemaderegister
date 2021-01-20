@@ -136,7 +136,6 @@ module.exports.createTopic = async (req, res) => {
   const { value, error } = TopicSchema.validate(topic)
 
   if (error) { return res.json({ success: false, message: error.message }) }
-
   await new Topic(value).save()
 
   return res.json({ success: true })
