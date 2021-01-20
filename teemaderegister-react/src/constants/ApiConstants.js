@@ -33,3 +33,4 @@ export const USER_FACTOR_DISABLE = `${API}/auth/local/factor/disable`
 export const USER_FACTOR_INSERT = `${API}/auth/local/factor/insert`
 
 export const SIGNUP_URL = `${API}/auth/local/signup`
+export const USER_CONFIRM_EMAIL_URL = `${API}/auth/emailconfirm`

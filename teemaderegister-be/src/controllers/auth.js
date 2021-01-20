@@ -10,33 +10,16 @@ const { Error, InsertToken } = require('../utils/errors')
 
 
 module.exports.emailVerification = async (req, res) => {
-  //const {email, password} = req.body
-  //return res.status(201).send({ message: req.params.token })
 
-  const user = await User.findById(req.query.id)
+  const user = await User.findById(req.user._id)
 
-  var response = null;
-
-  if (user.login.emailConfirmToken === req.params.token){
-    response = true;
+  if (user){
     user.login.emailConfirmed = true;
-    //user.login.email =
     await user.save()
-  }else{
-    response = false;
+
+    return res.json({ result: true })
   }
-
-  const url =
-      `${process.env.SITE_URL}/settings/account`
-
-
-  res.writeHead(301,
-      {Location: url}
-  );
-  res.end();
-  return res;
-
-  //return res.json({"response":response})
+  return res.json({ result: false })
 }
 
 module.exports.getPasswordResetTokenValues = () => {

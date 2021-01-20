@@ -51,8 +51,8 @@ services:
       PASSWORD_RESET_LINK_LIMIT: 300000
       MAILSERVICE_HOST: smtp.mailgun.org
       MAILSERVICE_PORT: 587
-      MAILSERVICE_USERNAME: postmaster@sandbox5ebcec8bb7a74f2e94c35289d63959fd.mailgun.org
-      MAILSERVICE_PASSWORD: c63d598dcf032c9f4f251fae99281c89
+      MAILSERVICE_USERNAME: postmaster@sandbox03a6163943544308b47a0f28e0042e86.mailgun.org
+      MAILSERVICE_PASSWORD: 13d9fe17c0df34f7cb336f792d5e4452-3d0809fb-b28facc4
       EMAIL_SENDER: teemaderegister@tlu.ee
       EMAIL_SENDER_NAME: Teemaderegister
       TOPICS_EXPIRE_IN_MONTHS: 72

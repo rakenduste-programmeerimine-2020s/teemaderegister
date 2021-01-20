@@ -3,11 +3,14 @@ import PropTypes from 'prop-types'
 import Breadcrumbs from './Breadcrumbs'
 import { Link } from 'react-router-dom'
 
-import { USER_PICTURE_UPLOAD_URL } from '../constants/ApiConstants'
+import {USER_CONFIRM_EMAIL_URL, USER_PICTURE_RESET_URL, USER_PICTURE_UPLOAD_URL} from '../constants/ApiConstants'
 import { getToken } from '../utils/jwt'
 
 import { Row, Col, Form, Input, Button, Upload, message, Avatar, Spin, Modal, Dropdown, Menu, Select } from 'antd'
 import { UploadOutlined, CloseCircleOutlined, EditOutlined } from '@ant-design/icons'
+import Api from '../utils/Api'
+import * as types from '../constants/ActionTypes'
+import {checkUser} from '../actions/AuthActions'
 const FormItem = Form.Item
 const { confirm } = Modal
 const { Option } = Select
@@ -94,6 +97,7 @@ class SettingsAccount extends React.Component {
 
   submitUpdateProfile (values) {
     this.props.updateProfile(values)
+    window.location.reload()
   }
 
   beforeUpload (file) {
@@ -144,12 +148,17 @@ class SettingsAccount extends React.Component {
       ? `${process.env.UPLOAD_PATH + image.full}?updatedAt=${updatedAt}`
       : null
 
-    console.log('confirmed:' + emailConfirmed)
+    const emailConfirmedText = emailConfirmed ? 'Email verified!' : 'Email not verified!'
 
-    let emailConfirmedText = 'Email not verified!'
+    const query = new URLSearchParams(this.props.location.search)
+    const token = query.get('emailConfirmToken')
+    if (token != null) {
+      if (emailConfirmed) {
+        message.success('Email confirmed!', 2)
+        this.props.history.push('/settings/account')
+      }
 
-    if (emailConfirmed) {
-      emailConfirmedText = 'Email verified!'
+      this.props.getEmailConfirmToken(token)
     }
 
     return (
@@ -230,14 +239,16 @@ class SettingsAccount extends React.Component {
                   ]}>
                     <Input type='email' />
                   </FormItem>
-                  <FormItem>
-                    <Button
-                      type='primary'
-                      className='button--fullWidth'
-                    >
-                      {emailConfirmedText}
-                    </Button>
-                  </FormItem>
+                  {!emailConfirmed &&
+                <FormItem>
+                  <Button
+                    type='primary'
+                    className='button--fullWidth'
+                    htmlType='submit'
+                  >
+                    {emailConfirmedText}
+                  </Button>
+                </FormItem>}
                   <FormItem label='Roles' name='roles' initialValue={roles} rules={[{ required: true }]}>
                     <Select disabled mode='multiple'>
                       {roles.map(r =>

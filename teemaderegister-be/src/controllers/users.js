@@ -91,25 +91,8 @@ module.exports.updateUser = async (req, res) => {
     })
   if (userWithSameEmail) throw new Error(`Email ${email} already in use`)
 
-  const user = await User.findById(req.user._id);
-
-  //const user = await User.findOne({'login.email': email})
-
   const newtoken = await crypto.randomBytes(50).toString('hex');
-  let confirmLink = "http://localhost:3000/api/auth/emailconfirm/" + newtoken
-
-  confirmLink += "?id="+req.user._id;
-
-  await user.save()
-
-  await mail.sendMail({
-    to: email,
-    subject: "Email verification",
-    template: {
-      name: 'emailValidate',
-      data: { confirmLink }
-    }
-  })
+  let confirmLink = "http://localhost:8080/settings/account?emailConfirmToken=" + newtoken
 
   await User.findByIdAndUpdate(req.user._id, {
     $set: {
@@ -123,6 +106,17 @@ module.exports.updateUser = async (req, res) => {
       'login.emailConfirmToken' : newtoken
     }
   })
+
+  await mail.sendMail({
+    to: email,
+    subject: "Email verification",
+    template: {
+      name: 'emailValidate',
+      data: { confirmLink }
+    }
+  })
+
+
 
   return res.json({ message: 'Changes saved' })
 }
