@@ -1,7 +1,9 @@
 const Topic = require('../models/topic')
 const Promise = require('bluebird')
+const Joi = require('joi')
 const { TopicsQuery } = require('../utils/queryHelpers')
 const { validateGetTopicsQuery } = require('./../utils/queryValidation')
+const { Error } = require('../utils/errors')
 
 module.exports.getTopics = async (req, res) => {
   const query = validateGetTopicsQuery(req.query)
@@ -84,3 +86,57 @@ exports.getRelatedTopicsIds = async q => (await Topic.aggregate([
   },
   { $project: { fullName: 0, title: 0, slug: 0 } }
 ])).reduce((arrayOfIds, topic) => [topic._id, ...arrayOfIds], [])
+
+const TopicSchema = Joi.object({
+  title: Joi.string().required().min(1),
+  titleEng: Joi.string().required().min(1),
+  slug: Joi.string().min(1).replace(' ', '-').required(),
+
+  description: Joi.string(),
+
+  supervisors: Joi.array().items(
+    Joi.object({
+      type: Joi.string().valid('Main', 'Co').required(),
+      supervisor: Joi.string().required()
+    }).required()
+  ).required(),
+
+  curriculums: Joi.array().items(
+    Joi.string().required()
+  ).required(),
+
+  types: Joi.array().items(
+    Joi.string().valid('SE', 'BA', 'MA', 'PHD').required()
+  ).required(),
+
+  author: Joi.object({
+    firstName: Joi.string(),
+    lastName: Joi.string(),
+    email: Joi.string().email(),
+    phone: Joi.string()
+  }),
+
+  specialConditions: Joi.string(),
+
+  file: Joi.string(),
+  attachments: Joi.array().items(
+    Joi.string()
+  ),
+
+  accepted: Joi.date(),
+  registered: Joi.date(),
+  defended: Joi.date(),
+  archived: Joi.date(),
+  starred: Joi.boolean()
+})
+
+module.exports.createTopic = async (req, res) => {
+  const topic = req.body
+
+  const { value, error } = TopicSchema.validate(topic)
+
+  if (error) { return res.json({ success: false, message: error.message }) }
+  await new Topic(value).save()
+
+  return res.json({ success: true })
+}

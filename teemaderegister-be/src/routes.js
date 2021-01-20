@@ -36,6 +36,7 @@ router.get('/supervisors/:slug', asyncMiddleware(supervisors.getSupervisorBySlug
 
 router.get('/topics/', asyncMiddleware(topics.getTopics))
 router.post('/topics/supervisor', jwtEnsure, allowRoles([SUPERVISOR, ADMIN]), asyncMiddleware(topics.getSupervisorTopics))
+router.post('/topics/', jwtEnsure, allowRoles([SUPERVISOR, ADMIN]), asyncMiddleware(topics.createTopic))
 
 router.get('/users/me', jwtEnsure, asyncMiddleware(users.getUser))
 router.get('/users/profile', jwtEnsure, asyncMiddleware(users.getProfile))
