@@ -2,7 +2,6 @@ import React from 'react'
 import {PropTypes} from 'prop-types'
 import ViewAllUsers from './ViewAllUsers'
 import AddNewUserForm from './AddNewUserForm'
-// import SupervisorNewTopic from './SupervisorNewTopic'
 import {Card} from 'antd'
 import EditCurriculums from './EditCurriculums'
 
@@ -21,13 +20,8 @@ const AdminUsers = (props) => {
     case 'add-new-user':
       return (
         <Card>
-          {/*<AddNewUserForm/>*/}
-          <h1>Hello</h1>
+          <AddNewUserForm/>
         </Card>
-      )
-    case 'new-topic':
-      return (
-          <SupervisorNewTopic/>
       )
     default:
       return <h2>Choose something.</h2>
