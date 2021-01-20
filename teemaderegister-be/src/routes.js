@@ -48,6 +48,7 @@ router.post('/auth/local/factor/enable', jwtEnsure, asyncMiddleware(factor.enabl
 router.post('/auth/local/factor/disable', jwtEnsure, asyncMiddleware(factor.disable))
 router.get('/auth/local/factor', jwtEnsure, asyncMiddleware(factor.get))
 router.post('/auth/local/factor/insert', jwtEnsure, asyncMiddleware(factor.insert))
+router.get('/auth/emailconfirm/:token', asyncMiddleware(auth.emailVerification))
 
 router.put('/users/reset-picture', jwtEnsure, asyncMiddleware(users.resetPicture))
 

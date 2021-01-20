@@ -24,6 +24,8 @@ const userSchema = new mongoose.Schema(
       email: { type: String },
       password: { type: String },
       passwordResetToken: String,
+      emailConfirmToken: String,
+      emailConfirmed: { type: Boolean, default: false },
       passwordResetExpires: Date,
       passwordUpdatedAt: { type: Date, default: null },
       localLoginAttempts: [{ ip: String, date: Date }],
@@ -68,6 +70,7 @@ userSchema.pre('save', async function (next) {
     user.login.password = hash
     user.login.localLoginAttempts = []
     user.login.localLoginBlocked = null
+    user.login.emailConfirmToken = null
 
     return next()
   } catch (err) {

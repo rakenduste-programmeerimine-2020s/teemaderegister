@@ -7,6 +7,9 @@ const User = require('../models/user')
 const log = require('../utils/logger')
 const { signToken, blacklistToken } = require('../utils/jwt')
 const { Error, NotAuthorizedError } = require('../utils/errors')
+const mail = require('./../utils/mail')
+const crypto = require('crypto')
+
 module.exports.getUser = async (req, res) => {
   // Check if user from token exists
   const user = await User.findById(req.user._id)
@@ -35,7 +38,8 @@ module.exports.getUser = async (req, res) => {
       },
       login: {
         email: user.login.email,
-        roles: user.login.roles
+        roles: user.login.roles,
+        emailConfirmed: user.login.emailConfirmed
       },
       updatedAt: user.updatedAt
     }
@@ -87,6 +91,9 @@ module.exports.updateUser = async (req, res) => {
     })
   if (userWithSameEmail) throw new Error(`Email ${email} already in use`)
 
+  const newtoken = await crypto.randomBytes(50).toString('hex')
+  let confirmLink = 'http://localhost:8080/settings/account?emailConfirmToken=' + newtoken
+
   await User.findByIdAndUpdate(req.user._id, {
     $set: {
       'profile.firstName': firstName,
@@ -94,7 +101,18 @@ module.exports.updateUser = async (req, res) => {
       // TODO Fix for unique slug, waiting(teemaderegister-be/pull/18)
       'profile.slug': slug(firstName + ' ' + lastName),
       'login.email': email,
-      'profile.description': description
+      'profile.description': description,
+      'login.emailConfirmed': false,
+      'login.emailConfirmToken': newtoken
+    }
+  })
+
+  await mail.sendMail({
+    to: email,
+    subject: 'Email verification',
+    template: {
+      name: 'emailValidate',
+      data: { confirmLink }
     }
   })
 
@@ -186,6 +204,7 @@ module.exports.resetPicture = async (req, res) => {
 
   return res.json({ user, message: 'Picture updated successfully' })
 }
+
 module.exports.getAllUsers = async (req, res) => {
   const users = await User.find({}, { 'login.password': 0 })
 
