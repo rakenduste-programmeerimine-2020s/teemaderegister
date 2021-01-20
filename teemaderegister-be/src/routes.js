@@ -9,7 +9,7 @@ const { ADMIN, SUPERVISOR } = require('./constants/roles')
 const csv = require('./controllers/csv')
 =======
 
-const { ADMIN } = require('./constants/roles')
+const { ADMIN, SUPERVISOR } = require('./constants/roles')
 
 >>>>>>> supervisor can add topics
 const auth = require('./controllers/auth')

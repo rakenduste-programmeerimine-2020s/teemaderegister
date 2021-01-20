@@ -24,7 +24,6 @@ const SupervisorNewTopic = (props) => {
     }
 
     fetchData()
-    console.log(curriculums)
   }, [])
 
   const onFinish = async (values) => {
@@ -123,7 +122,7 @@ const SupervisorNewTopic = (props) => {
       <Form.Item label={'Types'} name={'types'} required={true}>
         <Select
           mode='multiple'
-          style={{ width: '100%' }}
+          className='maxWidth'
           placeholder='select at least one type'
         >
           <Option value={'SE'}>SE</Option>
@@ -135,7 +134,7 @@ const SupervisorNewTopic = (props) => {
 
       <Form.Item label={'Main supervisor:'} required={true}>
         <Select
-          style={{ width: '100%' }}
+          className='maxWidth'
           placeholder='select main supervisor'
           onChange={handleChangeMain}
         >
@@ -150,7 +149,7 @@ const SupervisorNewTopic = (props) => {
 
       <Form.Item label={'Co supervisor'}>
         <Select
-          style={{ width: '100%' }}
+          className='maxWidth'
           placeholder='select at least one supervisor'
           onChange={handleChangeCo}
         >
@@ -164,7 +163,7 @@ const SupervisorNewTopic = (props) => {
 
       <Form.Item label={'Type'} required={true}>
         <Select
-          style={{ width: '100%' }}
+          className='maxWidth'
           placeholder='Select Type'
           onChange={TYPECHANGE}
         >
@@ -177,7 +176,7 @@ const SupervisorNewTopic = (props) => {
       <Form.Item label={'Curriculums'} name={'curriculums'} required={true}>
         <Select
           mode='multiple'
-          style={{ width: '100%' }}
+          className='maxWidth'
           placeholder='select one curriculum'
         >
           { curriculums.curriculums && (

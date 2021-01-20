@@ -43,7 +43,7 @@ export const getSupervisorTopics = userData => {
 export const createTopic = dispatch => {
   return async () => {
     try {
-      return await Api('POST', TOPICS_URL, {data: dispatch})
+      return await Api('POST', TOPICS_URL, { data: dispatch })
     } catch (err) {
       return err.data
     }
@@ -53,7 +53,7 @@ export const createTopic = dispatch => {
 export const getSupervisors = dispatch => {
   return async () => {
     try {
-      return await Api('GET', SUPERVISORS_URL, {data: dispatch})
+      return await Api('GET', SUPERVISORS_URL, { data: dispatch })
     } catch (err) {
       return err.data
     }
@@ -63,7 +63,7 @@ export const getSupervisors = dispatch => {
 export const getCurriculums = dispatch => {
   return async () => {
     try {
-      return await Api('GET', CURRICULUMS_URL, {data: dispatch})
+      return await Api('GET', CURRICULUMS_URL, { data: dispatch })
     } catch (err) {
       return err.data
     }
