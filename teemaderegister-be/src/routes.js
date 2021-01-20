@@ -4,8 +4,14 @@ const { jwtEnsure, allowRoles } = require('./utils/jwt')
 const validate = require('./utils/validate')
 const asyncMiddleware = require('./utils/asyncMiddleware')
 const multerMiddleware = require('./utils/multerMiddleware')
+<<<<<<< HEAD
 const { ADMIN, SUPERVISOR } = require('./constants/roles')
 const csv = require('./controllers/csv')
+=======
+
+const { ADMIN, SUPERVISOR } = require('./constants/roles')
+
+>>>>>>> supervisor can add topics
 const auth = require('./controllers/auth')
 const curriculums = require('./controllers/curriculums')
 const search = require('./controllers/search')
@@ -36,6 +42,7 @@ router.get('/supervisors/:slug', asyncMiddleware(supervisors.getSupervisorBySlug
 
 router.get('/topics/', asyncMiddleware(topics.getTopics))
 router.post('/topics/supervisor', jwtEnsure, allowRoles([SUPERVISOR, ADMIN]), asyncMiddleware(topics.getSupervisorTopics))
+router.post('/topics/', jwtEnsure, allowRoles([SUPERVISOR, ADMIN]), asyncMiddleware(topics.createTopic))
 
 router.get('/users/me', jwtEnsure, asyncMiddleware(users.getUser))
 router.get('/users/profile', jwtEnsure, asyncMiddleware(users.getProfile))

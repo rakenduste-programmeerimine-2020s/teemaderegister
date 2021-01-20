@@ -37,11 +37,16 @@ class Admin extends React.Component {
       registered: <AdminTopics type='registered'/>,
       available: <AdminTopics type='available'/>,
       defended: <AdminTopics type='defended'/>,
+      addNewTopic: <AdminTopics type ='addNew'/>,
       confs: <AdminConfirmations/>,
       allUsers: <AdminUsers type='allusers'/>,
       addNewUser: <AdminUsers type='add-new-user'/>,
       tos: <AdminTosContainer />,
+<<<<<<< HEAD
       editCurriculums: <AdminUsers type='edit-curriculums'/>
+=======
+      // newTopic: <AdminUsers type='new-topic'/>
+>>>>>>> supervisor can add topics
     }
 
     this.defaultPage = 'registered'
@@ -97,6 +102,7 @@ class Admin extends React.Component {
                   <Menu.Item key='registered'>Registered</Menu.Item>
                   <Menu.Item key='available'>Available</Menu.Item>
                   <Menu.Item key='defended'>Defended</Menu.Item>
+                  <Menu.Item key='newTopic'>New topic</Menu.Item>
                 </SubMenu>
                 <Menu.Item key='confs'>
                   <LaptopOutlined />
