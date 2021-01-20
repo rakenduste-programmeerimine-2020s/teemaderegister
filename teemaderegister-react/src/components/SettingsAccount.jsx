@@ -3,14 +3,11 @@ import PropTypes from 'prop-types'
 import Breadcrumbs from './Breadcrumbs'
 import { Link } from 'react-router-dom'
 
-import {USER_CONFIRM_EMAIL_URL, USER_PICTURE_RESET_URL, USER_PICTURE_UPLOAD_URL} from '../constants/ApiConstants'
+import { USER_PICTURE_UPLOAD_URL } from '../constants/ApiConstants'
 import { getToken } from '../utils/jwt'
 
 import { Row, Col, Form, Input, Button, Upload, message, Avatar, Spin, Modal, Dropdown, Menu, Select } from 'antd'
 import { UploadOutlined, CloseCircleOutlined, EditOutlined } from '@ant-design/icons'
-import Api from '../utils/Api'
-import * as types from '../constants/ActionTypes'
-import {checkUser} from '../actions/AuthActions'
 const FormItem = Form.Item
 const { confirm } = Modal
 const { Option } = Select

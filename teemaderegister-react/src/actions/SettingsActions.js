@@ -3,10 +3,11 @@ import * as types from '../constants/ActionTypes'
 import { checkUser } from './AuthActions'
 
 import {
-    USER_PROFILE_URL,
-    USER_UPDATE_PROFILE_URL,
-    USER_UPDATE_PASSWORD_URL,
-    USER_PICTURE_RESET_URL, USER_CONFIRM_EMAIL_URL
+  USER_PROFILE_URL,
+  USER_UPDATE_PROFILE_URL,
+  USER_UPDATE_PASSWORD_URL,
+  USER_PICTURE_RESET_URL,
+  USER_CONFIRM_EMAIL_URL
 } from '../constants/ApiConstants'
 
 export const initSettings = () => dispatch =>
@@ -25,6 +26,7 @@ export const getProfile = () => dispatch => {
 
 export const updateProfile = user => dispatch => {
   dispatch({ type: types.USER_SETTINGS_SAVE_START })
+
   return Api('PUT', USER_UPDATE_PROFILE_URL, { data: user })
     .then(data => {
       const { message } = data
@@ -81,14 +83,11 @@ export const changePassword = user => dispatch => {
 }
 
 export const getEmailConfirmToken = token => dispatch => {
-
-    return Api('GET', USER_CONFIRM_EMAIL_URL+"/"+token)
-        .then(data => {
-            const { message } = data
-
-        }).catch(err => {
-        const error = err.data
-        console.log(error)
+  return Api('GET', USER_CONFIRM_EMAIL_URL + '/' + token)
+    .then(data => {
+      const { message } = data
+    }).catch(err => {
+      const error = err.data
+      console.log(error)
     })
-
 }

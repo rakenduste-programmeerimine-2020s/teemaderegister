@@ -116,8 +116,6 @@ module.exports.updateUser = async (req, res) => {
     }
   })
 
-
-
   return res.json({ message: 'Changes saved' })
 }
 
