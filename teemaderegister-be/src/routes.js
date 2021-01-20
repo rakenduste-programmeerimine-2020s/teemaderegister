@@ -4,14 +4,8 @@ const { jwtEnsure, allowRoles } = require('./utils/jwt')
 const validate = require('./utils/validate')
 const asyncMiddleware = require('./utils/asyncMiddleware')
 const multerMiddleware = require('./utils/multerMiddleware')
-<<<<<<< HEAD
 const { ADMIN, SUPERVISOR } = require('./constants/roles')
 const csv = require('./controllers/csv')
-=======
-
-const { ADMIN, SUPERVISOR } = require('./constants/roles')
-
->>>>>>> supervisor can add topics
 const auth = require('./controllers/auth')
 const curriculums = require('./controllers/curriculums')
 const search = require('./controllers/search')
