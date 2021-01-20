@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const { topicTypes } = require('./../constants/types')
+const mongoose = require("mongoose");
+const { topicTypes } = require("./../constants/types");
 
 const topicSchema = new mongoose.Schema(
   {
@@ -13,38 +13,46 @@ const topicSchema = new mongoose.Schema(
       {
         type: {
           type: String,
-          enum: ['Main', 'Co'],
-          required: true
+          enum: ["Main", "Co"],
+          required: true,
         },
         supervisor: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: 'User',
-          required: true
-        }
-      }
+          ref: "User",
+          required: true,
+        },
+      },
     ],
 
     curriculums: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Curriculum',
-        required: true
-      }
+        ref: "Curriculum",
+        required: true,
+      },
+    ],
+
+    tags: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "tag",
+        required: true,
+      },
     ],
 
     types: [
       {
         type: String,
         enum: topicTypes,
-        required: true
-      }
+        required: true,
+      },
     ],
 
     author: {
       firstName: { type: String },
       lastName: { type: String },
       email: { type: String },
-      phone: { type: String }
+      phone: { type: String },
     },
 
     specialConditions: { type: String },
@@ -57,16 +65,16 @@ const topicSchema = new mongoose.Schema(
     defended: { type: Date },
     archived: { type: Date },
 
-    starred: { type: Boolean }
+    starred: { type: Boolean },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
-)
+);
 
 // Indexes and unique fields
-topicSchema.index({ slug: 1 }, { unique: true })
+topicSchema.index({ slug: 1 }, { unique: true });
 
-const Topic = mongoose.model('Topic', topicSchema)
+const Topic = mongoose.model("Topic", topicSchema);
 
-module.exports = Topic
+module.exports = Topic;

@@ -1,13 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import { Select } from 'antd';
 import Breadcrumbs from './Breadcrumbs'
 import TableWrap from '../components/TableWrap'
 import getTabs from '../utils/getTabs'
 import CurriculumMeta from './CurriculumMeta'
+import { Divider } from 'antd';
 import Tags from "./tags2.json";
 const { Option } = Select;
-
+const { bool, func, object, shape } = PropTypes
 const children = [];
 Tags.titlen.map(item => {
   children.push(<Option key={item.tag}>{item.tag}</Option>)
@@ -16,8 +17,6 @@ Tags.titlen.map(item => {
 function handleChange(value) {
   console.log(`selected ${value}`);
 }
-
-const { bool, func, object, shape } = PropTypes
 
 const propTypes = {
   clearTableContent: func.isRequired,
@@ -72,10 +71,10 @@ class Curriculum extends React.Component {
           <div>
             <Breadcrumbs crumbs={this.getCrumbs(meta.names.et)} />
             <CurriculumMeta meta={meta} />
-	    <p></p>
-            <Select mode="multiple" style={{ width: "100%" }} placeholder="Vali" onChange={handleChange} >
+            <p></p>
+            <Select mode="multiple" style={{ width: "100%" }} placeholder="Please select" onChange={handleChange} >
             {children}
-            </Select>
+            </Select>            
             <TableWrap
               clearTableContent={clearTableContent}
               curriculum={curriculum}

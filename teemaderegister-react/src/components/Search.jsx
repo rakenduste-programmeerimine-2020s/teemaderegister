@@ -46,9 +46,13 @@ class Search extends React.Component {
 
     return (
       <div className='search width--public-page'>
+
         {!loading &&
           <div>
+
+            
             <Breadcrumbs crumbs={this.getCrumbs()} />
+
             <TableWrap
               tabs={getTabs({ topics, supervisors })}
               history={history}

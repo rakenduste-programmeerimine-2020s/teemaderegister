@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { Link } from 'react-router-dom'
 import queryString from 'query-string'
-import BasicAutoSuggest from '../utils/autosuggest'
+
 import setUrl from '../utils/setUrl'
 import { Menu, Dropdown, Form, Input, Layout } from 'antd'
 

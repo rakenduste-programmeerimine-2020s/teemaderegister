@@ -2,7 +2,6 @@ import React from 'react'
 import { PropTypes } from 'prop-types'
 import { Col, Card, Row, Collapse } from 'antd'
 import { Link } from 'react-router-dom'
-
 import noneBack from '../media/background/none-home-back.svg'
 import halfBack from '../media/background/half-home-back.svg'
 import fullBack from '../media/background/full-home-back.svg'
@@ -20,8 +19,7 @@ const propTypes = {
       names: shape({
         et: string.isRequired
       }).isRequired,
-      slugs: shape({
-        et: string.isRequired
+      slugs: shape({sket: string.isRequired
       }).isRequired
     }).isRequired
   ).isRequired,

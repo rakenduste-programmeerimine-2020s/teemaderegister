@@ -1,35 +1,34 @@
-version: '3.4'
+version: "3.4"
 
 services:
   tr-mongo:
     image: mongo:latest
-    container_name: 'tr-mongo'
+    container_name: "tr-mongo"
     command: --auth
     ports:
       - 27017:27017
     volumes:
-      - './data/mongo:/data/db:delegated'
-      - './data/seed:/teemaderegister/teemaderegister:delegated'
-    environment: 
+      - "./data/seed:/teemaderegister/teemaderegister:delegated"
+    environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
 
-  tr-node: 
-    container_name: 'tr-node'
+  tr-node:
+    container_name: "tr-node"
     depends_on:
       - tr-mongo
     build:
-      context: '../teemaderegister-be'
+      context: "../teemaderegister-be"
     ports:
-      - '3000:3000'
-      - '9000:9000'
+      - "3000:3000"
+      - "9000:9000"
     volumes:
-      - '../teemaderegister-be:/home/node/app:delegated'
-      - '../local-dev/data:/home/node/data:delegated'
+      - "../teemaderegister-be:/home/node/app:delegated"
+      - "../local-dev/data:/home/node/data:delegated"
     environment:
       MONGODB_URI: mongodb://root:root@tr-mongo/teemaderegister?authSource=admin
       MONGODB_TESTS_URI: mongodb://root:root@tr-mongo/teemaderegister-test?authSource=admin
-      MONGOOSE_DEBUG: 'true'
+      MONGOOSE_DEBUG: "true"
       SECRET: this is the secret secret secret 12356
       TOKEN_EXPIRES_IN_SECONDS: 86400
       TOKEN_UPDATE_IN_SECONDS: 3600
@@ -37,7 +36,7 @@ services:
       LOGIN_ATTEMPT_BLOCK_DELAY_IN_MS: 3600000
       PORT: 3000
       NODE_ENV: development
-      LOG_LEVEL: 4
+      LOG_LEVEL: 3
       APP_NAME: teemaderegister
       SITE_URL: http://localhost:8080
       UPLOAD_DIR: ../data/uploads/
@@ -53,8 +52,8 @@ services:
       MAILSERVICE_PASSWORD: c63d598dcf032c9f4f251fae99281c89
       EMAIL_SENDER: teemaderegister@tlu.ee
       EMAIL_SENDER_NAME: Teemaderegister
-      TOPICS_EXPIRE_IN_MONTHS: 72
-    command: 'run start-dev'
+      TOPICS_EXPIRE_IN_MONTHS: 12
+    command: "run start-dev"
 
   tr-react:
     image: teemaderegister-react
@@ -62,19 +61,19 @@ services:
     depends_on:
       - tr-node
     build:
-      context: '../teemaderegister-react'
+      context: "../teemaderegister-react"
     ports:
       - "3446:3446"
     volumes:
-      - '../teemaderegister-react:/home/node/app:delegated'
+      - "../teemaderegister-react:/home/node/app:delegated"
     environment:
-        GA_CODE: 'UA-000000000-0'
-        GA_ENABLED: 'false'
-        FACULTY: 'DTI'
-        UPLOAD_PATH: '/uploads/'
-        PROFILE_PIC_MAX_SIZE_IN_MB: 10
+      GA_CODE: "UA-000000000-0"
+      GA_ENABLED: "false"
+      FACULTY: "DTI"
+      UPLOAD_PATH: "/uploads/"
+      PROFILE_PIC_MAX_SIZE_IN_MB: 10
     command: run dev
-  
+
   tr-nginx:
     image: nginx
     container_name: "tr-nginx"
