@@ -76,7 +76,7 @@ module.exports.getProfile = async (req, res) => {
 }
 
 module.exports.updateUser = async (req, res) => {
-  const { firstName, lastName, email } = matchedData(req) // validated data
+  const { firstName, lastName, email, description } = matchedData(req) // validated data
 
   const userWithSameEmail = await User
     .findOne({
