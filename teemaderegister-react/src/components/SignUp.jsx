@@ -50,8 +50,8 @@ class SignUp extends React.Component {
     const roles = { roles: ['student'] }
     const result = { ...values, ...roles }
     window.setTimeout(() => {
-      this.props.triggerSignUp(result).then(() => {
-        if (this.props.signup.signUpSuccess) {
+      this.props.triggerSignUp(result).then((response) => {
+        if (response) {
           this.formRef.current.resetFields()
           message.success('Account created, you can now log in')
         }
