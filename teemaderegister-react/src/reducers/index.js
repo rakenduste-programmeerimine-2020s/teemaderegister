@@ -10,6 +10,7 @@ import tableContent from './TableContentReducers'
 import password from './PasswordReducers'
 import settings from './SettingsReducer'
 import tos from './TermsOfServiceReducers'
+import signup from './SignUpReducers'
 
 const rootReducer = combineReducers({
   auth,
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
   supervisor,
   tableContent,
   settings,
-  tos
+  tos,
+  signup
 })
 
 export default rootReducer

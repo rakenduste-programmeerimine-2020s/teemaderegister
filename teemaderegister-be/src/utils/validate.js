@@ -42,6 +42,12 @@ module.exports.localSignup = [
   body('password')
     .isLength({ min: passwordMinLength }).withMessage(
       `Password must be at least ${passwordMinLength} characters long`
+    )
+    .matches('[0-9]').withMessage(
+      'Password must contain a number'
+    )
+    .matches('[A-Z]').withMessage(
+      'Password must contain an uppercase letter'
     ),
   body('roles').custom(userRoles => {
     const rolesArray = Object.values(roles)

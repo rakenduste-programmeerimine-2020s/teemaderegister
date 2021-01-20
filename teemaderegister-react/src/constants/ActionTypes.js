@@ -18,6 +18,11 @@ export const LOGIN_START = 'LOGIN_START'
 export const LOGIN_LOADED = 'LOGIN_LOADED'
 export const LOGIN_INIT = 'LOGIN_INIT'
 
+// signup
+export const SIGNUP_START = 'SIGNUP_START'
+export const SIGNUP_LOADED = 'SIGNUP_LOADED'
+export const SIGNUP_INIT = 'SIGNUP_INIT'
+
 // password
 export const PASSWORD_RESET_LINK_SENDING = 'PASSWORD_RESET_LINK_SENDING'
 export const PASSWORD_RESET_LINK_SENT = 'PASSWORD_RESET_LINK_SENT'
