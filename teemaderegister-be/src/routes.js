@@ -48,6 +48,7 @@ router.post('/auth/local/factor/enable', jwtEnsure, asyncMiddleware(factor.enabl
 router.post('/auth/local/factor/disable', jwtEnsure, asyncMiddleware(factor.disable))
 router.get('/auth/local/factor', jwtEnsure, asyncMiddleware(factor.get))
 router.post('/auth/local/factor/insert', jwtEnsure, asyncMiddleware(factor.insert))
+router.get('/auth/emailconfirm/:token', asyncMiddleware(auth.emailVerification))
 
 router.put('/users/reset-picture', jwtEnsure, asyncMiddleware(users.resetPicture))
 
@@ -61,6 +62,5 @@ router.get('/tos', asyncMiddleware(tos.getTos))
 router.get('/admin/curriculums', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(admin.getCurriculums))
 router.put('/admin/curriculums', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(admin.putCurriculums))
 router.get('/admin/user/ids', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(admin.getUserData))
-router.get('/auth/emailconfirm/:token', asyncMiddleware(auth.emailVerification))
 
 module.exports = router

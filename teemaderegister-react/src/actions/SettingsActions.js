@@ -84,10 +84,9 @@ export const changePassword = user => dispatch => {
 
 export const getEmailConfirmToken = token => dispatch => {
   return Api('GET', USER_CONFIRM_EMAIL_URL + '/' + token)
-    .then(data => {
-      const { message } = data
-    }).catch(err => {
+    .catch(err => {
       const error = err.data
       console.log(error)
+      throw err
     })
 }
