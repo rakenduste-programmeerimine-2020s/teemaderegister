@@ -43,7 +43,6 @@ class Admin extends React.Component {
       addNewUser: <AdminUsers type='add-new-user'/>,
       tos: <AdminTosContainer />,
       editCurriculums: <AdminUsers type='edit-curriculums'/>
-      // newTopic: <AdminUsers type='new-topic'/>
     }
 
     this.defaultPage = 'registered'
