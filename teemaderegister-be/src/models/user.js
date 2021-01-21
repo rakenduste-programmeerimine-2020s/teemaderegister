@@ -11,7 +11,6 @@ const userSchema = new mongoose.Schema(
     profile: {
       firstName: { type: String, required: true },
       lastName: { type: String, required: true },
-      description: { type: String, default: null },
       slug: { type: String, required: true, unique: true },
       image: {
         original: { type: String, default: null },
@@ -24,8 +23,6 @@ const userSchema = new mongoose.Schema(
       email: { type: String },
       password: { type: String },
       passwordResetToken: String,
-      emailConfirmToken: String,
-      emailConfirmed: { type: Boolean, default: false },
       passwordResetExpires: Date,
       passwordUpdatedAt: { type: Date, default: null },
       localLoginAttempts: [{ ip: String, date: Date }],
@@ -36,9 +33,9 @@ const userSchema = new mongoose.Schema(
       }]
     },
     auth: {
-      enabled: { type: Boolean, default: false },
-      secret: { type: String },
-      image: { type: String }
+      enabled: {type: Boolean, default: false},
+      secret: {type: String},
+      image: {type: String}
     },
 
     settings: {
@@ -70,7 +67,6 @@ userSchema.pre('save', async function (next) {
     user.login.password = hash
     user.login.localLoginAttempts = []
     user.login.localLoginBlocked = null
-    user.login.emailConfirmToken = null
 
     return next()
   } catch (err) {

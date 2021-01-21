@@ -132,17 +132,12 @@ class Login extends React.Component {
                   </Button>
                 </FormItem>
                 <p>
-                  <br></br>
-                  <Link to='/sign_up'>
-                    <Button
-                      type='primary'
-                      htmlType='submit'
-                      className='button--fullWidth'
-                      loading={loading}
-                    >
-                    Sign up
-                    </Button>
-                  </Link>
+                  <Tooltip
+                    placement='topLeft'
+                    title='If you do not have account please contact your school administrator'
+                  >
+                    <span>do not have account?</span>
+                  </Tooltip>
                 </p>
               </FormItem>
             </Form>

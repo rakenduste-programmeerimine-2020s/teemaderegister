@@ -4,7 +4,6 @@ const Joi = require('joi')
 const slug = require('slug')
 const mail = require('./../utils/mail')
 const {getPasswordResetTokenValues} = require('./auth')
-const Curriculum = require('../models/curriculum')
 
 const createSchema = Joi.object({
   status: Joi.string().allow('registered', 'available', 'defended').required()
@@ -63,30 +62,4 @@ module.exports.getSecret = async (req, res) => {
   const { user: { _id } } = req
 
   return res.json({ _id })
-}
-module.exports.getCurriculums = async (req, res) => {
-  const curriculums = await Curriculum.find({}).populate('representative', '_id profile')
-
-  res.json(curriculums)
-}
-
-module.exports.getUserData = async (req, res) => {
-  const users = await User.find({}, {_id: 1, 'profile.slug': 1})
-  res.json(users)
-}
-
-module.exports.putCurriculums = async (req, res) => {
-  const {curriculum_id, userId, closed} = req.body
-  // eslint-disable-next-line standard/object-curly-even-spacing
-  let curriculum = await Curriculum.findOne({_id: curriculum_id })
-  if (userId) {
-    const user = await User.findOne({_id: userId})
-    if (!user) return res.json({message: 'User Not found', error: true})
-    curriculum.representative = userId
-  }
-
-  curriculum.closed = closed ? new Date() : null
-
-  await curriculum.save()
-  res.json({message: 'Curriculum Updated', error: false})
 }

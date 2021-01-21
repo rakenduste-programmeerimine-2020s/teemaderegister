@@ -17,8 +17,7 @@ import {
   SETTINGS_ACCOUNT_PATH,
   SETTINGS_PASSWORD_PATH,
   TOS_PATH,
-  SETTINGS_2FA_PATH,
-  SIGN_UP
+  SETTINGS_2FA_PATH
 } from './constants/RouterConstants'
 
 import CurriculumContainer from './containers/CurriculumContainer'
@@ -37,7 +36,7 @@ import SettingsPasswordContainer from './containers/SettingsPasswordContainer'
 import TermsOfServiceContainer from './containers/TermsOfServiceContainer'
 import CurriculumAddContainer from './containers/CurriculumAddContainer'
 import Settings2faContainer from './containers/Settings2faContainer'
-import SignUpContainer from './containers/SignUpContainer'
+import TopicAddContainer from './containers/TopicAddContainer'
 
 import store from './store/configureStore'
 import { initAnalytics } from './utils/Analytics'
@@ -107,8 +106,8 @@ render(
                 <Route path={SETTINGS_2FA_PATH} component={
                   RouteWrapContainer(props => <Settings2faContainer {...props} />, {restrict: true})
                 } />
-                <Route path={SIGN_UP} component={
-                  RouteWrapContainer(props => <SignUpContainer {...props} />)
+                <Route path={TOPIC_ADD_PATH} component={
+                  RouteWrapContainer(props => <TopicAddContainer {...props} />, {restrict: true})
                 } />
                 <Route component={
                   RouteWrapContainer(props => <NotFound {...props} />)

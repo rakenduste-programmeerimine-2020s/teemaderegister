@@ -3,6 +3,7 @@ import { PropTypes } from 'prop-types'
 import TableContent from '../components/TableContent'
 import { Tabs, Radio } from 'antd'
 import DownloadCSV from './DownloadCSV'
+import AddTopicButton from './AddTopicButton'
 const { func, object, string } = PropTypes
 
 const propTypes = {
@@ -30,6 +31,7 @@ class TabsWrap extends Component {
       return (
         <Tabs.TabPane tab={this.createTabTitle(icon, title, count)} key={key}>
           {this.createSubTabs(subs)}
+          <AddTopicButton {...this.props}/>
           <DownloadCSV {...this.props} />
           <TableContent
             curriculum={curriculum}

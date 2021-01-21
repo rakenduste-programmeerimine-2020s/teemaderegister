@@ -16,8 +16,7 @@ const SupervisorObj = {
     _id: string,
     profile: shape({
       firstName: string,
-      lastName: string,
-      description: string
+      lastName: string
     })
   }).isRequired,
   loading: bool.isRequired

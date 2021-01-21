@@ -5,10 +5,14 @@ export const AUTH_INIT = 'AUTH_INIT'
 
 // curriculum
 export const CURRICULUM_LOADED = 'CURRICULUM_LOADED'
-export const CURRICULUM_NOT_FOUND = 'CURRICULUM_NOT_FOUND'
 export const CURRICULUM_INIT = 'CURRICULUM_INIT'
 export const CURRICULUM_ADD_START = 'CURRICULUM_ADD_START'
 export const CURRICULUM_ADD_END = 'CURRICULUM_ADD_END'
+
+
+//topcis
+export const TOPIC_ADD_START = 'TOPIC_ADD_START'
+export const TOPIC_ADD_END = 'TOPIC_ADD_END'
 
 // home
 export const CURRICULUMS_LOADED = 'CURRICULUMS_LOADED'
@@ -17,11 +21,6 @@ export const CURRICULUMS_LOADED = 'CURRICULUMS_LOADED'
 export const LOGIN_START = 'LOGIN_START'
 export const LOGIN_LOADED = 'LOGIN_LOADED'
 export const LOGIN_INIT = 'LOGIN_INIT'
-
-// signup
-export const SIGNUP_START = 'SIGNUP_START'
-export const SIGNUP_LOADED = 'SIGNUP_LOADED'
-export const SIGNUP_INIT = 'SIGNUP_INIT'
 
 // password
 export const PASSWORD_RESET_LINK_SENDING = 'PASSWORD_RESET_LINK_SENDING'
@@ -40,7 +39,6 @@ export const SEARCH_INIT = 'SEARCH_INIT'
 
 // supervisor
 export const SUPERVISOR_LOADED = 'SUPERVISOR_LOADED'
-export const SUPERVISOR_NOT_FOUND = 'SUPERVISOR_NOT_FOUND'
 export const SUPERVISOR_INIT = 'SUPERVISOR_INIT'
 
 // tableContent
