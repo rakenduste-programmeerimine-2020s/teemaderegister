@@ -1,7 +1,14 @@
 const Topic = require("../models/topic");
 const Promise = require("bluebird");
+<<<<<<< Updated upstream
 const { TopicsQuery } = require("../utils/queryHelpers");
 const { validateGetTopicsQuery } = require("./../utils/queryValidation");
+=======
+const Joi = require("joi");
+const { TopicsQuery } = require("../utils/queryHelpers");
+const { validateGetTopicsQuery } = require("./../utils/queryValidation");
+const { Error } = require("../utils/errors");
+>>>>>>> Stashed changes
 
 module.exports.getTopics = async (req, res) => {
   const query = validateGetTopicsQuery(req.query);
@@ -91,6 +98,10 @@ exports.getRelatedTopicsIds = async (q) =>
   ).reduce((arrayOfIds, topic) => [topic._id, ...arrayOfIds], []);
 
 module.exports.postTopics = async (req, res) => {
+<<<<<<< Updated upstream
+=======
+  
+>>>>>>> Stashed changes
   const {
     curriculum,
     author,
@@ -127,3 +138,88 @@ module.exports.postTopics = async (req, res) => {
       : "Curriculum with set et/en names does not  exist";
   throw new Error(errorMsg);
 };
+<<<<<<< Updated upstream
+=======
+
+const TopicSchema = Joi.object({
+  title: Joi.string().required().min(1),
+  titleEng: Joi.string().required().min(1),
+  slug: Joi.string().min(1).replace(' ', '-').required(),
+
+  description: Joi.string(),
+
+  supervisors: Joi.array().items(
+    Joi.object({
+      type: Joi.string().valid('Main', 'Co').required(),
+      supervisor: Joi.string().required()
+    }).required()
+  ).required(),
+
+  curriculums: Joi.array().items(
+    Joi.string().required()
+  ).required(),
+
+  types: Joi.array().items(
+    Joi.string().valid('SE', 'BA', 'MA', 'PHD').required()
+  ).required(),
+
+  author: Joi.object({
+    firstName: Joi.string(),
+    lastName: Joi.string(),
+    email: Joi.string().email(),
+    phone: Joi.string()
+  }),
+
+  specialConditions: Joi.string(),
+
+  file: Joi.string(),
+  attachments: Joi.array().items(
+    Joi.string()
+  ),
+
+  accepted: Joi.date(),
+  registered: Joi.date(),
+  defended: Joi.date(),
+  archived: Joi.date(),
+  starred: Joi.boolean()
+})
+
+module.exports.postTopics = async (req, res) => {
+  
+  const {
+    curriculum,
+    author,
+    supervisor,
+    registered_date,
+    description,
+  } = matchedData(req);
+
+  const slugs = { et: slug(names.et), en: slug(names.en) };
+
+  const existingCurriculum = await Curriculum.findOne({
+    $or: [
+      { "slugs.et": slugs.et },
+      { "slugs.en": slugs.en },
+      { abbreviation: abbreviation },
+    ],
+  });
+
+  if (existingCurriculum) {
+    const topic = await new Topic({
+      curriculum,
+      author,
+      supervisor,
+      registered_date,
+      description,
+    }).save();
+
+    return res.status(201).send({ topic });
+  }
+
+  let errorMsg =
+    existingCurriculum.abbreviation !== abbreviation
+      ? "Curriculum with set abbreviation does not exist"
+      : "Curriculum with set et/en names does not  exist";
+  throw new Error(errorMsg);
+};
+>>>>>>> Stashed changes
