@@ -154,7 +154,7 @@ class HeaderWrap extends Component {
       <Header className='headerWrap'>
         <div className='headerWrap__wrapper'>
           <Link to='/'>
-            <div className='logo'>TeRe</div>
+            <div className='logo'>Jaanus ja Kristian</div>
           </Link>
           <div className='content'>
             <Form ref={this.formRef} className='search' name='searchField'>
