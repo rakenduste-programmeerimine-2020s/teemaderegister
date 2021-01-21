@@ -6,7 +6,10 @@ import queryString from 'query-string'
 import reactStringReplace from 'react-string-replace'
 
 import { message, Badge, Tooltip } from 'antd'
+// import { Table } from 'antd'
 import { DownloadOutlined, StarOutlined, CopyOutlined } from '@ant-design/icons'
+
+
 
 export default params => {
   const columns = getColumnNames(params)
@@ -38,7 +41,16 @@ const author = ({ columnKey, order, q }) => ({
   key: 'author',
   sortOrder: columnKey === 'author' && order,
   sorter: true,
+
+  // console.log(columnKey); 
+
+  // nõuanded: 
+
+  // url-ilt saada infot ja selle kaudu saata filtrisse tulemused, mille kaudu filtreerida
+  // Console.log-ida kõike võimalikku
+
   render: author => {
+    console.log("render author ColumnKey: ", columnKey);
     if (!author) return '-'
 
     const fullName = author.firstName + ' ' + author.lastName
@@ -66,6 +78,9 @@ const curriculums = ({ curriculums }) => ({
   key: 'curriculums',
   filteredValue: curriculums || null,
   render: curriculums => {
+    console.log("C curriculums: ", curriculums);
+    console.log("C columnKey: ", columnKey);
+    console.log("C curriculums.abbreviation: ", curriculums.abbreviation);
     let content = null
     if (curriculums.length > 1) {
       content = <Badge
@@ -87,16 +102,120 @@ const defended = ({ columnKey, order }) => ({
   sortOrder: columnKey === 'defended' && order
 })
 
+// console.log("curriculums.length: ", curriculums.length);
+// console.log("curriculums.map(c): ", curriculums.map(c));
+// console.log("curriculums.map(i): ", curriculums.map(i));
+// console.log("curriculums.length: ", curriculums.length);
+// console.log("curriculums.length: ", curriculums.length);
+
+// return curriculums.map((c, i) => {
+//   const url = '/curriculum/s/' + c.slugs.et
+//   const abbr = c.abbreviation
+
+
+
 const detailCurriculums = () => ({
   className: 'text-align--left',
   dataIndex: 'curriculums',
   key: 'curriculums',
   title: 'Curriculum',
+
+  // lisatud
+
+      // https://ant.design/components/table/#components-table-demo-head
+      // headerwrap --- handlesearch + otsing ja url-muutus
+      // tablecontenttopics --- luuakse tabel + filter
+      // tablewrap --- loetakse väärtus sisse + console.log(filters);
+
+  filters: [
+    {
+      text: ('IFITM'),
+      // value: ('597849cd0d77d8435fdf65d4'),
+      value: ('IFITM'),
+    },
+    {
+      text: 'IFIFB',
+      // value: '597849cd0d77d8435fdf65d1',
+      value: 'IFIFB',
+    },
+    {
+      text: 'DTLGM',
+      // value: '597849cd0d77d8435fdf65dc',
+      value: 'DTLGM',
+    },
+  ],
+
+
+
+
+
+
+
+    // {
+    //   text: 'Jim',
+    //   value: 'Jim',
+    // },
+    // {
+    //   text: 'Submenu',
+    //   value: 'Submenu',
+    //   children: [
+    //     {
+    //       text: 'Green',
+    //       value: 'Green',
+    //     },
+    //     {
+    //       text: 'Black',
+    //       value: 'Black',
+    //     },
+    //   ],
+    // },
+    /////////////////////////////////////////////////////////////////////<
+    // componentDidMount () {
+    //   this.props.getCurriculums()
+    //   setDocTitle('Home')
+    // },
+   /////////////////////////////////////////////////////////////////////>
+
+   // specify the condition of filtering result
+   // here is that finding the name started with `value`
+
+   // Selle asemel kirjutada aadressiribale
+
+  // original: *****
+  // onFilter: (value, record) => true,
+
+
+
+  onFilter: (value, record) => record.abbreviation(value) === value,
+
+
+
+  // onFilter: (value, curriculums) => curriculums[dataIndex] ? value[dataIndex] : false, 
+
   render: curriculums => {
+    console.log("render curriculums: ", curriculums);
+    // console.log("render curriculums.abbreviation: ", curriculums.abbreviation);
+   /////////////////////////////////////////////////////////////////////<
+      // const {
+      //   home: { loading, curriculums },
+      //   auth: {
+      //     user: { login: { roles } },
+      //     isAuthenticated
+      //   }
+      // } = this.props
+   //////////////////////////////////////////////////////////////////////>
+
     if (curriculums.length === 0) return null
     return curriculums.map((c, i) => {
       const url = '/curriculum/s/' + c.slugs.et
       const abbr = c.abbreviation
+
+      console.log(abbr);
+      console.log("c: ", c);
+      console.log("i: ", i);
+      console.log("url: ", url);
+      console.log("abbr: ", abbr);
+
       const content =
         i < curriculums.length - 1 && curriculums.length > 1
           ? abbr + ', '
@@ -123,6 +242,7 @@ const detailTypes = () => ({
   key: 'types',
   title: 'Types',
   render: types => {
+    console.log("render types: ", types);
     if (types.length === 0) return null
     return types.map((t, i) => {
       const content = i < types.length - 1 && types.length > 1 ? t + ', ' : t
@@ -171,6 +291,7 @@ const supervisors = () => ({
   dataIndex: 'supervisors',
   key: 'supervisors',
   render: arr => {
+    console.log("supervisors arr: ", arr);
     return arr.map((o, i) => {
       const { _id, profile } = o.supervisor
       const linkContent =
@@ -180,6 +301,10 @@ const supervisors = () => ({
 
       const url = '/supervisor/' + profile.slug
 
+      // console.log("supervisors o.supervisor: ", o.supervisor);
+      // console.log("supervisors o: ", o);
+      console.log("supervisors linkContent: ", linkContent);
+      console.log("supervisors url: ", url);
       return (
         <Link key={_id} to={url}>
           {linkContent}
@@ -196,6 +321,7 @@ const title = ({ columnKey, order, sub, q }) => ({
   sorter: true,
   sortOrder: columnKey === 'title' && order,
   render: (title, row) => {
+    console.log("render title + row: ", title, " : ", row);
     let finalTitle = title
 
     if (q) {
@@ -205,7 +331,7 @@ const title = ({ columnKey, order, sub, q }) => ({
     }
 
     const { starred, file: fileUrl, slug } = row
-    const fileInViewerUrl = <a href={'https://docs.google.com/gview?url=' + fileUrl} target='_blank' rel='noreferrer'>{finalTitle}</a>
+    const fileInViewerUrl = <a href={'https://docs.google.com/gview?url=' + fileUrl} target='_blank'>{finalTitle}</a>
     const topicTitle = sub === 'defended'
       ? fileInViewerUrl
       : finalTitle
@@ -278,6 +404,7 @@ const getColumnNames = ({ sub, names, type, supervisor }) => {
       columns.push('detailCurriculums')
     }
     if (isInformaticsBa) columns.push('types')
+    columns.push('detailCurriculums') // lisatud
 
     columns.push('author', 'supervisors', 'registered')
   }
