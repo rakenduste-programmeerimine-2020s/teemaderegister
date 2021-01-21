@@ -42,10 +42,6 @@ const author = ({ columnKey, order, q }) => ({
   sortOrder: columnKey === 'author' && order,
   sorter: true,
 
-  // console.log(columnKey); 
-
-  // nõuanded: 
-
   // url-ilt saada infot ja selle kaudu saata filtrisse tulemused, mille kaudu filtreerida
   // Console.log-ida kõike võimalikku
 
@@ -108,19 +104,11 @@ const defended = ({ columnKey, order }) => ({
 // console.log("curriculums.length: ", curriculums.length);
 // console.log("curriculums.length: ", curriculums.length);
 
-// return curriculums.map((c, i) => {
-//   const url = '/curriculum/s/' + c.slugs.et
-//   const abbr = c.abbreviation
-
-
-
 const detailCurriculums = () => ({
   className: 'text-align--left',
   dataIndex: 'curriculums',
   key: 'curriculums',
   title: 'Curriculum',
-
-  // lisatud
 
       // https://ant.design/components/table/#components-table-demo-head
       // headerwrap --- handlesearch + otsing ja url-muutus
@@ -145,66 +133,13 @@ const detailCurriculums = () => ({
     },
   ],
 
-
-
-
-
-
-
-    // {
-    //   text: 'Jim',
-    //   value: 'Jim',
-    // },
-    // {
-    //   text: 'Submenu',
-    //   value: 'Submenu',
-    //   children: [
-    //     {
-    //       text: 'Green',
-    //       value: 'Green',
-    //     },
-    //     {
-    //       text: 'Black',
-    //       value: 'Black',
-    //     },
-    //   ],
-    // },
-    /////////////////////////////////////////////////////////////////////<
-    // componentDidMount () {
-    //   this.props.getCurriculums()
-    //   setDocTitle('Home')
-    // },
-   /////////////////////////////////////////////////////////////////////>
-
-   // specify the condition of filtering result
-   // here is that finding the name started with `value`
-
-   // Selle asemel kirjutada aadressiribale
-
-  // original: *****
-  // onFilter: (value, record) => true,
-
-
-
   onFilter: (value, record) => record.abbreviation(value) === value,
-
-
-
-  // onFilter: (value, curriculums) => curriculums[dataIndex] ? value[dataIndex] : false, 
 
   render: curriculums => {
     console.log("render curriculums: ", curriculums);
+    
     // console.log("render curriculums.abbreviation: ", curriculums.abbreviation);
-   /////////////////////////////////////////////////////////////////////<
-      // const {
-      //   home: { loading, curriculums },
-      //   auth: {
-      //     user: { login: { roles } },
-      //     isAuthenticated
-      //   }
-      // } = this.props
-   //////////////////////////////////////////////////////////////////////>
-
+    
     if (curriculums.length === 0) return null
     return curriculums.map((c, i) => {
       const url = '/curriculum/s/' + c.slugs.et
