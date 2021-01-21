@@ -71,7 +71,7 @@ router.get(
 router.get("/topics/", asyncMiddleware(topics.getTopics));
 
 router.post("/tag/save", asyncMiddleware(tag.postTag));
-router.get("tag", asyncMiddleware(tag.getTag));
+router.get("/tag/", asyncMiddleware(tag.getTag));
 
 router.get("/users/me", jwtEnsure, asyncMiddleware(users.getUser));
 router.get("/users/profile", jwtEnsure, asyncMiddleware(users.getProfile));
