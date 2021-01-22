@@ -16,9 +16,6 @@ const topics = require('./controllers/topics')
 const users = require('./controllers/users')
 const admin = require('./controllers/admin')
 
-//router.post('/auth/local/google', validate.localLogin, asyncMiddleware(auth.localLogin))
-
-
 router.post('/auth/local/login', validate.localLogin, asyncMiddleware(auth.localLogin))
 router.post('/auth/local/signup', validate.localSignup, asyncMiddleware(auth.localSignup))
 router.post('/auth/logout', jwtEnsure, asyncMiddleware(auth.logout))
@@ -47,7 +44,6 @@ router.put('/users/reset-picture', jwtEnsure, asyncMiddleware(users.resetPicture
 
 // SAMPLE
 router.get('/admin/', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(admin.getSecret))
-//router.post('/googlelogin', validate.googleLogin, asyncMiddleware(auth.googleLogin))
 router.post('/auth/googlelogin', validate.googleLogin, asyncMiddleware(auth.googleLogin))
 
 module.exports = router
