@@ -42,6 +42,12 @@ module.exports.localSignup = [
   body('password')
     .isLength({ min: passwordMinLength }).withMessage(
       `Password must be at least ${passwordMinLength} characters long`
+    )
+    .matches('[0-9]').withMessage(
+      'Password must contain a number'
+    )
+    .matches('[A-Z]').withMessage(
+      'Password must contain an uppercase letter'
     ),
   body('roles').custom(userRoles => {
     const rolesArray = Object.values(roles)
@@ -83,6 +89,7 @@ module.exports.userAccountUpdate = [
   body('lastName').exists().withMessage('LastName is required')
     .trim()
     .isLength({ min: 1 }).withMessage('LastName is required'),
+  body('description'),
   errorCheck
 ]
 
@@ -117,7 +124,7 @@ module.exports.addCurriculumValidation = [
     .withMessage('Representative is not valid'),
   body(['names.et', 'names.en'])
     .trim()
-    .isLength({min: curriculumNamesMinLength})
+    .isLength({ min: curriculumNamesMinLength })
     .withMessage(`Name must be at least ${curriculumNamesMinLength} characters long`),
   errorCheck
 ]

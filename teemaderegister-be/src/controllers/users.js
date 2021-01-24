@@ -7,6 +7,9 @@ const User = require('../models/user')
 const log = require('../utils/logger')
 const { signToken, blacklistToken } = require('../utils/jwt')
 const { Error, NotAuthorizedError } = require('../utils/errors')
+const mail = require('./../utils/mail')
+const crypto = require('crypto')
+
 module.exports.getUser = async (req, res) => {
   // Check if user from token exists
   const user = await User.findById(req.user._id)
@@ -19,6 +22,7 @@ module.exports.getUser = async (req, res) => {
       profile: {
         firstName: user.profile.firstName,
         lastName: user.profile.lastName,
+        description: user.profile.description,
         slug: user.profile.slug,
         authentication: user.profile.dataQR,
         asciiQR: user.profile.asciiQR,
@@ -34,7 +38,8 @@ module.exports.getUser = async (req, res) => {
       },
       login: {
         email: user.login.email,
-        roles: user.login.roles
+        roles: user.login.roles,
+        emailConfirmed: user.login.emailConfirmed
       },
       updatedAt: user.updatedAt
     }
@@ -75,7 +80,7 @@ module.exports.getProfile = async (req, res) => {
 }
 
 module.exports.updateUser = async (req, res) => {
-  const { firstName, lastName, email } = matchedData(req) // validated data
+  const { firstName, lastName, email, description } = matchedData(req) // validated data
 
   const userWithSameEmail = await User
     .findOne({
@@ -86,13 +91,28 @@ module.exports.updateUser = async (req, res) => {
     })
   if (userWithSameEmail) throw new Error(`Email ${email} already in use`)
 
+  const newtoken = await crypto.randomBytes(50).toString('hex')
+  let confirmLink = 'http://localhost:8080/settings/account?emailConfirmToken=' + newtoken
+
   await User.findByIdAndUpdate(req.user._id, {
     $set: {
       'profile.firstName': firstName,
       'profile.lastName': lastName,
       // TODO Fix for unique slug, waiting(teemaderegister-be/pull/18)
       'profile.slug': slug(firstName + ' ' + lastName),
-      'login.email': email
+      'login.email': email,
+      'profile.description': description,
+      'login.emailConfirmed': false,
+      'login.emailConfirmToken': newtoken
+    }
+  })
+
+  await mail.sendMail({
+    to: email,
+    subject: 'Email verification',
+    template: {
+      name: 'emailValidate',
+      data: { confirmLink }
     }
   })
 
@@ -184,8 +204,9 @@ module.exports.resetPicture = async (req, res) => {
 
   return res.json({ user, message: 'Picture updated successfully' })
 }
+
 module.exports.getAllUsers = async (req, res) => {
-  const users = await User.find({}, {'login.password': 0})
+  const users = await User.find({}, { 'login.password': 0 })
 
   return res.json(users)
 }

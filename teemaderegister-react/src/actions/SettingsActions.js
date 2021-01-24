@@ -6,7 +6,8 @@ import {
   USER_PROFILE_URL,
   USER_UPDATE_PROFILE_URL,
   USER_UPDATE_PASSWORD_URL,
-  USER_PICTURE_RESET_URL
+  USER_PICTURE_RESET_URL,
+  USER_CONFIRM_EMAIL_URL
 } from '../constants/ApiConstants'
 
 export const initSettings = () => dispatch =>
@@ -78,5 +79,14 @@ export const changePassword = user => dispatch => {
       const error = err.data
       console.log(error)
       dispatch({ type: types.PASSWORD_CHANGE_END, error })
+    })
+}
+
+export const getEmailConfirmToken = token => dispatch => {
+  return Api('GET', USER_CONFIRM_EMAIL_URL + '/' + token)
+    .catch(err => {
+      const error = err.data
+      console.log(error)
+      throw err
     })
 }

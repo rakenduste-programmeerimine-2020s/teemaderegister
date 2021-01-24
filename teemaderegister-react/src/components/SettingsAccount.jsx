@@ -5,18 +5,29 @@ import { Link } from 'react-router-dom'
 
 import { USER_PICTURE_UPLOAD_URL } from '../constants/ApiConstants'
 import { getToken } from '../utils/jwt'
+import setUrl from '../utils/setUrl'
 
-import { Row, Col, Form, Input, Button, Upload, message, Avatar, Spin, Modal, Dropdown, Menu, Select } from 'antd'
-import { UploadOutlined, CloseCircleOutlined, EditOutlined } from '@ant-design/icons'
+import { Row, Col, Form, Input, Button, Upload, message, Avatar, Spin, Modal, Dropdown, Menu, Select, Tooltip } from 'antd'
+import { UploadOutlined, CloseCircleOutlined, EditOutlined, ExclamationCircleOutlined, CheckCircleOutlined } from '@ant-design/icons'
+
 const FormItem = Form.Item
 const { confirm } = Modal
 const { Option } = Select
 
-const { func, shape, bool, string, array } = PropTypes
+const { func, object, shape, bool, string, array } = PropTypes
 
 const propTypes = {
+  getEmailConfirmToken: func.isRequired,
   getProfile: func.isRequired,
+  history: shape({
+    replace: func.isRequired,
+    location: shape({
+      pathname: string.isRequired,
+      search: string.isRequired
+    }).isRequired
+  }).isRequired,
   initSettings: func.isRequired,
+  location: object.isRequired,
   resetPicture: func.isRequired,
   settings: shape({
     loading: bool.isRequired,
@@ -29,13 +40,15 @@ const propTypes = {
       profile: shape({
         firstName: string,
         lastName: string,
+        description: string,
         image: shape({
           full: string
         })
       }).isRequired,
       login: shape({
         email: string,
-        roles: array
+        roles: array,
+        emailConfirmed: bool
       }).isRequired,
       updatedAt: string.isRequired
     }).isRequired,
@@ -83,7 +96,30 @@ class SettingsAccount extends React.Component {
   }
 
   componentDidMount () {
-    this.props.getProfile()
+    const {
+      getEmailConfirmToken,
+      getProfile,
+      history: { replace, location: { pathname, search } }
+    } = this.props
+
+    const query = new URLSearchParams(search)
+    const token = query.get('emailConfirmToken')
+    if (!token) {
+      getProfile()
+      return
+    }
+
+    getEmailConfirmToken(token)
+      .then(() => {
+        message.success('Email confirmed!')
+
+        setUrl(replace, pathname)
+      })
+      .catch(() => {
+        message.error('Wrong email confirmation token!')
+      }).finally(() => {
+        getProfile()
+      })
   }
 
   componentWillUnmount () {
@@ -92,6 +128,7 @@ class SettingsAccount extends React.Component {
 
   submitUpdateProfile (values) {
     this.props.updateProfile(values)
+    window.location.reload()
   }
 
   beforeUpload (file) {
@@ -129,16 +166,20 @@ class SettingsAccount extends React.Component {
         loading,
         formLoading,
         user: {
-          profile: { firstName, lastName, image },
-          login: { email, roles },
+          profile: { firstName, lastName, image, description },
+          login: { email, roles, emailConfirmed },
           updatedAt
         }
       }
     } = this.props
 
+    const showDescriptionBox = roles && roles.includes('supervisor')
+
     const avatarSrc = image
       ? `${process.env.UPLOAD_PATH + image.full}?updatedAt=${updatedAt}`
       : null
+
+    const emailConfirmedText = emailConfirmed ? 'Email verified!' : 'Email not verified!'
 
     return (
       <div className='settingsAccount width--public-page'>
@@ -216,7 +257,14 @@ class SettingsAccount extends React.Component {
                     { required: true, message: 'Please enter your email' },
                     { type: 'email', message: 'Please enter a correct email' }
                   ]}>
-                    <Input type='email' />
+                    <Input type='email' suffix={
+                      <Tooltip title={emailConfirmedText}>
+                        {emailConfirmed
+                          ? <CheckCircleOutlined style={{ color: 'darkgreen' }} />
+                          : <ExclamationCircleOutlined style={{ color: 'darkred' }} />
+                        }
+                      </Tooltip>
+                    } />
                   </FormItem>
                   <FormItem label='Roles' name='roles' initialValue={roles} rules={[{ required: true }]}>
                     <Select disabled mode='multiple'>
@@ -225,6 +273,9 @@ class SettingsAccount extends React.Component {
                       )}
                     </Select>
                   </FormItem>
+                  {showDescriptionBox && (<FormItem label='Description' name='description' initialValue={description} rules={[{ required: false }]}>
+                    <Input.TextArea />
+                  </FormItem >)}
                   <FormItem>
                     <Button
                       type='primary'

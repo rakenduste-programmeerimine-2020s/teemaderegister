@@ -10,6 +10,7 @@ import {
   CURRICULUM_ADD_PATH,
   CURRICULUM_PATH,
   SEARCH_PATH,
+  //TOPIC_ADD_PATH,
   SUPERVISOR_PATH,
   ADMIN_PATH,
   ACCOUNT_FORGOT,
@@ -38,6 +39,7 @@ import TermsOfServiceContainer from './containers/TermsOfServiceContainer'
 import CurriculumAddContainer from './containers/CurriculumAddContainer'
 import Settings2faContainer from './containers/Settings2faContainer'
 import SignUpContainer from './containers/SignUpContainer'
+import TopicAddContainer from './containers/TopicAddContainer'
 
 import store from './store/configureStore'
 import { initAnalytics } from './utils/Analytics'

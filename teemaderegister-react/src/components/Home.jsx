@@ -35,6 +35,7 @@ class Home extends React.Component {
       }
     } = this.props
     const showAddCurriculumLink = isAuthenticated && roles.includes('admin')
+    
 
     return (
       <div className='home width--public-page'>
@@ -45,6 +46,9 @@ class Home extends React.Component {
           <Link to='/curriculum/add'>
             <Button icon={<PlusOutlined/>}>Lisa õppekava</Button>
           </Link>}
+          <Link to='/topic/add'>
+            <Button icon={<PlusOutlined/>}>Lisa teema</Button>
+          </Link>
         {!loading && <HomeCollection curriculums={curriculums} />}
       </div>
     )

@@ -7,7 +7,8 @@ import {
   uploadPictureStart,
   uploadPictureEnd,
   uploadPictureError,
-  resetPicture
+  resetPicture,
+  getEmailConfirmToken
 } from '../actions/SettingsActions'
 import SettingsAccount from '../components/SettingsAccount'
 
@@ -24,5 +25,6 @@ export default connect(mapStateToProps, {
   uploadPictureStart,
   uploadPictureEnd,
   uploadPictureError,
-  resetPicture
+  resetPicture,
+  getEmailConfirmToken
 })(SettingsAccountContainer)

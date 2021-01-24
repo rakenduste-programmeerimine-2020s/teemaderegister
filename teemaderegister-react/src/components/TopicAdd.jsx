@@ -1,172 +1,202 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Breadcrumbs from './Breadcrumbs'
-import { Row, Col, Form, Input, Button, message, Select, Spin, Checkbox, Tooltip } from 'antd'
-import { debounce } from 'lodash'
-import { setDocTitle } from '../utils/Helpers'
-import { CURRICULUM_TYPES } from '../constants/CurriculumTypes'
+import React, {useEffect, useState} from 'react'
+import {connect} from 'react-redux'
+import {createTopic, getSupervisors, getCurriculums} from '../actions/TopicAddActions'
+import {setDocTitle} from '../utils/Helpers'
+import {Button, Form, Input, notification, Select} from 'antd'
 
-import Api from '../utils/Api'
-import { SUPERVISOR_CURRICULUMFORM_URL } from '../constants/ApiConstants'
+const { Option } = Select
 
-const Option = Select.Option
-const FormItem = Form.Item
-const CheckboxGroup = Checkbox.Group
+const CompanyNewTopic = (props) => {
+  const [supervisors, setSupervisors] = useState([])
+  const [curriculums, setCurriculums] = useState([])
+  const [option, setOption] = useState()
 
-const { bool, func, object, shape, string } = PropTypes
+  const [main, setMain] = useState()
+  const [co, setCo] = useState()
 
-const propTypes = {
-  curriculumForm: shape({
-    curriculum: object.isRequired,
-    error: object.isRequired,
-    loading: bool.isRequired,
-    hasError: bool.isRequired
-  }).isRequired,
-  initTopic: func.isRequired,
-  location: shape({
-    pathname: string.isRequired
-  }).isRequired,
-  triggerAddTopic: func.isRequired
+  useEffect(() => {
+    setDocTitle('Create Topic')
+    const fetchData = async () => {
+      const fetchSupervisors = await props.getSupervisors()
+      setSupervisors(fetchSupervisors)
+      const fetchCurriculums = await props.getCurriculums()
+      setCurriculums(fetchCurriculums)
+    }
 
+    fetchData()
+  }, [])
+
+  const onFinish = async (values) => {
+    console.log(values)
+    values.slug = values.title.replace(' ', '-')
+
+    if (main) {
+      values.supervisors = []
+      values.supervisors.push({
+        'type': 'Main',
+        'supervisor': main
+      })
+    }
+
+    if (co) {
+      values.supervisors = []
+      values.supervisors.push({
+        'type': 'Co',
+        'supervisor': co
+      })
+    }
+
+    if (option === 'accepted') {
+      values.accepted = new Date()
+    } else if (option === 'registered') {
+      values.registered = new Date()
+    } else if (option === 'defended') {
+      values.defended = new Date()
+    }
+
+    // eslint-disable-next-line react/prop-types
+    const sendTopic = await props.createTopic(values)
+    if (sendTopic.success) return notification.success({message: 'Created Topic'})
+    notification.error({message: sendTopic.message})
+    console.log(sendTopic)
+  }
+
+  const onFinishFailed = (errorInfo) => {
+    notification.error({message: errorInfo})
+  }
+
+  const handleChangeMain = value => {
+    setMain(value)
+  }
+
+  const handleChangeCo = value => {
+    setCo(value)
+  }
+
+  const TYPECHANGE = value => {
+    setOption(value)
+  }
+
+  return (
+    <Form
+      onFinish={onFinish}
+      onFinishFailed={onFinishFailed}
+      labelCol={{span: 3}}
+      wrapperCol={{span: 14}}
+    >
+      <Form.Item label={'Title'} name={'title'} required={true}>
+        <Input/>
+      </Form.Item>
+
+      <Form.Item label={'Title in English'} name={'titleEng'} required={true}>
+        <Input/>
+      </Form.Item>
+
+      <Form.Item label={'Description'} name={'description'} required={true}>
+        <Input.TextArea />
+      </Form.Item>
+
+      <Form.Item label={'First name'} name={['author', 'firstName']}>
+        <Input/>
+      </Form.Item>
+
+      <Form.Item label={'Last name'} name={['author', 'lastName']}>
+        <Input/>
+      </Form.Item>
+
+      <Form.Item label={'Special Conditions'} name={'specialConditions'}>
+        <Input/>
+      </Form.Item>
+
+      <Form.Item label={'File link'} name={'file'}>
+        <Input/>
+      </Form.Item>
+
+      <Form.Item label={'Starred'} name={'starred'}>
+        <Select>
+          <Option value={true}>True</Option>
+          <Option value={false}>False</Option>
+        </Select>
+      </Form.Item>
+
+      <Form.Item label={'Types'} name={'types'} required={true}>
+        <Select
+          mode='multiple'
+          className='maxWidth'
+          placeholder='select at least one type'
+        >
+          <Option value={'SE'}>SE</Option>
+          <Option value={'BA'}>BA</Option>
+          <Option value={'MA'}>MA</Option>
+          <Option value={'PHD'}>PHD</Option>
+        </Select>
+      </Form.Item>
+
+      <Form.Item label={'Main supervisor:'} required={true}>
+        <Select
+          className='maxWidth'
+          placeholder='select main supervisor'
+          onChange={handleChangeMain}
+        >
+          { supervisors.supervisors && supervisors.supervisors.map((value) => {
+            // eslint-disable-next-line react/jsx-key
+            return <Option value={value._id}>{value.slug}</Option>
+          })
+          }
+        </Select>
+
+      </Form.Item>
+
+      <Form.Item label={'Co supervisor'}>
+        <Select
+          className='maxWidth'
+          placeholder='select at least one supervisor'
+          onChange={handleChangeCo}
+        >
+          { supervisors.supervisors && supervisors.supervisors.map((value) => {
+            // eslint-disable-next-line react/jsx-key
+            return <Option value={value._id}>{value.slug}</Option>
+          })
+          }
+        </Select>
+      </Form.Item>
+
+      <Form.Item label={'Type'} required={true}>
+        <Select
+          className='maxWidth'
+          placeholder='Select Type'
+          onChange={TYPECHANGE}
+        >
+          <Option value={'accepted'}>accepted</Option>
+          <Option value={'registered'}>registered</Option>
+          <Option value={'defended'}>defended</Option>
+        </Select>
+      </Form.Item>
+
+      <Form.Item label={'Curriculums'} name={'curriculums'} required={true}>
+        <Select
+          mode='multiple'
+          className='maxWidth'
+          placeholder='select one curriculum'
+        >
+          { curriculums.curriculums && (
+            curriculums.curriculums.map((value) => {
+              return value.collection.map((value2) => {
+                // eslint-disable-next-line react/jsx-key
+                return <Option value={value2._id}>{value2.names.et}</Option>
+              })
+            })
+          )
+          }
+        </Select>
+      </Form.Item>
+
+      <Form.Item >
+        <Button type='primary' htmlType='submit'>Submit</Button>
+      </Form.Item>
+    </Form>
+  )
 }
 
-class AddTopic extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.seSelection = ['Yes', 'No']
-
-    this.fetchUsers = debounce(this.fetchUsers.bind(this), 500)
-    this.submit = this.submit.bind(this)
-
-    this.state = {
-      representatives: [],
-      fetching: false
-    }
-    this.formRef = React.createRef()
-  }
-
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    const { curriculumForm } = this.props
-    const { curriculum, error, loading, hasError } = nextProps.curriculumForm
-
-    if (curriculumForm.loading && !loading) {
-      if (curriculum._id) {
-        message.success('Save a new topic ' + curriculum.names.et)
-        this.formRef.current.resetFields()
-      }
-      if (hasError) {
-        message.error(error.message, 10)
-      }
-    }
-  }
-
-  componentDidMount() {
-    setDocTitle('Add Topic')
-  }
-
-  componentWillUnmount() {
-    this.props.initTopic()
-  }
-
-  languagesChanged(values) {
-    this.languagesValues = values
-  }
-
-  fetchUsers(value) {
-    if (!value) return
-
-    this.setState({ fetching: true }, () => {
-      Api('GET', SUPERVISOR_CURRICULUMFORM_URL, { params: { q: value } })
-        .then(body => {
-          const representatives = body.supervisors.map(user => ({
-            text: user.fullName,
-            value: user._id
-          }))
-          this.setState({ representatives, fetching: false })
-        })
-    })
-  }
-
-  submit(values) {
-    this.props.triggerAddTopic({
-      ...values,
-      supervisors: [values.representative.key]
-    })
-  }
-
-  render() {
-    const {
-      curriculumForm: { loading }
-    } = this.props
-
-    const crumbs = [{ url: null, name: 'Lisa Teema' }]
-    const { representatives, fetching } = this.state
-
-    return (
-      <div className='topicAdd width--public-page'>
-        <Breadcrumbs crumbs={crumbs} />
-        <Row gutter={8}>
-          <Col span={8} />
-          <Col xs={24} sm={8}>
-            <Form ref={this.formRef} onFinish={this.submit} className='form--narrow'>
-              <h2 className='text-align--center'>Lisa Teema</h2>
-              <FormItem label='Title' name='title' rules={[{ required: true, message: 'Please input a title for the topic!' }]}>
-                <Input id='title' />
-              </FormItem>
-              <FormItem label='Title (English)' name='titleEng' rules={[{ required: true, message: 'Please input a title for the topic!' }]}>
-                <Input id='titleEng' />
-              </FormItem>
-              <FormItem label='Description' name='description' rules={[{ required: true, message: 'Please input a a description for the topic' }]}>
-                <Input id='description' />
-              </FormItem>
-              <FormItem label='Type' name='type' rules={[{ required: true, message: 'Please select type!' }]}>
-                <Select>
-                  {CURRICULUM_TYPES.map(function (type) {
-                    return <Option key={type} value={type}>{type}</Option>
-                  })}
-                </Select>
-              </FormItem>
-              <FormItem label='Supervisor'>
-                <Tooltip
-                  placement='topLeft'
-                  title='Type supervisor name.'
-                  trigger='focus'
-                >
-
-                  <FormItem noStyle name='supervisor' rules={[{ required: true, message: 'Please select a supervisor for the topic!' }]}>
-                    <Select
-                      showSearch
-                      labelInValue
-                      notFoundContent={fetching ? <Spin size='small' /> : null}
-                      filterOption={false}
-                      onSearch={this.fetchUsers}
-                      style={{ width: '100%' }}
-                    >
-                      {representatives.map(d => <Option key={d.value}>{d.text}</Option>)}
-                    </Select>
-                  </FormItem>
-                </Tooltip>
-              </FormItem>
-              <FormItem>
-                <Button
-                  type='primary'
-                  htmlType='submit'
-                  className='button--fullWidth'
-                  loading={loading}
-                >
-                  Add Topic
-                </Button>
-              </FormItem>
-            </Form>
-          </Col>
-          <Col span={8} />
-        </Row>
-      </div>
-    )
-  }
-}
-
-AddTopic.propTypes = propTypes
-
-export default AddTopic
+export default connect(() => {
+}, {createTopic, getSupervisors, getCurriculums})(CompanyNewTopic)

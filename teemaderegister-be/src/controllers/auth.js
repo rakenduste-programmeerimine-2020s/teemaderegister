@@ -8,6 +8,18 @@ const { signToken, blacklistToken } = require('../utils/jwt')
 
 const { Error, InsertToken } = require('../utils/errors')
 
+module.exports.emailVerification = async (req, res) => {
+  const user = await User.findOne({ $and: [{'_id': req.user._id}, { 'login.emailConfirmToken': req.params.token }] })
+  if (!user) {
+    throw new Error('Wrong token')
+  }
+  user.login.emailConfirmed = true
+  user.login.emailConfirmToken = null
+  await user.save()
+
+  return res.json({ result: true })
+}
+
 module.exports.getPasswordResetTokenValues = () => {
   return {
     passwordResetToken: crypto.randomBytes(20).toString('hex'),
