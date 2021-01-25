@@ -17,6 +17,14 @@ const errorCheck = (req, res, next) => {
 const passwordMinLength = 8
 const curriculumNamesMinLength = 3
 
+module.exports.googleLogin = [
+
+  body('email')
+      .isEmail().withMessage('Email is not valid')
+      .trim().normalizeEmail({ remove_dots: false }),
+  errorCheck
+]
+
 module.exports.localLogin = [
   body('email')
     .isEmail().withMessage('Email is not valid')

@@ -1,5 +1,6 @@
 const API = '/api'
 
+export const AUTH_GOOGLE_LOGIN_URL = `${API}/auth/googlelogin`
 export const AUTH_LOCAL_LOGIN_URL = `${API}/auth/local/login`
 export const AUTH_LOGOUT_URL = `${API}/auth/logout`
 export const CURRICULUMS_URL = `${API}/curriculums`

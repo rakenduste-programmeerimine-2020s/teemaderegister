@@ -7,6 +7,7 @@ import Breadcrumbs from './Breadcrumbs'
 import { Row, Col, Form, Input, Button, message, Tooltip } from 'antd'
 import { UserOutlined, LockOutlined, BulbOutlined } from '@ant-design/icons'
 import { setDocTitle } from '../utils/Helpers'
+import GoogleBtn from './GoogleBtn'
 
 const FormItem = Form.Item
 
@@ -142,6 +143,7 @@ class Login extends React.Component {
                     >
                     Sign up
                     </Button>
+                    <GoogleBtn/>
                   </Link>
                 </p>
               </FormItem>

@@ -8,6 +8,16 @@ const { signToken, blacklistToken } = require('../utils/jwt')
 
 const { Error, InsertToken } = require('../utils/errors')
 
+module.exports.googleLogin = async (req, res) => {
+
+  const user = await User.findOne({ 'login.email': req.body["email"]  })
+  return res.json({
+    loggedIn: true,
+    message:"kasutaja on juba olemas",
+    token: signToken(user)
+  })
+}
+
 module.exports.emailVerification = async (req, res) => {
   const user = await User.findOne({ $and: [{'_id': req.user._id}, { 'login.emailConfirmToken': req.params.token }] })
   if (!user) {

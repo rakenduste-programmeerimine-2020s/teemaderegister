@@ -63,5 +63,5 @@ router.get('/tos', asyncMiddleware(tos.getTos))
 router.get('/admin/curriculums', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(admin.getCurriculums))
 router.put('/admin/curriculums', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(admin.putCurriculums))
 router.get('/admin/user/ids', jwtEnsure, allowRoles([ADMIN]), asyncMiddleware(admin.getUserData))
-
+router.post('/auth/googlelogin', validate.googleLogin, asyncMiddleware(auth.googleLogin))
 module.exports = router
